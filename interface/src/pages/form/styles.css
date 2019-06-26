@@ -1,0 +1,33 @@
+.formArea {
+    max-width: 700px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+}
+
+.formArea input, .formArea button{
+    display: block;
+    margin: 20px auto 0;
+    clear: both;
+}
+
+.formArea button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #da552f;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.formArea button:hover {
+    opacity: 0.8;
+}
+
+.formArea input[type=number]::-webkit-inner-spin-button, 
+.formArea input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin:0;
+}
