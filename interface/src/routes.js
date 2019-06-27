@@ -5,15 +5,17 @@ import Form from './pages/form';
 import Home from './pages/home';
 import UserLogIn from './pages/userLogin';
 import MedicalLogIn from './pages/medicalLogin';
+import Default from './pages/default';
 
 const Routes = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/UserLogin' component={UserLogIn} />
-            <Route path='/MedicalLogin' component={MedicalLogIn} />
-            <Route path='/main' component={Main} />
-            <Route path='/new' component={Form} />
+            <Route exact path='/UserLogin' component={UserLogIn} />
+            <Route exact path='/MedicalLogin' component={MedicalLogIn} />
+            <Route exact path='/main' component={Main} />
+            <Route exact path='/new' component={Form} />
+            <Route component={Default} />
         </Switch>
     </BrowserRouter>
 );

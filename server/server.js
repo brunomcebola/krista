@@ -14,6 +14,7 @@ mongoose.connect(
     'mongodb+srv://kristadmin:iRAhiSIFacrKpEo8@sitedata-xv2ex.mongodb.net/data?retryWrites=true&w=majority',
     { useNewUrlParser: true}
 );
+
 requireDir('./src/models');
 
 app.use('/kristaApi', require('./src/routes'));
