@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
-const ProductSchema = new mongoose.Schema({
+const DoctorSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -17,6 +17,6 @@ const ProductSchema = new mongoose.Schema({
     }
 });
 
-//ProductSchema.plugin(mongoosePaginate);   usado se chegar a fazer paginação dos medicos existentes
+//DoctorSchema.plugin(mongoosePaginate);   usado se chegar a fazer paginação dos medicos existentes
 
-mongoose.model('Doctor', ProductSchema);
+mongoose.model('Doctor', DoctorSchema);

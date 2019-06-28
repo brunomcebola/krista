@@ -5,6 +5,7 @@ import Form from './pages/form';
 import Home from './pages/home';
 import UserLogIn from './pages/userLogin';
 import MedicalLogIn from './pages/medicalLogin';
+import MedicalArea from './pages/medicalArea';
 import Default from './pages/default';
 
 const Routes = () => (
@@ -13,6 +14,7 @@ const Routes = () => (
             <Route exact path='/' component={Home} />
             <Route exact path='/UserLogin' component={UserLogIn} />
             <Route exact path='/MedicalLogin' component={MedicalLogIn} />
+            <Route exact path='/medicalArea' component={MedicalArea} />
             <Route exact path='/main' component={Main} />
             <Route exact path='/new' component={Form} />
             <Route component={Default} />

@@ -1,0 +1,213 @@
+.header {
+    display: flex;
+}
+
+.header h2 {
+    flex: 40%
+}
+
+.header img {
+    width: 50px;
+    margin-left: 0.5%;
+}
+.medical-nav {
+    display: flex;
+    margin-top: 17px ;
+    padding: 10px;
+    border-bottom: 2px solid black;
+    background-color: #F8F8FF;
+    margin-top:0px;
+    justify-content: space-between;
+}
+
+.medical-nav .search{
+    flex: 45%;
+}
+
+.medical-nav .search button {
+  background: #5B5F97;
+  border: 1px solid black;
+  font-size: 16px;
+  padding: 6px;
+  transition: all 0.3s
+}
+
+.medical-nav .search button:hover {
+    opacity: 0.8
+}
+
+.medical-nav .search input {
+    font-size: 16px;
+    padding: 6px;
+    margin-left: 2%;
+    width: 194px;
+    border: 1px solid black;
+}
+
+.medical-nav .new {
+    flex: 48%;
+}
+
+.contentor {
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.contentor .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    min-width: 230px;
+}
+
+.contentor .modal-content .data-form {
+    padding-top: 20px
+}
+
+.contentor .modal-content .data-form p label {
+    font-weight: normal;
+}
+
+.contentor .modal-content .data-form button {
+    margin:-5px;
+    margin-top: 20px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.contentor .modal-content .data-form button:hover {
+    opacity: 0.8;
+}
+
+.contentor .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.contentor .close:hover,
+.contentor .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.medical-nav .logout {
+    flex: 7%;
+}
+
+.medical-nav .logout .logoutBtn,
+.medical-nav .new .newPatient {
+    padding: 6px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.medical-nav .logout .logoutBtn:hover,
+.medical-nav .new .newPatient:hover {
+    opacity: 0.8
+}
+
+.medical-nav .logout .logoutBtn #out {
+    text-decoration: none;
+    color: #fff;
+}
+
+.patient-list {
+    max-width: 80%;
+    margin: 20px auto 0;
+    padding: 0 20px;
+}
+
+.patient-list article {
+    background: #FFF;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.patient-list article .profile-container {
+    flex: 5%;
+    text-align: center;
+    margin: auto
+}
+
+.patient-list article .profile-container .profile-pic {
+    width: 90%;
+}
+
+.patient-list article .patient-info {
+    flex: 85%;
+    padding-left: 2%;
+    margin: auto
+}
+
+.patient-list article p {
+    font-size: 16px;
+    color: #999;
+    margin-top: 5px;
+    line-height: 24px;
+}
+
+.patient-list .actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto 20px;
+}
+
+.patient-list .actions button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.patient-list .actions button #formLink {
+    color: #fff;
+    text-decoration: none;
+}
+
+.patient-list .actions button[disabled]{
+    opacity: 0.6;
+    filter: grayscale(100%);
+    cursor: default;
+}
+
+.patient-list .actions button:hover {
+    opacity: 0.8;
+}
+
+.patient-list .actions button[disabled]:hover{
+    opacity: 0.6;
+}
