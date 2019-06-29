@@ -11,9 +11,10 @@ const DoctorSchema = new mongoose.Schema({
         required: true,
     },
     medicalNumber: {
-        type: Number,
-        min : 100000000,
-        max : 999999999,
+        type: String,
+        minlength : 9,
+        maxlength : 9,
+        required: true
     }
 });
 
