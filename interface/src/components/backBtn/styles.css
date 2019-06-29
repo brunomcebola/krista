@@ -1,0 +1,12 @@
+.backBtn-component .backBtn-container {
+    padding-top:1%;
+    padding-left:1%;
+}
+
+.backBtn-component .backBtn-container .backBtn {
+    font-size: 24px; 
+    background-color: transparent; 
+    border:none;
+    text-decoration: none;
+    color: #000;
+}

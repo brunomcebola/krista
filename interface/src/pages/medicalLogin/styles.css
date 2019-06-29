@@ -6,19 +6,6 @@
     background-size: 100% 100%;
 }
 
-.medical-login .backBtn-container {
-    padding-top:1%;
-    padding-left:1%;
-}
-
-.medical-login .backBtn-container .backBtn {
-    font-size: 24px; 
-    background-color: transparent; 
-    border:none;
-    text-decoration: none;
-    color: #000;
-}
-
 .medical-login .form-container {
     display: flex;
     align-items: center;
@@ -49,12 +36,6 @@
     clear: both;
     font-size: 16px;
     width: 194px;
-}
-
-.medical-login .form-container .blue-ball .medical-form input[type=number]::-webkit-inner-spin-button, 
-.medical-login .form-container .blue-ball .medical-form input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin:0;
 }
 
 .medical-login .form-container .blue-ball .medical-form button{

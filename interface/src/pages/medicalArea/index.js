@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import api from '../../services/api';
 import { Link } from 'react-router-dom';
 import { StickyContainer, Sticky } from 'react-sticky';
+
+import Loader from 'react-loader-spinner';
+
 import './styles.css';
 import logo from '../../images/icon.png'
 
@@ -33,6 +36,9 @@ class List extends Component {
                             <p>Número do sistema de saúde: <u>{patient.hsn}</u></p>
                             <p>Médico: </p>
                         </div>
+                        <div className="scheduleBtn">
+                            <button disabled={patient.docNum!=JSON.parse(localStorage.getItem('docInfo'))}><Link id="link" to="/medicalArea/schedules">Manage</Link></button>
+                        </div>
                     </article>
                 )):(exists&&search)?(<article key={patients._id}> 
                     <div className="profile-container">
@@ -46,7 +52,7 @@ class List extends Component {
                 </article>):(!exists&&search)?<h3>Não foi possível encontrar o paciente</h3>:null}
                 <div className="actions">
                     <button disabled={page === 1 || search === true} onClick={this.props.prev}>Anterior</button>
-                    <button disabled={page === productInfo.pages || search === true} onClick={this.props.next}>Próximo</button>
+                    <button disabled={page === productInfo.pages || productInfo.total<=productInfo.limit || search === true} onClick={this.props.next}>Próximo</button>
                 </div>
             </div>
         );
@@ -54,24 +60,64 @@ class List extends Component {
 }
 
 class Modal extends Component {
+    state = {
+        hsn: '',
+        firstName: '',
+        lastName: '',
+        docNum: JSON.parse(localStorage.getItem('docInfo')),
+        load: false,
+        erro: false,
+        success: false
+    }
+
+    loading = () => {
+        this.state.load = true;
+        this.forceUpdate();
+    }
+
+    formSubmit = async (e) => {
+        e.preventDefault();
+
+        this.loading();
+
+        const response = await api.get(`/patients/${this.state.hsn}`);
+
+        if(response.data===null){
+            await api.post('/patients/new', this.state);
+            await api.get(`/schedules/${'u'+this.state.hsn}`);
+            this.state.load=false;
+            this.state.erro=false;
+            this.state.success = true;
+            this.forceUpdate();
+            setTimeout(this.props.close, 1650);
+        }
+        else{
+            this.state.load=false;
+            this.state.erro=true;
+            this.forceUpdate();
+        }
+    };
+
     render() {
         return(
             <div className="contentor">
-                <div className="modal-content">
+                <div id="modal-content" className="modal-content">
                     <span className="close" onClick={this.props.close}>&times;</span>
                     <h3>Informação do paciente</h3>
-                    <div className="data-form">
-                        <p><label htmlfor="hsn">Número do sistema de saúde:</label>
-                        <input id="hsn" type="text" name="hsn" required /></p>
-                        <p><label htmlfor="fname">Primeiro nome:</label>
-                        <input id="fname" type="text" name="fname" required /></p>
-                        <p><label htmlfor="lname">Último nome:</label>
-                        <input id="lname" type="text" name="lname" required /></p>
-                        <button>Adicionar</button>
-                    </div>
+
+                    {this.state.load?<Loader type="ThreeDots" color="green"height="30" width="30"/>:this.state.erro?<div id="erro">Paciente já existente</div>:this.state.success?<div id="succ">Paciente criado com sucesso</div>:null}
+
+                    <form className="data-form" onSubmit={e => this.formSubmit(e)}>
+                        <p><label>Número do sistema de saúde:</label>
+                        <input id="hsn" type="text" required autoComplete="off" onChange={e => this.setState({ hsn: e.target.value})} value={this.state.hsn}/></p>
+                        <p><label>Primeiro nome:</label>
+                        <input id="fname" type="text" required autoComplete="off" onChange={e => this.setState({ firstName: e.target.value})} value={this.state.firstName}/></p>
+                        <p><label>Último nome:</label>
+                        <input id="lname" type="text" required autoComplete="off" onChange={e => this.setState({ lastName: e.target.value})} value={this.state.lastName}/></p>
+                        <button type="submit">Adicionar</button>
+                    </form>
                 </div>
             </div>
-            
         )
     }
 }
@@ -137,7 +183,18 @@ export default class MedicalArea extends Component {
     };
 
     switchModal = () => {
+        if(this.state.new===true){
+            this.loadProducts();
+            this.forceUpdate();
+        }
+        
         this.setState(prevState => ({ new: !prevState.new }));
+        
+    }
+
+    logout = () => {
+        localStorage.removeItem('docInfo');
+        this.props.history.push("/medicalLogin");
     }
 
     render() {
@@ -148,15 +205,16 @@ export default class MedicalArea extends Component {
                     <Sticky>
                         {({ style }) => 
                             <div style={style} className="medical-nav">
-                                <div className="search">
-                                    <input id="search-patient" type="text" placeholder="Número de paciente" name="search" />
-                                    <button onClick={this.search}><i className="fa fa-search"></i></button>
-                                </div>
-                                <div className="new">
-                                    <button className="newPatient" onClick={this.switchModal}>Novo Paciente</button>
+                                <div className="left-container">
+                                    <div className="patient">
+                                        <input id="search-patient" type="text" placeholder="Número de paciente" name="search" />
+                                        <button className="searchBtn" onClick={this.search}><i className="fa fa-search"></i></button>
+                                        <button className="newPatient" onClick={this.switchModal}>Novo Paciente</button>
+                                    </div>
+                                    
                                 </div>
                                 <div className="logout">
-                                    <button className="logoutBtn"><Link to='/medicalLogin' id="out">Sign Out <i className="fa fa-sign-out"></i></Link></button>
+                                    <button onClick={this.logout} className="logoutBtn">Sign Out <i className="fa fa-sign-out"></i></button>
                                 </div>
                                 
                                 
