@@ -41,6 +41,10 @@ const PatientSchema = new mongoose.Schema({
         minlength : 9,
         maxlength : 9,
         required: true
+    },
+    docName: {
+        type: String,
+        required: true
     }
 });
 

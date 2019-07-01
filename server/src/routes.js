@@ -15,6 +15,8 @@ routes.get('/patients/:hsn', PatientsController.show);
 routes.post('/patients/new', PatientsController.store);
 
 routes.get('/schedules/:col', Schedules.new);
+routes.get('/schedules/info/:col', Schedules.info);
+routes.put('/schedules/info/:col', Schedules.update);
 
 
 //routes.delete('/products/:id', ProductController.destroy);    usado se chegar a fazer remoção dos medicos existentes

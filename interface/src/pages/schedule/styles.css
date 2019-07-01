@@ -1,0 +1,102 @@
+.schedule #title {
+    text-align: center
+}
+
+.schedule table {
+    margin: 20px auto
+}
+
+.schedule table tbody #header {
+    font-size: 18px;
+}
+
+.schedule table tbody #header td {
+    background-color: #E0E0E0
+}
+
+.schedule table tbody tr td{
+    border: 1px solid black;
+    padding: 3px;
+    background-color: #fff
+}
+
+.schedule table tbody tr td select {
+    font-size: 16px;
+    border: none
+} 
+
+.schedule table tbody tr td input {
+    max-width: 125px;
+    border: none
+}
+
+.schedule .save {
+    float: right;
+    margin-top: 10px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.schedule .save:hover {
+    opacity: 0.8;
+}
+
+.schedule #info {
+    width: 1440px;
+    margin: auto
+}
+
+.schedule #info #loader {
+    text-align: center
+}
+
+.schedule #info #succ {
+    color: green;
+    font-size: 15px;
+    margin-bottom: 15px
+}
+
+.schedule #info #wait {
+    color: rgb(255, 187, 0);
+    font-size: 15px;
+    margin-bottom: 15px
+}
+
+.schedule #text {
+    display: block;
+    margin: auto 0px;
+    max-width: 1440px;
+    min-width: 1440px;
+    min-height: 100px;
+    font-size: 18px
+}
+
+.schedule #info #personalInfo {
+    margin-top: 40px;
+    display: flex;
+}
+
+.schedule #info #personalInfo #userPic-container {
+    flex: 17%
+}
+
+.schedule #info #personalInfo #userPic-container img {
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid black
+}
+
+.schedule #info #personalInfo #detail {
+    flex: 83%
+}
+
+.schedule #info #personalInfo #detail p .identifier {
+    font-size: 19px
+}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
-import { Link } from 'react-router-dom';
 
 import BackBtn from '../../components/backBtn';
 import './styles.css';
@@ -20,16 +19,24 @@ export default class MedicalLogIn extends Component {
         if(response.data != null){
             if(response.data.password === password){
                 localStorage.setItem('docInfo', JSON.stringify(medicalNumber));
-                this.props.history.push("/medicalArea");
+                localStorage.setItem('medicalLogged', JSON.stringify(true));
+                this.props.history.push("/MedicalArea");
             } 
         }
 
     };
 
+    checkLogin = () => {
+        const logged = JSON.parse(localStorage.getItem('medicalLogged'));
+        if(logged===true) this.props.history.push("/MedicalArea");
+    }
+
     render(){
+        this.checkLogin();
+
         return(
             <div className="medical-login">
-                <BackBtn />
+                <BackBtn path='/' text="Página inicial"/>
                 <div className="form-container">
                     <div className="blue-ball">
                         <h1>Área Médica</h1>

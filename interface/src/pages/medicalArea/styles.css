@@ -64,6 +64,10 @@
     min-width: 105px;
 }
 
+.medical-nav .logout .logoutBtn {
+    margin-right: 20px;
+}
+
 .medical-nav .logout .logoutBtn:hover,
 .medical-nav .left-container .patient .newPatient:hover {
     opacity: 0.8
@@ -114,6 +118,10 @@
 .patient-list article .scheduleBtn {
     flex: 8%;
     margin: auto;
+}
+
+.patient-list #pacient-error {
+    color: #f00;
 }
 
 .patient-list .actions {
@@ -179,12 +187,16 @@
     min-width: 230px;
 }
 
-.contentor .modal-content #erro {
-    color: #f00
+.contentor .modal-content #warn {
+    color: rgb(255, 217, 0)
 }
 
 .contentor .modal-content #succ {
     color: green;
+}
+
+.contentor .modal-content #erro {
+    color: #f00
 }
 
 .contentor .modal-content .data-form {

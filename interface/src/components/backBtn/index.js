@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
-const BackBtn = () =>
+const BackBtn = ({ path , text}) =>
     <div className="backBtn-component">
        <div className="backBtn-container">
-            <Link to='/' className="backBtn"><i className="fa fa-arrow-circle-left"></i> Página inicial</Link>
+            <Link to={path} className="backBtn"><i className="fa fa-arrow-circle-left"></i> {text}</Link>
         </div> 
     </div>
     
