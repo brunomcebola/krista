@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import Cookies from 'universal-cookie';
 import api from '../../services/api';
 
 import BackBtn from '../../components/backBtn';
 import './styles.css';
 
-export default class MedicalLogIn extends Component {
+export default class MedicalLogIn extends Component {    
+    state = {
+        cookies : new Cookies()
+    }
 
-    submit = async (e) => {
+    log = async (e) => {
         e.preventDefault();
 
         const medicalNumber = document.getElementById("nm").value;
@@ -18,17 +22,17 @@ export default class MedicalLogIn extends Component {
         
         if(response.data != null){
             if(response.data.password === password){
+                this.state.cookies.set('medicalLogged', 'logged', { path: '/', expires: new Date(Date.now()+21600000)});
+                localStorage.setItem('medicalLogged','logged');
                 localStorage.setItem('docInfo', JSON.stringify(medicalNumber));
-                localStorage.setItem('medicalLogged', JSON.stringify(true));
                 this.props.history.push("/MedicalArea");
             } 
         }
-
     };
 
     checkLogin = () => {
-        const logged = JSON.parse(localStorage.getItem('medicalLogged'));
-        if(logged===true) this.props.history.push("/MedicalArea");
+        const logged = this.state.cookies.get('medicalLogged');
+        if(logged==='logged') this.props.history.push("/MedicalArea");
     }
 
     render(){
@@ -40,7 +44,7 @@ export default class MedicalLogIn extends Component {
                 <div className="form-container">
                     <div className="blue-ball">
                         <h1>Área Médica</h1>
-                        <form className="medical-form" onSubmit={e => this.submit(e)}>
+                        <form className="medical-form" onSubmit={e => this.log(e)}>
                             <label forhtml="nm">Número medico</label>
                             <input id="nm" type="text" placeholder="Numero medico" autoComplete="on" required/>
                             <label forhtml="pw">Password</label>

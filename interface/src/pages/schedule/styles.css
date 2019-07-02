@@ -3,7 +3,7 @@
 }
 
 .schedule table {
-    margin: 20px auto
+    margin: auto
 }
 
 .schedule table tbody #header {
@@ -20,14 +20,14 @@
     background-color: #fff
 }
 
-.schedule table tbody tr td select {
-    font-size: 16px;
+.schedule table tbody tr td .hours {
+    font-size: 12px;
     border: none
 } 
 
-.schedule table tbody tr td input {
-    max-width: 125px;
-    border: none
+.schedule table tbody tr td .basic-multi-select {
+    width: 136.1px;
+    font-size: 10px
 }
 
 .schedule .save {
@@ -53,17 +53,20 @@
     margin: auto
 }
 
+.schedule #table #loader,
 .schedule #info #loader {
     text-align: center
 }
 
-.schedule #info #succ {
+.schedule #table #loader #succ,
+.schedule #info #loader #succ {
     color: green;
     font-size: 15px;
     margin-bottom: 15px
 }
 
-.schedule #info #wait {
+.schedule #table #loader #wait,
+.schedule #info #loader #wait {
     color: rgb(255, 187, 0);
     font-size: 15px;
     margin-bottom: 15px
@@ -79,7 +82,7 @@
 }
 
 .schedule #info #personalInfo {
-    margin-top: 40px;
+    margin: 40px 0 40px;
     display: flex;
 }
 
@@ -100,3 +103,4 @@
 .schedule #info #personalInfo #detail p .identifier {
     font-size: 19px
 }
+

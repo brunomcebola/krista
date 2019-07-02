@@ -11,3 +11,22 @@ body {
     color: #333;
     min-width:560px;
 }
+
+::-webkit-scrollbar {
+    width: 12.5px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: #c9c7c7; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #5B5F97;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(67, 70, 110);
+}

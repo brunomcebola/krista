@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
 import { StickyContainer, Sticky } from 'react-sticky';
+import Cookies from 'universal-cookie';
 import Loader from 'react-loader-spinner';
 
 import './styles.css';
@@ -146,18 +147,20 @@ export default class MedicalArea extends Component {
         exists: false,
         page: 1,
         new: false,
-        load: false
+        load: true,
+        cookies: new Cookies()
     }
 
     componentDidMount() {
-        this.loadProducts();
+        setInterval(this.checkLogin, 5000);
+        this.loadPatients();
     }
 
-    loadProducts = async (page = 1) => {
+    loadPatients = async (page = 1) => {
         const response = await api.get(`/patients?page=${page}`);
         const { docs, ...productInfo} = response.data;
 
-        this.setState({ patients: docs, productInfo, page, exists: (response.data.length===0)?false:true , search: false});
+        this.setState({ patients: docs, productInfo, page, exists: (response.data.length===0)?false:true , search: false, load: false});
     };
 
     prevPage = () => {
@@ -166,7 +169,7 @@ export default class MedicalArea extends Component {
         if( page === 1) return;
 
         const pageNumber = page - 1;
-        this.loadProducts(pageNumber);
+        this.loadPatients(pageNumber);
     };
 
     nextPage = () => {
@@ -175,7 +178,7 @@ export default class MedicalArea extends Component {
         if (page === productInfo.pages) return;
 
         const pageNumber = page + 1;
-        this.loadProducts(pageNumber);
+        this.loadPatients(pageNumber);
     };
 
     search = async () => {
@@ -207,7 +210,7 @@ export default class MedicalArea extends Component {
 
     switchModal = () => {
         if(this.state.new===true){
-            this.loadProducts();
+            this.loadPatients();
             this.forceUpdate();
         }
         
@@ -216,14 +219,16 @@ export default class MedicalArea extends Component {
     }
 
     logout = () => {
-        localStorage.removeItem('docInfo');
+        this.state.cookies.set('medicalLogged','notLogged');
         localStorage.removeItem('medicalLogged');
+        localStorage.removeItem('docInfo');
         this.props.history.push("/MedicalLogin");
     }
 
     checkLogin = () => {
-        const logged = JSON.parse(localStorage.getItem('medicalLogged'));
-        if(logged!==true) this.props.history.push("/MedicalLogin");
+        const loggedCookie = this.state.cookies.get('medicalLogged');
+        const loggedStorage = localStorage.getItem('medicalLogged');
+        if(loggedCookie!=='logged' || loggedStorage!=='logged') this.props.history.push("/MedicalLogin");
     }
 
     handleKeyDown = (e) => {

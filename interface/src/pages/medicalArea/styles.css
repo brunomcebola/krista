@@ -24,6 +24,10 @@
     flex: 93%;
 }
 
+.medical-nav .left-container .patient #search-patient {
+    max-height: 37px
+}
+
 .medical-nav .left-container .patient .searchBtn {
   background: #5B5F97;
   color: #fff;

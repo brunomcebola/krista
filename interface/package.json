@@ -8,14 +8,17 @@
     "password-hash": "^1.2.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-cookie": "^4.0.0",
     "react-dom": "^16.8.6",
     "react-encrypt": "^1.0.1",
     "react-loader-spinner": "^2.3.0",
     "react-loading-overlay": "^1.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-select": "^3.0.4",
     "react-spinners": "^0.5.4",
-    "react-sticky": "^6.0.3"
+    "react-sticky": "^6.0.3",
+    "universal-cookie": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
