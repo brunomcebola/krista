@@ -19,7 +19,7 @@ class Table extends Component {
     state = {
         hsn: JSON.parse(localStorage.getItem('hsn')),
         saving: 0,
-        carregado: 0
+        qnt: 28
     }
 
     medication = {
@@ -48,6 +48,7 @@ class Table extends Component {
             index++;
         }
         this.medList=list
+        this.state.qnt=28
         this.forceUpdate();
     }
 
@@ -55,10 +56,28 @@ class Table extends Component {
         const name = id.substring(2);
         const meds = [];
         const hour = document.getElementById(id).value;
-        if(newValue.length>this.medicamentos[id[2].charCodeAt(0)-97]){
-            this.medicamentos[id[2].charCodeAt(0)-97].push({id: name, option: newValue[newValue.length-1]})
+        var change = 0;
+
+        if(newValue!==null){
+            this.medicamentos[id[2].charCodeAt(0)-97].map(function(e) { if(e.id===name) change=1 })
+            if(change===0){ this.medicamentos[id[2].charCodeAt(0)-97].push({id: name, option: [newValue[0]]}) }
+            else if(change===1) {
+                this.medicamentos[id[2].charCodeAt(0)-97][this.medicamentos[id[2].charCodeAt(0)-97].map(function(e) { return e.id; }).indexOf(name)].option=[]
+                for(let i=0;i<newValue.length;i++){
+                    this.medicamentos[id[2].charCodeAt(0)-97][this.medicamentos[id[2].charCodeAt(0)-97].map(function(e) { return e.id; }).indexOf(name)].option.push(newValue[i])
+                }
+            }
             this.forceUpdate()
         }
+        else if(newValue===null){
+            for(let i = 0; i < this.medicamentos[id[2].charCodeAt(0)-97].length; i++){ 
+                if ( this.medicamentos[id[2].charCodeAt(0)-97][i].id === name) {
+                    this.medicamentos[id[2].charCodeAt(0)-97].splice(i, 1); 
+                }
+            }
+            this.forceUpdate()
+        }
+
         if(newValue!==null && hour !== '__h__'){
             this.state.saving = 1;
             this.forceUpdate();
@@ -120,23 +139,47 @@ class Table extends Component {
         const list = [];
         const index = letter.charCodeAt(0)-97;
 
-        if(this.medicamentos[index].length!==0){
-            for(let i=0; i<this.medicamentos[index].length; i++){
-                if(this.medicamentos[index][i].id===letter+'_'+number){
-                    list.push(this.medicamentos[index][i].option)
+        if(this.state.qnt===0){
+            if(this.medicamentos[index].length!==0){
+                for(let i=0; i<this.medicamentos[index].length; i++){
+                    if(this.medicamentos[index][i].id===letter+'_'+number){
+                        for(let a=0;a<this.medicamentos[index][i].option.length;a++){
+                            list.push(this.medicamentos[index][i].option[a])
+                        }   
+                    }
                 }
             }
         }
         
-        const length = this.medList[index].length;
-        for(let i=0; i<length; i++){
-            if(this.medList[index][i].name===letter+'_'+number){
-                for(let a=0; a<this.medList[index][i].meds.length; a++){
-                    list.push(options[options.map(function(e) { return e.value; }).indexOf(this.medList[index][i].meds[a])])
+        if(this.state.qnt!==0){
+            this.state.qnt--
+            const length = this.medList[index].length;
+            for(let i=0; i<length; i++){
+                if(this.medList[index][i].name===letter+'_'+number){
+                    for(let a=0; a<this.medList[index][i].meds.length; a++){
+                        list.push(options[options.map(function(e) { return e.value; }).indexOf(this.medList[index][i].meds[a])])
+                    }
                 }
             }
         }
-        return list
+        
+
+        if(list.length!==0){
+            if(this.medicamentos[index].length===0) this.medicamentos[index].push({id: letter+'_'+number, option: list})
+            else{
+                var exs = false;
+                this.medicamentos[index].map(function(e) { if(e.id===letter+'_'+number) exs=true })
+                if(exs){
+                    let col = this.medicamentos[index].map(function(e) { return e.id} ).indexOf(letter+'_'+number)
+                    this.medicamentos[index][col].option=list;
+                }
+                else{
+                    this.medicamentos[index].push({id: letter+'_'+number, option: list})
+                }
+            }            
+        }
+
+        return list      
     }
 
     createRow = (letter) => {
