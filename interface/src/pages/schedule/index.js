@@ -7,7 +7,6 @@ import './styles.css';
 import User from '../../images/user.png';
 
 import BackBtn from '../../components/backBtn';
-import { stringify } from 'querystring';
 
 const options = [
     { value: 'Ben-u-ron', label: 'Ben-u-ron' },
@@ -19,7 +18,8 @@ const options = [
 class Table extends Component {
     state = {
         hsn: JSON.parse(localStorage.getItem('hsn')),
-        saving: 0
+        saving: 0,
+        carregado: 0
     }
 
     medication = {
@@ -29,6 +29,8 @@ class Table extends Component {
     }
 
     medList = [[],[],[],[]]
+
+    medicamentos = [[],[],[],[]]
 
     hours = ['__h__','00h00','01h00','02h00','03h00','04h00','05h00','06h00','07h00','08h00','09h00','10h00','11h00','12h00',
              '13h00','14h00','15h00','16h00','17h00','18h00','19h00','20h00','21h00','22h00','23h00'];
@@ -53,6 +55,10 @@ class Table extends Component {
         const name = id.substring(2);
         const meds = [];
         const hour = document.getElementById(id).value;
+        if(newValue.length>this.medicamentos[id[2].charCodeAt(0)-97]){
+            this.medicamentos[id[2].charCodeAt(0)-97].push({id: name, option: newValue[newValue.length-1]})
+            this.forceUpdate()
+        }
         if(newValue!==null && hour !== '__h__'){
             this.state.saving = 1;
             this.forceUpdate();
@@ -110,6 +116,29 @@ class Table extends Component {
         return false
     };
 
+    selectMeds = (letter, number) => {
+        const list = [];
+        const index = letter.charCodeAt(0)-97;
+
+        if(this.medicamentos[index].length!==0){
+            for(let i=0; i<this.medicamentos[index].length; i++){
+                if(this.medicamentos[index][i].id===letter+'_'+number){
+                    list.push(this.medicamentos[index][i].option)
+                }
+            }
+        }
+        
+        const length = this.medList[index].length;
+        for(let i=0; i<length; i++){
+            if(this.medList[index][i].name===letter+'_'+number){
+                for(let a=0; a<this.medList[index][i].meds.length; a++){
+                    list.push(options[options.map(function(e) { return e.value; }).indexOf(this.medList[index][i].meds[a])])
+                }
+            }
+        }
+        return list
+    }
+
     createRow = (letter) => {
         let row = [];
         for (let i = 0; i < 7; i++) {
@@ -121,7 +150,7 @@ class Table extends Component {
                         </select>}
                       </td> );
             row.push( <td key={i}>
-                        <CreatableSelect isClearable={false} isMulti options={options} className="basic-multi-select" onChange={e => this.getValuesMedSelect(e, 'h_'+letter+'_'+i)} id={'m_'+letter+'_'+i}/>
+                        <CreatableSelect value={this.selectMeds(letter, i)} isClearable={false} isMulti options={options} className="basic-multi-select" onChange={e => this.getValuesMedSelect(e, 'h_'+letter+'_'+i)} id={'m_'+letter+'_'+i}/>
                       </td> )
           }
         return row
@@ -131,7 +160,7 @@ class Table extends Component {
         this.getMeds();
     }
 
-    render() {       
+    render() {
         const { saving } = this.state
         return(
             <div id="table">
@@ -169,6 +198,7 @@ class Table extends Component {
                     </tfoot>
                 </table>
             </div>
+            
         )
     }
 } 
