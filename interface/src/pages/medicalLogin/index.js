@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
 import api from '../../services/api';
 
 import BackBtn from '../../components/backBtn';
 import './styles.css';
 
 export default class MedicalLogIn extends Component {    
-    state = {
-        cookies : new Cookies()
-    }
-
     log = async (e) => {
         e.preventDefault();
 
@@ -22,7 +17,6 @@ export default class MedicalLogIn extends Component {
         
         if(response.data != null){
             if(response.data.password === password){
-                this.state.cookies.set('medicalLogged', 'logged', { path: '/', expires: new Date(Date.now()+21600000)});
                 localStorage.setItem('medicalLogged','logged');
                 localStorage.setItem('docInfo', JSON.stringify(medicalNumber));
                 this.props.history.push("/MedicalArea");
@@ -31,8 +25,8 @@ export default class MedicalLogIn extends Component {
     };
 
     checkLogin = () => {
-        const logged = this.state.cookies.get('medicalLogged');
-        if(logged==='logged') this.props.history.push("/MedicalArea");
+        const loggedStorage = localStorage.getItem('medicalLogged');
+        if(loggedStorage==='logged') this.props.history.push("/MedicalArea");
     }
 
     render(){

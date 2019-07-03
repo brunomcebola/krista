@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
 import { StickyContainer, Sticky } from 'react-sticky';
-import Cookies from 'universal-cookie';
 import Loader from 'react-loader-spinner';
 
 import './styles.css';
@@ -147,8 +146,7 @@ export default class MedicalArea extends Component {
         exists: false,
         page: 1,
         new: false,
-        load: true,
-        cookies: new Cookies()
+        load: true
     }
 
     componentDidMount() {
@@ -219,16 +217,14 @@ export default class MedicalArea extends Component {
     }
 
     logout = () => {
-        this.state.cookies.set('medicalLogged','notLogged');
         localStorage.removeItem('medicalLogged');
         localStorage.removeItem('docInfo');
         this.props.history.push("/MedicalLogin");
     }
 
     checkLogin = () => {
-        const loggedCookie = this.state.cookies.get('medicalLogged');
         const loggedStorage = localStorage.getItem('medicalLogged');
-        if(loggedCookie!=='logged' || loggedStorage!=='logged') this.props.history.push("/MedicalLogin");
+        if(loggedStorage!=='logged') this.props.history.push("/MedicalLogin");
     }
 
     handleKeyDown = (e) => {

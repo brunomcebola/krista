@@ -14,11 +14,11 @@ routes.get('/patients', PatientsController.index);
 routes.get('/patients/:hsn', PatientsController.show);
 routes.post('/patients/new', PatientsController.store);
 
-routes.get('/schedules/:col', Schedules.new);
-routes.get('/schedules/info/:col', Schedules.info);
-routes.put('/schedules/info/:col', Schedules.update);
-
-
-//routes.delete('/products/:id', ProductController.destroy);    usado se chegar a fazer remoção dos medicos existentes
+routes.get('/schedules/:col', Schedules.new);   //cria nova colleção
+routes.get('/schedules/info/:col', Schedules.info);     //obtem info medica
+routes.put('/schedules/info/:col', Schedules.updateInfo);       //atualiza info medica
+routes.get('/schedules/med/:col/:name', Schedules.medicine);       //obtem os medicamentos
+routes.put('/schedules/med/:col', Schedules.newMed);      //cria ou atualiza medicamentos
+routes.delete('/schedules/med/:col/:name', Schedules.delMed);     //elimina horario de medicação
 
 module.exports = routes;
