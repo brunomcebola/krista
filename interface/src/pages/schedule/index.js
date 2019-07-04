@@ -36,6 +36,8 @@ class Table extends Component {
              '13h00','14h00','15h00','16h00','17h00','18h00','19h00','20h00','21h00','22h00','23h00'];
 
     getMeds = async () => {
+        this.state.saving=1
+        this.forceUpdate()
         const list = [[],[],[],[]]
         var index=0;
         for(let line of 'abcd'){
@@ -49,6 +51,7 @@ class Table extends Component {
         }
         this.medList=list
         this.state.qnt=28
+        this.state.saving=0
         this.forceUpdate();
     }
 
@@ -199,6 +202,12 @@ class Table extends Component {
         return row
     }
 
+    activateLoad = () => {
+        this.state.saving = 1;
+        this.forceUpdate();
+        setTimeout(() => this.setState({saving: 2}), 1000);
+    }
+
     componentDidMount() {
         this.getMeds();
     }
@@ -236,7 +245,7 @@ class Table extends Component {
                     <tfoot>
                         <tr>
                             <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                            <td><button className="save">Guardar</button></td>
+                            <td><button className="save" onClick={this.state.saving!==1?this.activateLoad:null}>Guardar</button></td>
                         </tr>
                     </tfoot>
                 </table>

@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
-import Main from './pages/main';
-import Form from './pages/form';
 import Home from './pages/home';
 import UserLogIn from './pages/userLogin';
 import MedicalLogIn from './pages/medicalLogin';
@@ -19,8 +17,6 @@ const Routes = () => (
                 <Route exact path='/MedicalLogin' component={MedicalLogIn} />
                 <Route exact path='/MedicalArea' component={MedicalArea} />
                 <Route exact path='/MedicalArea/Schedules' component={Schedule} />
-                <Route exact path='/main' component={Main} />
-                <Route exact path='/new' component={Form} />
                 <Route component={Default} />
             </Switch>
         </BrowserRouter>
