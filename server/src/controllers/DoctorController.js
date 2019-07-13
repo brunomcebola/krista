@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Doctor = mongoose.model('Doctor');
 
 function check(req){
-    return (req.headers.referer === 'http://localhost:3000/MedicalLogin' || req.headers.referer === 'http://localhost:3000/MedicalArea' || req.headers.referer === 'http://localhost:3000/MedicalArea/Schedules') 
+    return (req.headers.referer === 'https://kristahealthcare.netlify.com/MedicalLogin' || req.headers.referer === 'https://kristahealthcare.netlify.com/MedicalArea' || req.headers.referer === 'https://kristahealthcare.netlify.com/MedicalArea/Schedules') 
 }
 
 module.exports = {
