@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors({
-    //origin: 'https://kristahealthcare.netlify.com'
+    origin: 'https://kristahealthcare.netlify.com'
 }));
 
 mongoose.connect(
