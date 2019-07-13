@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const Doctor = mongoose.model('Doctor');
+const links = require('../links');
 
 function check(req){
-    return (req.headers.referer === 'https://kristahealthcare.netlify.com/MedicalLogin' || req.headers.referer === 'https://kristahealthcare.netlify.com/MedicalArea' || req.headers.referer === 'https://kristahealthcare.netlify.com/MedicalArea/Schedules') 
+    return (links.includes(req.headers.referer)) 
 }
 
 module.exports = {

@@ -319,7 +319,7 @@ class Info extends Component {
                 <button className="save" onClick={this.activateLoad}>Guardar</button>
                 <div id="personalInfo">
                     <div id="userPic-container">
-                        <img src={User}/>
+                        <img src={User} alt='user'/>
                     </div>
                     <div id="detail">
                         <p><span className="identifier">Número de paciente: </span>{this.state.hsn}</p>
