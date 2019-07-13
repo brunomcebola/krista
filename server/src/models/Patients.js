@@ -45,6 +45,12 @@ const PatientSchema = new mongoose.Schema({
     docName: {
         type: String,
         required: true
+    },
+    boxNum: {
+        type: String,
+        minlength : 12,
+        maxlength : 12,
+        required: true
     }
 });
 

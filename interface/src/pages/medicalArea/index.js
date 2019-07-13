@@ -73,6 +73,7 @@ class Modal extends Component {
         lastName: '',
         docNum: JSON.parse(localStorage.getItem('docInfo')),
         docName: '',
+        boxNum: '',
         load: false,
         exists: false,
         success: false,
@@ -88,7 +89,7 @@ class Modal extends Component {
         const response = await api.get(`/patients/${this.state.hsn}`);
 
         if(response.data===null){
-            if(isNaN(this.state.hsn) || !this.state.firstName.match(/^[A-Za-z]+$/) || !this.state.lastName.match(/^[A-Za-z]+$/)) {
+            if(isNaN(this.state.hsn) || !this.state.firstName.match(/^[A-Za-z]+$/) || !this.state.lastName.match(/^[A-Za-z]+$/) || !this.state.boxNum.match(/^[A-Za-z0-9]+$/)) {
                 this.state.load=false;
                 this.state.exists=false;
                 this.state.success=false;
@@ -130,6 +131,8 @@ class Modal extends Component {
                         <input id="fname" type="text" required autoComplete="off" onChange={e => this.setState({ firstName: e.target.value})} value={this.state.firstName}/></p>
                         <p><label>Último nome:</label>
                         <input id="lname" type="text" required autoComplete="off" onChange={e => this.setState({ lastName: e.target.value})} value={this.state.lastName}/></p>
+                        <p><label>ID da caixa:</label>
+                        <input id="bn" type="text" required autoComplete="off" minLength='12' maxLength='12' onChange={e => this.setState({ boxNum: e.target.value})} value={this.state.boxNum}/></p>
                         <button type="submit">Adicionar</button>
                     </form>
                 </div>
