@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import Home from './pages/home';
-import UserLogIn from './pages/userLogin';
 import MedicalLogIn from './pages/medicalLogin';
 import MedicalArea from './pages/medicalArea';
 import Schedule from './pages/schedule';
@@ -13,7 +12,6 @@ const Routes = () => (
         <BrowserRouter>
             <Switch>
                 <Route exact path='/' component={Home} />
-                <Route exact path='/UserLogin' component={UserLogIn} />
                 <Route exact path='/MedicalLogin' component={MedicalLogIn} />
                 <Route exact path='/MedicalArea' component={MedicalArea} />
                 <Route exact path='/MedicalArea/Schedules' component={Schedule} />

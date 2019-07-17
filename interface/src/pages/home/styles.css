@@ -70,9 +70,35 @@
 
 .home .navigation .dropdown:hover .dropdown-content {display: block;}
 
-.home .navigation .dropdown:hover .dropbtn {background-color: #808080;}
+.home .navigation .dropdown:hover .dropbtn {transition: 0.4s; background-color: #808080;}
 
 .home .navigation .logBtn {
     text-decoration: none;
     color: #fff;
+}
+
+.home .navigation .navbar-inverse .container-fluid .navbar-right input {
+    padding: 7px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 16px;
+    width: 150px;
+    margin: auto 2px;
+}
+
+.home #login {
+    padding: 8px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: auto 8px auto 3px;
+    transition: all 0.3s;
+}
+
+.home #login:hover {
+    opacity: 0.8
 }

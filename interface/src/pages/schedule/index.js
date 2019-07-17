@@ -12,7 +12,7 @@ const options = [
     { value: 'Ben-u-ron', label: 'Ben-u-ron' },
     { value: 'Aulin', label: 'Aulin' },
     { value: 'Brufen', label: 'Brufen' }
-  ]
+]
 
 
 class Table extends Component {

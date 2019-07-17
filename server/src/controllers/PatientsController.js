@@ -28,6 +28,16 @@ module.exports = {
         }
     },
 
+    async log(req, res) {
+        if (check(req)){
+            const patient = await Patient.findOne({'username': req.body.user, 'password': req.body.pass});
+            return res.send(patient);
+        }
+        else {
+            return res.send('Não tem permissão para aceder a esta página')
+        }
+    },
+
     async store(req, res) {
         if (check(req)){
             const patient = await Patient.create(req.body);

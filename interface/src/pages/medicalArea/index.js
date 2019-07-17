@@ -69,6 +69,7 @@ class List extends Component {
 class Modal extends Component {
     state = {
         hsn: '',
+        username: '',
         firstName: '',
         lastName: '',
         docNum: JSON.parse(localStorage.getItem('docInfo')),
@@ -84,6 +85,7 @@ class Modal extends Component {
         e.preventDefault();
 
         this.state.load = true;
+        this.state.username = this.state.hsn;
         this.forceUpdate();
 
         const response = await api.get(`/patients/${this.state.hsn}`);
@@ -149,11 +151,12 @@ export default class MedicalArea extends Component {
         exists: false,
         page: 1,
         new: false,
-        load: true
+        load: true,
+        interval: ''
     }
 
     componentDidMount() {
-        setInterval(this.checkLogin, 5000);
+        this.state.interval = setInterval(this.checkLogin, 5000);
         this.loadPatients();
     }
 
@@ -164,6 +167,7 @@ export default class MedicalArea extends Component {
         this.setState({ patients: docs, productInfo, page, exists: (response.data.length===0)?false:true , search: false, load: false});
     };
 
+    //caso nao hajam muitas paginas nao aparecer ?
     prevPage = () => {
         const { page } = this.state;
 
@@ -173,6 +177,7 @@ export default class MedicalArea extends Component {
         this.loadPatients(pageNumber);
     };
 
+    //same que o prevPage
     nextPage = () => {
         const { page, productInfo } = this.state;
 
@@ -182,6 +187,7 @@ export default class MedicalArea extends Component {
         this.loadPatients(pageNumber);
     };
 
+    //ideia para mais tarde : ajuda nas procuras "facilitar"
     search = async () => {
         this.state.load=true;
         this.forceUpdate();
@@ -222,6 +228,7 @@ export default class MedicalArea extends Component {
     logout = () => {
         localStorage.removeItem('medicalLogged');
         localStorage.removeItem('docInfo');
+        clearInterval(this.state.interval);
         this.props.history.push("/MedicalLogin");
     }
 
