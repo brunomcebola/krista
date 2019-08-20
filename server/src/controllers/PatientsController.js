@@ -50,7 +50,7 @@ module.exports = {
 
     async update(req, res) {
         if (check(req)){
-            const patient = await Patient.findByIdAndUpdate(req.params.id, req.body, {new: true});
+            const patient = await Patient.findOneAndUpdate({'hsn':req.params.id} , req.body);
             return res.json(patient)
         }
         else {

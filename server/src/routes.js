@@ -15,6 +15,7 @@ routes.get('/patients', PatientsController.index);
 routes.get('/patients/:hsn', PatientsController.show);
 routes.post('/patients/log', PatientsController.log);
 routes.post('/patients/new', PatientsController.store);
+routes.post('/patients/update/:id', PatientsController.update);
 
 routes.get('/schedules/:col', Schedules.new);   //cria nova colleção
 routes.get('/schedules/info/:col', Schedules.info);     //obtem info medica

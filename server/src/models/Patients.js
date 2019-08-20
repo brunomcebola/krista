@@ -26,7 +26,7 @@ const PatientSchema = new mongoose.Schema({
     },
     sex: {
         type: Number,
-        default: 0,
+        default: 2,
     },
     age: {
         type: Number,

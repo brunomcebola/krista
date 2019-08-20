@@ -1,9 +1,13 @@
+/*HOME CLASS STYLES*/
+
 .home button{
     background-color: transparent;
     border: none;
     outline: none;
     cursor:pointer;
 }
+
+/*Header da página*/
 
 .home .page-header{
     position:static;
@@ -17,13 +21,23 @@
 .home .page-header img {
     display:inline-block; 
     width:7.5%;
+    min-width: 74px;
     margin-top: 1%;
 }
 
 .home .page-header h1{
     display:block;
     margin-top: 1%;
+    font-size: 2.5vw;
 }
+
+@media only screen and (max-width: 875px) {
+    .home .page-header h1{
+        font-size: 24px
+    }
+} 
+
+/*Barra de navegação*/
 
 .home .navigation{
     position:static;
@@ -37,56 +51,119 @@
     color: #fff;
 }
 
-.home .navigation .dropbtn {
-    background-color:  #222;
+/*Botão área médica*/
+
+.home .navigation .navbar .container-fluid .nav .medBtn {
+    color: #fff;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    text-align: left
+}
+
+.home .navigation .navbar .container-fluid .nav .medBtn:hover {
+    transition: 0.4s; 
+    background-color: #808080;
+    border-radius: 5px;
+}
+
+.home .navigation .navbar .container-fluid .nav .medBtn .logBtn {
+    text-decoration: none;
+    color: #fff;
+}
+
+@media only screen and (max-width: 600px) {
+    .home .navigation .navbar .container-fluid .nav .medBtn {
+        width: 35%;
+        margin-right: 25%
+    }
+} 
+
+/*Menu usuário*/
+
+.home .navigation .navbar .container-fluid .nav .logged .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropbtn{
     color: #fff;
     padding: 16px;
     font-size: 16px;
     border: none;
 }
 
-.home .navigation .dropdown {
-    position: relative;
-    display: inline-block;
+.home .navigation .navbar .container-fluid .nav .logged .dropdown:hover .dropbtn {
+    transition: 0.4s; 
+    background-color: #808080;
+    border-radius: 5px 5px 0 0;
 }
 
-.home .navigation .dropdown-content {
+.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    margin-left: -21px
 }
 
-.home .navigation .dropdown-content a {
+.home .navigation .navbar .container-fluid .nav .logged .dropdown:hover .dropdown-content {display: block;}
+
+.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content a {
     color: #000;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
-.home .navigation .dropdown-content a:hover {background-color: #ddd;}
+.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content a:hover {background-color: #ddd;}
 
-.home .navigation .dropdown:hover .dropdown-content {display: block;}
+@media only screen and (max-width: 600px) {
+    .home .navigation .navbar .container-fluid .nav .logged .dropdown {
+        width: 40%;
+    }
+} 
 
-.home .navigation .dropdown:hover .dropbtn {transition: 0.4s; background-color: #808080;}
+/*Área login e logout*/
 
-.home .navigation .logBtn {
-    text-decoration: none;
-    color: #fff;
-}
-
-.home .navigation .navbar-inverse .container-fluid .navbar-right input {
+.home .navigation .navbar .container-fluid .nav .logging input {
     padding: 7px;
     border-radius: 5px;
     border: 0;
     font-size: 16px;
     width: 150px;
     margin: auto 2px;
+} 
+
+.home .navigation .navbar .container-fluid .nav .logging #pass-holder {
+    background-color: rgb(232, 240, 254);
+    padding: 9.5px 0 9.5px 0;
+    border-radius: 5px;
+    border: 0;
+    font-size: 16px;
+    margin: auto 2px;
 }
 
-.home #login {
+.home .navigation .navbar .container-fluid .nav .logging #pass {
+    margin: 0;
+    border-radius: 5px 0 0 5px;
+    width: 114px;
+}
+
+.home .navigation .navbar .container-fluid .nav .logging .fa.fa-eye,
+.home .navigation .navbar .container-fluid .nav .logging .fa.fa-eye-slash {
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    border: 0;
+    font-size: 16px;
+    margin: auto 2px auto 0;
+    cursor: pointer;
+}
+
+.home .navigation .navbar .container-fluid .nav .logged #logout,
+.home .navigation .navbar .container-fluid .nav .logging #login {
     padding: 8px;
     border-radius: 5px;
     border: 0;
@@ -99,6 +176,710 @@
     transition: all 0.3s;
 }
 
-.home #login:hover {
+.home .navigation .navbar .container-fluid .nav .logged #logout:hover,
+.home .navigation .navbar .container-fluid .nav .logging #login:hover {
     opacity: 0.8
+}
+
+@media only screen and (max-width: 600px) {  
+    .home .navigation .navbar .container-fluid .nav .logging input[type="text"] {
+        width: 38%;
+        margin-left: 12px;
+        margin-top: 17px
+    }
+
+    .home .navigation .navbar .container-fluid .nav .logging #pass {
+        width: 25%;
+    }
+
+    .home .navigation .navbar .container-fluid .nav .logging #login {
+        width: 15%
+    }
+
+    .home .navigation .navbar .container-fluid .nav .logged #logout {
+        margin-left: 12px;
+        margin-top: 17px
+    }
+}
+
+
+/*GENERAL CLASS STYLES*/
+
+.generalView {
+    width: 99vw;
+    height: 70vh;
+    max-height: 460px;
+    min-height: 320px;
+}
+
+/*moldura*/
+
+.generalView .mainInfo {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    border: 3px solid #5B5F97;
+    border-radius: 5px;
+    background-size: cover;
+    text-align: center;
+    color: #000;
+    text-shadow: 0 0 8px #fff;
+    font-weight: bolder;
+    overflow: scroll;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+    position: relative;
+}
+
+@media only screen and (max-width: 875px) {
+    .generalView .mainInfo {
+        margin-bottom: 20px
+    }
+}
+
+.generalView .mainInfo::-webkit-scrollbar { 
+    display: none; 
+} 
+
+/*Texto na moldura*/
+
+.generalView .mainInfo .info h1 {
+    font-size: 2.5vw
+}
+
+.generalView .mainInfo .info h2 {
+    font-size: 2vw
+}
+
+@media only screen and (max-width: 875px) {
+    .generalView .mainInfo .info h1 {
+        font-size: 21px
+    }
+    
+    .generalView .mainInfo .info h2 {
+        font-size: 17px
+    }
+}
+
+/*Seta para info na moldura*/
+
+.generalView .mainInfo .arrowContainer {
+    width: 100px;
+    height: 100px;
+    margin: 2% auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  
+.generalView .mainInfo .arrow-1 {
+    width: 100px;
+    height: 100px;
+    background: #5B5F97;
+    opacity: 0.5;
+    border-radius: 50%;
+    position: absolute;
+}
+  
+.generalView .mainInfo .arrow-2 {
+    width: 60px;
+    height: 60px;
+    background: #5B5F97;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    display: table;
+    cursor: pointer;
+    transition: opacity 0.3s ease;   
+}
+  
+.generalView .mainInfo .arrow-2:before {
+    width: 52px;
+    height: 52px;
+    content: "";
+    border: 2px solid rgb(56, 59, 94);
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+.generalView .mainInfo .arrow-2:hover {
+    opacity: 0.9;
+}
+  
+.generalView .mainInfo .arrow-2 i.fa {
+    font-size: 30px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: rgb(56, 59, 94);
+}
+
+.generalView .mainInfo .arrow-2 i.fa.turnUp {
+    -webkit-animation-name: turnUp;
+    -webkit-animation-duration: 500ms;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode:forwards;
+    animation-name: turnUp;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode:forwards
+}
+
+@-webkit-keyframes turnUp {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(180deg);
+    }
+}
+
+@keyframes turnUp {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(180deg);
+    }
+}
+
+.generalView .mainInfo .arrow-2 i.fa.turnDown {
+    -webkit-animation-name: turnDown;
+    -webkit-animation-duration: 500ms;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode:forwards;
+    animation-name: turnDown;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode:forwards
+}
+
+@-webkit-keyframes turnDown {
+    from {
+        transform:rotate(180deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes turnDown {
+    from {
+        transform:rotate(180deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+.generalView .mainInfo .zoomIn {
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-iteration-count:infinite;
+    animation-iteration-count:infinite;
+    -webkit-animation-name: zoomIn;
+    animation-name: zoomIn;
+}
+  
+@-webkit-keyframes zoomIn {
+    0% {
+      opacity: 0;
+      -webkit-transform: scale3d(.4, .4, .4);
+       transform: scale3d(.4, .4, .4);
+    }
+  
+    50% {
+      opacity: 0.5;
+    }
+    
+    100% {
+      opacity: 0;
+    }
+}
+  
+@keyframes zoomIn {
+    0% {
+      opacity: 0;
+      -webkit-transform: scale3d(.4, .4, .4);
+       transform: scale3d(.4, .4, .4);
+    }
+  
+    50% {
+      opacity: 0.5;
+    }
+    
+    100% {
+      opacity: 0;
+    }
+}
+
+/*Pontos na parte de baixo*/
+
+.generalView .mainInfo .dotContainer{
+    position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.generalView .mainInfo .dotContainer .dot {
+    cursor: pointer;
+    height: 17px;
+    width: 17px;
+    margin: 0 2px;
+    background-color: #5B5F97;
+    opacity: 0.6;
+    border-radius: 50%;
+    display: inline-block;
+    transition: 0.6s ease;
+}
+
+.generalView .mainInfo .dotContainer .dot:hover {
+    opacity: 1;
+}
+
+.generalView .mainInfo .dotContainer.out{
+    pointer-events:none;
+    -webkit-animation: fadeout_dot 0.8s ease 1 normal forwards;
+    animation: fadeout_dot 0.8s ease 1 normal forwards;
+}
+
+@-webkit-keyframes fadeout_dot{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fadeout_dot{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.generalView .mainInfo .dotContainer.in{
+    -webkit-animation: fadein_dot 0.8s ease 1 normal forwards;
+    animation: fadein_dot 0.8s ease 1 normal forwards;
+}
+
+@-webkit-keyframes fadein_dot{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadein_dot{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/*Imagem background e Display das molduras*/
+
+.generalView #mainInfo1 {  
+    background-image: url('../../images/pills.jpg');
+    background-color: #ddd; 
+    display: block;
+}
+
+.generalView #mainInfo2 {
+    background-color: #ddd;  
+    display: none
+}
+
+.generalView #mainInfo3 {
+    background-color: #ddd; 
+    display: none
+}
+
+/*Troca de molduras*/
+
+.generalView .mainInfo.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode:forwards;
+    animation-name: fade;
+    animation-duration: 1s;
+    animation-fill-mode:forwards
+}
+  
+@-webkit-keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+  
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+
+/*Setas para mudar moldura*/
+
+.generalView .mainInfo .prev, 
+.generalView .mainInfo .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    text-decoration: none
+}
+
+.generalView .mainInfo .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.generalView .mainInfo .prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.generalView .mainInfo .prev:hover,
+.generalView .mainInfo .next:hover {
+    background-color: rgba(0,0,0,0.8);
+    border-radius: 0px 5px 5px 0px
+}
+
+.generalView .mainInfo .next:hover {
+    border-radius: 5px 0px 0px 5px
+}
+
+.generalView .mainInfo .arrowsContainer.out{
+    pointer-events:none;
+    -webkit-animation: fadeout_arrow 0.8s ease 1 normal forwards;
+    animation: fadeout_arrow 0.8s ease 1 normal forwards;
+}
+
+@-webkit-keyframes fadeout_arrow{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fadeout_arrow{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.generalView .mainInfo .arrowsContainer.in{
+    -webkit-animation: fadein_arrow 0.8s ease 1 normal forwards;
+    animation: fadein_arrow 0.8s ease 1 normal forwards;
+}
+
+@-webkit-keyframes fadein_arrow{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadein_arrow{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/*Informações do produto*/
+
+.generalView .mainInfo .details {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    text-align: left;
+    width: 29%;
+    margin: auto;
+    margin-bottom: 0.5%;
+}
+
+.generalView .mainInfo .details h3 {
+    text-align: center;
+    font-size: 1.8vw
+}
+
+.generalView .mainInfo .details .identifier {
+    font-size: 1.25vw
+}
+
+@media only screen and (max-width: 875px) {
+    .generalView .mainInfo .details h3 {
+        font-size: 18px
+    }
+    
+    .generalView .mainInfo .details .identifier {
+        font-size: 18px
+    }
+
+    .generalView .mainInfo .details {
+        width: 275px;
+    }
+}
+
+
+/*USER CLASS STYLES*/
+
+.userView .setup {
+    width: 95vw;
+    margin: auto
+}
+
+.userView .setup form {
+    width: 25vw;
+    min-width: 300px;
+    margin: auto;
+    margin-top: 2%;
+    font-size: 16px
+}
+
+.userView .setup form p input {
+    border-radius: 5px;
+    border: 1px solid #5B5F97;
+    padding: 0.5%; 
+}
+
+.userView .setup form p input[type=number]::-webkit-inner-spin-button, 
+.userView .setup form p input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.userView .setup form p .divided {
+    width:49%
+}
+
+.userView .setup form p .divided.first {
+    margin-right:2%
+}
+
+.userView .setup form p .full {
+    width: 100%
+}
+
+.userView .setup form #pass-holder{
+    width: 100%;
+    border-radius: 5px;
+    border-right: none;
+    background-color: #fff;
+    border: 1px solid #5B5F97
+}
+
+.userView .setup form #pass-holder #pass {
+    width: 92.5%;
+    border-radius: 5px 0 0 5px;
+    border: none
+}
+
+.userView .setup form #pass-holder .fa {
+    font-size: 18px;
+    cursor: pointer
+}
+
+.userView .setup form p .options{
+    margin-right: 10%
+}
+
+.userView .setup form button {
+    padding: 8px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: auto 8px auto 3px;
+    transition: all 0.3s;
+}
+
+.userView .setup form button:hover {
+    opacity: 0.8
+}
+
+
+/*PAGE FOOTER*/
+
+.siteFooter {
+  background-color: #26272b;
+  padding:20px 0 20px;
+  margin-top: 20px;
+  font-size:15px;
+  line-height:24px;
+  color:#737373;
+}
+
+.siteFooter .line {
+  border-top-color: #4e515c;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 15px
+}
+
+.siteFooter #map {
+    border: 0.5px solid #4e515c;
+    width: 100%;
+    height: 100%;
+}
+
+.siteFooter h6 {
+  color:#fff;
+  font-size:16px;
+  text-transform:uppercase;
+  margin-top:5px;
+  letter-spacing:2px
+}
+
+.siteFooter a {
+  color:#737373;
+}
+
+.siteFooter a:hover {
+  color:#3366cc;
+  text-decoration:none;
+}
+
+.footer-links {
+  padding-left:0;
+  list-style:none
+}
+
+.footer-links li {
+  display:block
+}
+
+.footer-links a {
+  color:#737373
+}
+
+.footer-links a:active,
+.footer-links a:focus,
+.footer-links a:hover {
+  color:#3366cc;
+  text-decoration:none;
+}
+
+.footer-links.inline li {
+  display:inline-block
+}
+
+.siteFooter .social-icons {
+  text-align:right
+}
+
+.siteFooter .social-icons a {
+  width:40px;
+  height:40px;
+  line-height:40px;
+  margin-left:6px;
+  margin-right:0;
+  border-radius:100%;
+  background-color:#33353d
+}
+
+.copyright-text {
+  margin:0
+}
+
+@media only screen and (max-width:991px) {
+  .siteFooter [class^=col-] {
+    margin-bottom:30px
+  }
+}
+
+@media only screen and (max-width:875px) {
+  .siteFooter {
+    padding-bottom:0
+  }
+
+  .siteFooter .copyright-text,
+  .siteFooter .social-icons {
+    text-align:center
+  }
+}
+
+.social-icons {
+  padding-left:0;
+  margin-bottom:0;
+  list-style:none
+}
+
+.social-icons li {
+  display:inline-block;
+  margin-bottom:4px
+}
+
+.social-icons li.title {
+  margin-right:15px;
+  text-transform:uppercase;
+  color:#96a2b2;
+  font-weight:700;
+  font-size:13px
+}
+
+.social-icons a {
+  background-color:#eceeef;
+  color:#818a91;
+  font-size:16px;
+  display:inline-block;
+  line-height:44px;
+  width:44px;
+  height:44px;
+  text-align:center;
+  margin-right:8px;
+  border-radius:100%;
+  -webkit-transition:all .2s linear;
+  -o-transition:all .2s linear;
+  transition:all .2s linear;
+}
+
+.social-icons a:active,
+.social-icons a:focus,
+.social-icons a:hover {
+  color:#fff;
+}
+
+.social-icons.size-sm a {
+  line-height:34px;
+  height:34px;
+  width:34px;
+  font-size:14px
+}
+
+.social-icons a.facebook:active,
+.social-icons a.facebook:focus,
+.social-icons a.facebook:hover {
+  background-color:#3b5998
+}
+
+
+.social-icons a.twitter:active,
+.social-icons a.twitter:focus,
+.social-icons a.twitter:hover {
+  background-color:#00aced
+}
+
+.social-icons a.linkedin:active,
+.social-icons a.linkedin:focus,
+.social-icons a.linkedin:hover {
+  background-color:#007bb6
+}
+
+.social-icons a.instagram:active,
+.social-icons a.instagram:focus,
+.social-icons a.instagram:hover {
+    background-image: radial-gradient(farthest-corner at 0% 100%, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6)
+}
+
+@media only screen and (max-width:875px) {
+  .social-icons li.title {
+    display:block;
+    margin-right:0;
+    font-weight:600
+  }
 }

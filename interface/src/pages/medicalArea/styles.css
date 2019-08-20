@@ -1,3 +1,12 @@
+/*DEFAULT BACKGROUND COLOR*/
+
+#medical-area {
+    background-color: #F8F8FF
+}
+
+
+/*HEADER CLASS*/
+
 .header {
     display: flex;
 }
@@ -10,7 +19,13 @@
     width: 50px;
     margin-left: 0.5%;
 }
-.medical-nav {
+
+
+/*MEDICALAREA CLASS*/
+
+/*zona de navegação*/
+
+.medicalNav {
     display: flex;
     margin-top: 17px ;
     padding: 10px;
@@ -20,41 +35,46 @@
     justify-content: space-between;
 }
 
-.medical-nav .left-container{
+.medicalNav .leftContainer {
     flex: 93%;
 }
 
-.medical-nav .left-container .patient #search-patient {
-    max-height: 37px
+.medicalNav .leftContainer #search-patient {
+    max-height: 37px;
+    border-radius: 5px 0 0 5px;
+    border-right: none
 }
 
-.medical-nav .left-container .patient .searchBtn {
+.medicalNav .leftContainer #search-btn {
   background: #5B5F97;
   color: #fff;
   border: 1px solid black;
+  border-radius: 0 5px 5px 0;
   font-size: 16px;
   padding: 6px;
   transition: all 0.3s 
 }
 
-.medical-nav .left-container .patient .searchBtn:hover {
+.medicalNav .leftContainer #search-btn:hover {
     opacity: 0.8
 }
 
-.medical-nav .left-container .patient input {
+.medicalNav .leftContainer input {
     font-size: 16px;
     padding: 6px;
     margin-left: 2%;
-    width: 194px;
+    width: 15%;
+    min-width: 160px;
     border: 1px solid black;
 }
 
-.medical-nav .logout {
+.medicalNav .rightContainer {
     flex: 7%;
+    margin: auto
 }
 
-.medical-nav .logout .logoutBtn,
-.medical-nav .left-container .patient .newPatient {
+.medicalNav .rightContainer #logout-btn,
+.medicalNav .leftContainer #new-patient {
     padding: 6px;
     border-radius: 5px;
     border: 0;
@@ -68,18 +88,52 @@
     min-width: 105px;
 }
 
-.medical-nav .logout .logoutBtn {
+.medicalNav .rightContainer #logout-btn {
     margin-right: 20px;
 }
 
-.medical-nav .logout .logoutBtn:hover,
-.medical-nav .left-container .patient .newPatient:hover {
+.medicalNav .rightContainer #logout-btn:hover,
+.medicalNav .leftContainer #new-patient:hover {
     opacity: 0.8
 }
 
-.medical-nav .left-container .patient .newPatient {
+.medicalNav .leftContainer #new-patient {
     margin-left: 40px
 }
+
+@media only screen and (max-width: 600px) {
+    .medicalNav {
+        display: block
+    }
+
+    .medicalNav .leftContainer #search-patient {
+        width: 90%;
+        margin: auto
+    }
+
+    .medicalNav .leftContainer #search-btn{
+        width: 10%;
+    }
+
+    .medicalNav .leftContainer #new-patient {
+        float: left;
+        margin-left: 0;
+        margin-top: 2%
+    }
+
+    .medicalNav .rightContainer {
+        text-align: right;
+        margin-top: 2%
+    }
+
+    .medicalNav .rightContainer #logout-btn {
+        margin-left: 0;
+        margin-right: 0
+    }
+} 
+
+
+/*LIST CLASS*/
 
 .patient-list {
     max-width: 80%;
@@ -169,10 +223,13 @@
     opacity: 0.6;
 }
 
+
+/*MODAL CLASS*/
+
 .contentor {
     position: fixed;
     z-index: 1;
-    padding-top: 100px;
+    padding-top: 50px;
     left: 0;
     top: 0;
     width: 100%;
@@ -182,36 +239,45 @@
     background-color: rgba(0,0,0,0.4);
 }
 
-.contentor .modal-content {
+.contentor .modalContent {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px;
     width: 40%;
     min-width: 230px;
 }
 
-.contentor .modal-content #warn {
+.contentor .modalContent #warn {
     color: rgb(255, 217, 0)
 }
 
-.contentor .modal-content #succ {
+.contentor .modalContent #succ {
     color: green;
 }
 
-.contentor .modal-content #erro {
+.contentor .modalContent #erro {
     color: #f00
 }
 
-.contentor .modal-content .data-form {
+.contentor .modalContent .data-form {
     padding-top: 20px
 }
 
-.contentor .modal-content .data-form p label {
+.contentor .modalContent .data-form p label {
     font-weight: normal;
+    margin-right: 10px
 }
 
-.contentor .modal-content .data-form button {
+.contentor .modalContent .data-form p input {
+    border-radius: 5px;
+    border: 1px solid #5B5F97;
+    font-size: 16px;
+}
+
+.contentor .modalContent .data-form button {
     margin:-5px;
     margin-top: 20px;
     padding: 6px;
@@ -225,12 +291,12 @@
     transition: all 0.3s;
 }
 
-.contentor .modal-content .data-form button:hover {
+.contentor .modalContent .data-form button:hover {
     opacity: 0.8;
 }
 
 .contentor .close {
-    color: #aaaaaa;
+    color: #747474;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -241,4 +307,10 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 1100px) {
+    .contentor .modalContent .data-form p input {
+        width: 100%;
+    }
 }

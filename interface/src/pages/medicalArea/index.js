@@ -20,12 +20,13 @@ class List extends Component {
 
     goSchedule = (hsn) => {
         localStorage.setItem('hsn', JSON.stringify(hsn));
+        clearInterval(this.props.estado.interval);
         this.props.hist.push("/MedicalArea/Schedules");
     }
     
     render() {
         const {patients, search, exists, page, productInfo, load} = this.props.estado;
-
+        
         return(
             <div className = "patient-list">
                 <h2>Pacientes</h2>
@@ -58,8 +59,8 @@ class List extends Component {
                     </div>
                 </article>):(!exists&&search)?<h4 id="pacient-error">Nenhum paciente corresponde à pesquisa</h4>:null}
                 <div className="actions">
-                    <button disabled={page === 1 || search === true} onClick={this.props.prev}>Anterior</button>
-                    <button disabled={page === productInfo.pages || productInfo.total<=productInfo.limit || search === true} onClick={this.props.next}>Próximo</button>
+                    <button disabled={page === 1 || search === true || load === true} onClick={this.props.prev}>Anterior</button>
+                    <button disabled={page === productInfo.pages || productInfo.total<=productInfo.limit || search === true || load === true} onClick={this.props.next}>Próximo</button>
                 </div>
             </div>
         );
@@ -120,7 +121,7 @@ class Modal extends Component {
     render() {
         return(
             <div className="contentor">
-                <div id="modal-content" className="modal-content">
+                <div className="modalContent">
                     <span className="close" onClick={this.props.close}>&times;</span>
                     <h3>Informação do paciente</h3>
             
@@ -157,6 +158,7 @@ export default class MedicalArea extends Component {
 
     componentDidMount() {
         this.state.interval = setInterval(this.checkLogin, 5000);
+        console.log(this.state.interval)
         this.loadPatients();
     }
 
@@ -233,6 +235,7 @@ export default class MedicalArea extends Component {
     }
 
     checkLogin = () => {
+        alert('a')
         const loggedStorage = localStorage.getItem('medicalLogged');
         if(loggedStorage!=='logged') this.props.history.push("/MedicalLogin");
     }
@@ -247,25 +250,20 @@ export default class MedicalArea extends Component {
         this.checkLogin();
 
         return(
-            <div>
+            <div id="medical-area">
                 <Header/>
                 <StickyContainer>
                     <Sticky>
                         {({ style }) => 
-                            <div style={style} className="medical-nav">
-                                <div className="left-container">
-                                    <div className="patient">
-                                        <input id="search-patient" type="text" placeholder="Número de paciente" name="search" maxLength='9' onKeyDown={this.handleKeyDown}/>
-                                        <button className="searchBtn" onClick={this.search}><i className="fa fa-search"></i></button>
-                                        <button className="newPatient" onClick={this.switchModal}>Novo Paciente</button>
-                                    </div>
-                                    
+                            <div style={style} className="medicalNav">
+                                <div className="leftContainer">
+                                    <input id="search-patient" type="text" placeholder="Número de paciente" name="search" maxLength='9' onKeyDown={this.handleKeyDown}/>
+                                    <button id="search-btn" onClick={this.search}><i className="fa fa-search"></i></button>
+                                    <button id="new-patient" onClick={this.switchModal}>Novo Paciente</button>   
                                 </div>
-                                <div className="logout">
-                                    <button onClick={this.logout} className="logoutBtn">Sign Out <i className="fa fa-sign-out"></i></button>
-                                </div>
-                                
-                                
+                                <div className="rightContainer">
+                                    <button onClick={this.logout} id="logout-btn">Sign Out <i className="fa fa-sign-out"></i></button>
+                                </div>  
                             </div>
                         }
                     </Sticky>

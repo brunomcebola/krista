@@ -53,6 +53,15 @@
     margin: auto
 }
 
+.schedule #table #load-wait{
+    width: 1440px;
+    height: 300px;
+    background-color: rgb(243, 243, 243);
+    margin:auto;
+    text-align: center;
+    border: 1px solid black
+}
+
 .schedule #table #loader,
 .schedule #info #loader {
     text-align: center

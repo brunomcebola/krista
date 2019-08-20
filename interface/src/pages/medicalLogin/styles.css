@@ -36,6 +36,31 @@
     clear: both;
     font-size: 16px;
     width: 194px;
+    border-radius: 5px;
+    border: 1px solid #5B5F97;
+    padding: 5px
+}
+
+.medical-login .form-container .blue-ball .medical-form #pass-holder{
+    display: block;
+    background-color: rgb(232, 240, 254);
+    width: 194px;
+    margin: auto;
+    border-radius: 5px;
+    border: 1px solid #5B5F97
+}
+
+.medical-login .form-container .blue-ball .medical-form #pass-holder #pw {
+    display: inline-block;
+    width: 152px;
+    margin: 0;
+    border: none
+}
+
+.medical-login .form-container .blue-ball .medical-form #pass-holder .fa {
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 10px 0 10px;
 }
 
 .medical-login .form-container .blue-ball .medical-form button{

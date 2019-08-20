@@ -19,6 +19,6 @@ mongoose.connect(
 
 requireDir('./src/models');
 
-app.use('/kristaApi', require('./src/routes'));
+app.use('', require('./src/routes'));
 
 app.listen(PORT);

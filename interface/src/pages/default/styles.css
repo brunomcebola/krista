@@ -1,3 +1,7 @@
 .default {
     text-align: center;
 }
+
+.default img {
+    max-width: 300px
+}

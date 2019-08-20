@@ -8,7 +8,7 @@ export default class Default extends Component {
         return(
             <div class="default">
                 <img src={logo} alt="krista logo"/>
-                <h3>Lamentamos, mas não conseguimos encontrar a sua página</h3>
+                <h3>Lamentamos, mas a página que procurou não existe</h3>
                 <h2><Link to='/' className="backBtn"><i className="fa fa-arrow-circle-left"></i> Página inicial</Link></h2>
             </div>
         )

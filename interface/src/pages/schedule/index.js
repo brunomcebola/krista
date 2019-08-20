@@ -18,7 +18,7 @@ const options = [
 class Table extends Component {
     state = {
         hsn: JSON.parse(localStorage.getItem('hsn')),
-        saving: 0,
+        saving: 3,
         qnt: 28
     }
 
@@ -36,14 +36,17 @@ class Table extends Component {
              '13h00','14h00','15h00','16h00','17h00','18h00','19h00','20h00','21h00','22h00','23h00'];
 
     getMeds = async () => {
-        this.state.saving=1
-        this.forceUpdate()
         const list = [[],[],[],[]]
         var index=0;
         for(let line of 'abcd'){
             for(let column=0; column<7; column++){
                 const response = await api.get(`/schedules/med/${'u'+this.state.hsn}/${line+'_'+column}`);
                 if(response.data!==null){
+                    for(let i=0;i<response.data.meds.length;i++){
+                        let exists = false;
+                        options.map(function(e) {if(e.value===response.data.meds[i]){exists = true}})
+                        if(!exists) options.push({value: response.data.meds[i], label: response.data.meds[i]});
+                    }
                     list[index].push(response.data);
                 }
             }
@@ -196,7 +199,7 @@ class Table extends Component {
                         </select>}
                       </td> );
             row.push( <td key={i}>
-                        <CreatableSelect value={this.selectMeds(letter, i)} isClearable={false} isMulti options={options} className="basic-multi-select" onChange={e => this.getValuesMedSelect(e, 'h_'+letter+'_'+i)} id={'m_'+letter+'_'+i}/>
+                        <CreatableSelect value={this.selectMeds(letter, i)} isClearable={false} onCreateOption={this.handleCreate} isMulti options={options} className="basic-multi-select" onChange={e => this.getValuesMedSelect(e, 'h_'+letter+'_'+i)} id={'m_'+letter+'_'+i}/>
                       </td> )
           }
         return row
@@ -216,39 +219,47 @@ class Table extends Component {
         const { saving } = this.state
         return(
             <div id="table">
-                <div id="loader">
-                    {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Em espera...</div>}
-                </div>
-                <table>
-                    <tbody>
-                        <tr id="header">
-                            <td>Hora</td>
-                            <td>Segunda</td>
-                            <td>Hora</td>
-                            <td>Terça</td>
-                            <td>Hora</td>
-                            <td>Quarta</td>
-                            <td>Hora</td>
-                            <td>Quinta</td>
-                            <td>Hora</td>
-                            <td>Sexta</td>
-                            <td>Hora</td>
-                            <td>Sábado</td>
-                            <td>Hora</td>
-                            <td>Domingo</td>
-                        </tr>
-                        <tr>{this.createRow('a')}</tr>
-                        <tr>{this.createRow('b')}</tr>
-                        <tr>{this.createRow('c')}</tr>
-                        <tr>{this.createRow('d')}</tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                            <td><button className="save" onClick={this.state.saving!==1?this.activateLoad:null}>Guardar</button></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                {saving===3?
+                    <div id="load-wait">
+                        <Loader type="Ball-Triangle" color="green" height={300} width={125} />
+                    </div>
+                :
+                    <div>
+                        <div id="loader">
+                            {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Em espera...</div>}
+                        </div>
+                        <table>
+                            <tbody>
+                                <tr id="header">
+                                    <td>Hora</td>
+                                    <td>Segunda</td>
+                                    <td>Hora</td>
+                                    <td>Terça</td>
+                                    <td>Hora</td>
+                                    <td>Quarta</td>
+                                    <td>Hora</td>
+                                    <td>Quinta</td>
+                                    <td>Hora</td>
+                                    <td>Sexta</td>
+                                    <td>Hora</td>
+                                    <td>Sábado</td>
+                                    <td>Hora</td>
+                                    <td>Domingo</td>
+                                </tr>
+                                <tr>{this.createRow('a')}</tr>
+                                <tr>{this.createRow('b')}</tr>
+                                <tr>{this.createRow('c')}</tr>
+                                <tr>{this.createRow('d')}</tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                    <td><button className="save" onClick={this.state.saving!==1?this.activateLoad:null}>Guardar</button></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                }
             </div>
             
         )
