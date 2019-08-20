@@ -157,7 +157,7 @@ export default class MedicalArea extends Component {
     }
 
     componentDidMount() {
-        this.state.interval = setInterval(this.checkLogin, 5000);
+        this.state.interval = setInterval(this.checkLogin, 1000);
         console.log(this.state.interval)
         this.loadPatients();
     }
