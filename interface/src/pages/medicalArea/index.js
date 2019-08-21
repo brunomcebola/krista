@@ -23,6 +23,10 @@ class List extends Component {
         clearInterval(this.props.estado.interval);
         this.props.hist.push("/MedicalArea/Schedules");
     }
+
+    componentDidMount() {
+        window.addEventListener('resize', () => this.forceUpdate(), false);
+    }
     
     render() {
         const {patients, search, exists, page, productInfo, load} = this.props.estado;
@@ -31,15 +35,15 @@ class List extends Component {
             <div className = "patient-list">
                 <h2>Pacientes</h2>
                 {load?<Loader type="ThreeDots" color="green"height="30" width="30"/>:null}
-                {(exists&&!search)?patients.map(patient => (    //existe mas nao e procura
+                {(exists&&!search)?patients.map(patient => (
                     <article key={patient._id}>
                         <div className="profile-container">
                             <img className="profile-pic" src="http://icons.iconarchive.com/icons/icons8/ios7/512/Users-User-Male-2-icon.png" alt="icon"/>  
                         </div>
                         <div className="patient-info">
                             <h3><strong>{patient.firstName+' '+patient.lastName}</strong></h3>
-                            <p>Número do sistema de saúde: <u>{patient.hsn}</u></p>
-                            <p>Médico: {patient.docName}</p>
+                            <p><strong>Nº utente de saúde:</strong> {patient.hsn}</p>
+                            <p><strong>Médico:</strong> {patient.docName}</p>
                         </div>
                         <div className="scheduleBtn">
                             <button onClick={() => this.goSchedule(patient.hsn)} disabled={patient.docNum!==JSON.parse(localStorage.getItem('docInfo'))}>Manage</button>
@@ -51,8 +55,8 @@ class List extends Component {
                     </div>
                     <div className="patient-info">
                         <h3><strong>{patients.firstName+' '+patients.lastName}</strong></h3>
-                        <p>Número do sistema de saúde: <u>{patients.hsn}</u></p>
-                        <p>Médico: {patients.docName}</p>
+                        <p><strong>Nº utente de saúde:</strong> {patients.hsn}</p>
+                        <p><strong>Médico:</strong> {patients.docName}</p>
                     </div>
                     <div className="scheduleBtn">
                         <button onClick={() => this.goSchedule(patients.hsn)} disabled={patients.docNum!==JSON.parse(localStorage.getItem('docInfo'))}>Manage</button>
@@ -158,7 +162,6 @@ export default class MedicalArea extends Component {
 
     componentDidMount() {
         this.state.interval = setInterval(this.checkLogin, 1000);
-        console.log(this.state.interval)
         this.loadPatients();
     }
 
@@ -235,9 +238,11 @@ export default class MedicalArea extends Component {
     }
 
     checkLogin = () => {
-        alert('a')
         const loggedStorage = localStorage.getItem('medicalLogged');
-        if(loggedStorage!=='logged') this.props.history.push("/MedicalLogin");
+        if(loggedStorage!=='logged'){
+            clearInterval(this.state.interval);
+            this.props.history.push("/MedicalLogin");
+        }
     }
 
     handleKeyDown = (e) => {

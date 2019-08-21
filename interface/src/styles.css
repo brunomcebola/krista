@@ -7,6 +7,7 @@
 
 body {
     overflow-x: hidden;
+    background-color: #F8F8FF
 }
 
 @media only screen and (min-width: 600px) {

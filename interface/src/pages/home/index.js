@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { StickyContainer, Sticky } from 'react-sticky';
 import Loader from 'react-loader-spinner';
 import api from '../../services/api';
 import './styles.css';
@@ -442,45 +443,43 @@ export default class Home extends Component {
                     <img src={logo} alt="krista logo"/>
                     <h1>Krista Health-Care</h1>
                 </div>
-                <div className="navigation">
-                    <nav className="navbar navbar-inverse">
-                        <div className="container-fluid">
-                            <div className="navbar-header">
-                                <a className="navbar-brand">Krista Health-Care</a>
-                            </div>
-                            <ul className="nav navbar-nav navbar-right">
-                                <li>  
-                                    <button className="medBtn"><Link to='/MedicalLogin' className="logBtn">Área médica</Link></button>
-                                    {userLogged==="logged"
-                                        ?<span className="logged">
-                                            <div className="dropdown">
-                                                <button className="dropbtn">Área pessoal <i className="fa fa-caret-down"></i></button>
-                                                <div className="dropdown-content">
-                                                    <a href="#">Perfil</a>
-                                                    <a href="#">Horário</a>
-                                                </div>
-                                            </div> 
-                                            <button onClick={this.logout} id="logout">Logout</button>
-                                        </span>
-                                        :<span className="logging">
-                                            <input placeholder="username" type="text" id="user" autoComplete="on"></input>
-                                            <span id="pass-holder"><input placeholder="password" type="password" id="pass" autoComplete="on"></input>
-                                            <i className="fa fa-eye" onClick={this.togglePassword}></i></span>
-                                            <button onClick={this.login} id="login">{loading?<Loader type="ThreeDots" color='rgb(56, 59, 94)' height="10" width="30"/>:'Login'}</button>
-                                        </span>
-                                    }
-                                </li>
-                            </ul>
+                <StickyContainer>
+                    <Sticky>
+                    {({ style }) => 
+                        <div style={style} className="navigation">
+                            <nav className="navbar navbar-inverse">
+                                <div className="container-fluid">
+                                    <ul className="nav navbar-nav navbar-right">
+                                        <li>  
+                                            <button className="medBtn"><Link to='/MedicalLogin' className="logBtn">Área médica</Link></button>
+                                            {userLogged==="logged"
+                                                ?<span className="logged">
+                                                    <div className="dropdown">
+                                                        <button className="dropbtn">Área pessoal <i className="fa fa-caret-down"></i></button>
+                                                        <div className="dropdown-content">
+                                                            <a href="#">Perfil</a>
+                                                            <a href="#">Horário</a>
+                                                        </div>
+                                                    </div> 
+                                                    <button onClick={this.logout} id="logout">Logout</button>
+                                                </span>
+                                                :<span className="logging">
+                                                    <input placeholder="username" type="text" id="user" autoComplete="on"></input>
+                                                    <span id="pass-holder"><input placeholder="password" type="password" id="pass" autoComplete="on"></input>
+                                                    <i className="fa fa-eye" onClick={this.togglePassword}></i></span>
+                                                    <button onClick={this.login} id="login">{loading?<Loader type="ThreeDots" color='rgb(56, 59, 94)' height="10" width="30"/>:'Login'}</button>
+                                                </span>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
                         </div>
-                    </nav>
-                </div>
-                {userLogged==="logged"?
-                    <User data={data} logout={this.logout}/>
-                    :
-                    <General/>
-                }
-                
-                <Foot/>
+                    }
+                    </Sticky>
+                    {userLogged==="logged"?<User data={data} logout={this.logout}/>:<General/>}
+                    <Foot/>
+                </StickyContainer>
             </div>
         )
     }
