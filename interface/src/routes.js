@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
+
+
 import Home from './pages/home';
 import MedicalLogIn from './pages/medicalLogin';
 import MedicalArea from './pages/medicalArea';
@@ -20,5 +22,6 @@ const Routes = () => (
         </BrowserRouter>
     </CookiesProvider>
 );
+
 
 export default Routes;

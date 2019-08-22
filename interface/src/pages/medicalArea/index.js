@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import api from '../../services/api';
 import { StickyContainer, Sticky } from 'react-sticky';
 import Loader from 'react-loader-spinner';
+
+import api from '../../services/api';
+import PatientInfo from '../../components/patientInfo';
+import BackBtn from '../../components/backBtn';
 
 import './styles.css';
 import logo from '../../images/icon.png'
@@ -18,12 +21,6 @@ class Header extends Component {
 
 class List extends Component {
 
-    goSchedule = (hsn) => {
-        localStorage.setItem('hsn', JSON.stringify(hsn));
-        clearInterval(this.props.estado.interval);
-        this.props.hist.push("/MedicalArea/Schedules");
-    }
-
     componentDidMount() {
         window.addEventListener('resize', () => this.forceUpdate(), false);
     }
@@ -34,35 +31,11 @@ class List extends Component {
         return(
             <div className = "patient-list">
                 <h2>Pacientes</h2>
-                {load?<Loader type="ThreeDots" color="green"height="30" width="30"/>:null}
-                {(exists&&!search)?patients.map(patient => (
-                    <article key={patient._id}>
-                        <div className="profile-container">
-                            <img className="profile-pic" src="http://icons.iconarchive.com/icons/icons8/ios7/512/Users-User-Male-2-icon.png" alt="icon"/>  
-                        </div>
-                        <div className="patient-info">
-                            <h3><strong>{patient.firstName+' '+patient.lastName}</strong></h3>
-                            <p><strong>Nº utente de saúde:</strong> {patient.hsn}</p>
-                            <p><strong>Médico:</strong> {patient.docName}</p>
-                        </div>
-                        <div className="scheduleBtn">
-                            <button onClick={() => this.goSchedule(patient.hsn)} disabled={patient.docNum!==JSON.parse(localStorage.getItem('docInfo'))}>Manage</button>
-                        </div>
-                    </article>
-                )):(exists&&search)?(<article key={patients._id}> 
-                    <div className="profile-container">
-                        <img className="profile-pic" src="http://icons.iconarchive.com/icons/icons8/ios7/512/Users-User-Male-2-icon.png" alt="icon"/>  
-                    </div>
-                    <div className="patient-info">
-                        <h3><strong>{patients.firstName+' '+patients.lastName}</strong></h3>
-                        <p><strong>Nº utente de saúde:</strong> {patients.hsn}</p>
-                        <p><strong>Médico:</strong> {patients.docName}</p>
-                    </div>
-                    <div className="scheduleBtn">
-                        <button onClick={() => this.goSchedule(patients.hsn)} disabled={patients.docNum!==JSON.parse(localStorage.getItem('docInfo'))}>Manage</button>
-                    </div>
-                </article>):(!exists&&search)?<h4 id="pacient-error">Nenhum paciente corresponde à pesquisa</h4>:null}
-                <div className="actions">
+                {load?<Loader type="ThreeDots" color="green" height="30" width="30"/>:null}
+                {(exists&&!search)?patients.map(patient => (<PatientInfo data={patient} intervalId={this.props.estado.interval}/>)):
+                (exists&&search)?(<PatientInfo data={patients} intervalId={this.props.estado.interval}/>):
+                (!exists&&search)?<h4 id="pacient-error">Nenhum paciente corresponde à pesquisa</h4>:null}
+                <div id="actions">
                     <button disabled={page === 1 || search === true || load === true} onClick={this.props.prev}>Anterior</button>
                     <button disabled={page === productInfo.pages || productInfo.total<=productInfo.limit || search === true || load === true} onClick={this.props.next}>Próximo</button>
                 </div>
@@ -233,11 +206,21 @@ export default class MedicalArea extends Component {
     logout = () => {
         localStorage.removeItem('medicalLogged');
         localStorage.removeItem('docInfo');
+        localStorage.removeItem('medicalLoginDate');
         clearInterval(this.state.interval);
         this.props.history.push("/MedicalLogin");
     }
 
     checkLogin = () => {
+        const medicalLoginDate = localStorage.getItem('medicalLoginDate');
+        const today = new Date();
+        const date = today.getTime();
+
+        if((date-medicalLoginDate)/1000 > 10800){
+            alert('Por motivos de segurança é necessário realizar login novamente!');
+            this.logout()
+        }
+
         const loggedStorage = localStorage.getItem('medicalLogged');
         if(loggedStorage!=='logged'){
             clearInterval(this.state.interval);

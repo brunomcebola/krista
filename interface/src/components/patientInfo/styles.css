@@ -1,0 +1,84 @@
+#patient-info {
+    background: #FFF;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+#patient-info #patient-photo-container {
+    flex: 9%;
+    text-align: center;
+    margin: auto
+}
+
+#patient-info #patient-photo-container .profile-photo {
+    width: 100%;
+    min-width: 86px
+}
+
+#patient-info #patient-data-container {
+    flex: 83%;
+    padding-left: 2%;
+    margin: auto
+}
+
+#patient-info #patient-data-container p {
+    font-size: 16px;
+    color: #999;
+    margin-top: 5px;
+    line-height: 24px;
+}
+
+#patient-info #schedule-btn-container {
+    flex: 8%;
+    margin: auto;
+}
+
+#patient-info #schedule-btn-container button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#patient-info #schedule-btn-container button:hover {
+    opacity: 0.8;
+}
+
+#patient-info #schedule-btn-container button[disabled] {
+    opacity: 0.6;
+    filter: grayscale(100%);
+    cursor: default;
+}
+
+#patient-info #schedule-btn-container button[disabled]:hover {
+    opacity: 0.6;
+}
+
+@media only screen and (max-width: 700px) {
+    #patient-info {
+        display: block;
+    }
+
+    #patient-info #patient-photo-container {
+        text-align: center;
+    }
+
+    #patient-info #patient-photo-container .profile-photo {
+        width: 20vw;
+        margin: auto;
+        margin-top: 2%
+    }
+
+    #patient-info #schedule-btn-container {
+        margin: auto 2% 2% auto;
+        text-align: right
+    }
+}

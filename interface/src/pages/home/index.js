@@ -248,11 +248,11 @@ class User extends Component {
     }
 
     checkLoginTime = () => {
-        const loginDate = localStorage.getItem('loginDate');
+        const userLoginDate = localStorage.getItem('userLoginDate');
         const today = new Date();
         const date = today.getTime();
 
-        if((date-loginDate)/1000 > 10800){
+        if((date-userLoginDate)/1000 > 10800){
             alert('Por motivos de segurança é necessário realizar login novamente!')
             this.props.logout()
         }
@@ -402,7 +402,7 @@ export default class Home extends Component {
             const date = today.getTime();
             localStorage.setItem('userLogged', "logged");
             localStorage.setItem('userHsn', response.data.hsn);
-            localStorage.setItem('loginDate', date);
+            localStorage.setItem('userLoginDate', date);
             if(response.data.changed==0) localStorage.setItem('changed', "false");
         } 
         this.forceUpdate();
@@ -412,7 +412,7 @@ export default class Home extends Component {
         localStorage.removeItem('userLogged');
         localStorage.removeItem('changed');
         localStorage.removeItem('userHsn')
-        localStorage.removeItem('loginDate');
+        localStorage.removeItem('userLoginDate');
         clearInterval(loginIntervalId);
         this.forceUpdate();
     }

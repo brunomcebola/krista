@@ -25,6 +25,9 @@ export default class MedicalLogIn extends Component {
         
         if(response.data != null){
             if(response.data.password === password){
+                const today = new Date();
+                const date = today.getTime();
+                localStorage.setItem('medicalLoginDate', date);
                 localStorage.setItem('medicalLogged','logged');
                 localStorage.setItem('docInfo', JSON.stringify(medicalNumber));
                 this.props.history.push("/MedicalArea");

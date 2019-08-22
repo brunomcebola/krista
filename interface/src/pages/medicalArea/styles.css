@@ -141,56 +141,17 @@
     padding: 0 20px;
 }
 
-.patient-list article {
-    background: #FFF;
-    border: 1px solid #DDD;
-    border-radius: 5px;
-    padding: 5px;
-    margin-bottom: 10px;
-    display: flex;
-}
-
-.patient-list article .profile-container {
-    flex: 9%;
-    text-align: center;
-    margin: auto
-}
-
-.patient-list article .profile-container .profile-pic {
-    width: 100%;
-    min-width: 86px
-}
-
-.patient-list article .patient-info {
-    flex: 83%;
-    padding-left: 2%;
-    margin: auto
-}
-
-.patient-list article p {
-    font-size: 16px;
-    color: #999;
-    margin-top: 5px;
-    line-height: 24px;
-}
-
-.patient-list article .scheduleBtn {
-    flex: 8%;
-    margin: auto;
-}
-
 .patient-list #pacient-error {
     color: #f00;
 }
 
-.patient-list .actions {
+.patient-list #actions {
     display: flex;
     justify-content: space-between;
-    margin: 20px auto 20px;
+    margin: 20px auto 20px auto;
 }
 
-.patient-list article .scheduleBtn button,
-.patient-list .actions button {
+.patient-list #actions button {
     padding: 10px;
     border-radius: 5px;
     border: 0;
@@ -202,25 +163,22 @@
     transition: all 0.3s;
 }
 
-.patient-list .actions button #formLink {
+.patient-list #actions button #formLink {
     color: #fff;
     text-decoration: none;
 }
 
-.patient-list article .scheduleBtn button[disabled],
-.patient-list .actions button[disabled]{
+.patient-list #actions button[disabled]{
     opacity: 0.6;
     filter: grayscale(100%);
     cursor: default;
 }
 
-.patient-list article .scheduleBtn button:hover,
-.patient-list .actions button:hover {
+.patient-list #actions button:hover {
     opacity: 0.8;
 }
 
-.patient-list article .scheduleBtn button[disabled]:hover,
-.patient-list .actions button[disabled]:hover{
+.patient-list #actions button[disabled]:hover{
     opacity: 0.6;
 }
 
@@ -229,32 +187,6 @@
         max-width: 90%;
     }
 
-    .patient-list article {
-        display: block;
-    }
-
-    .patient-list article .profile-container {
-        text-align: center;
-    }
-
-    .patient-list article .profile-container .profile-pic {
-        width: 20vw;
-        margin: auto;
-        margin-top: 2%
-    }
-
-    .patient-list article .profile-container #profile-name {
-        float: left;
-        text-align: left;
-        font-size: 20px;
-        margin: 9% auto auto 2%;
-        width: 65%;
-    }
-
-    .patient-list article .scheduleBtn {
-        margin: auto 2% 2% auto;
-        text-align: right
-    }
 }
 
 

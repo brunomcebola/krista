@@ -335,7 +335,7 @@ class Info extends Component {
                     <div id="detail">
                         <p><span className="identifier">Número de paciente: </span>{this.state.hsn}</p>
                         <p><span className="identifier">Nome: </span>{this.state.nome}</p>
-                        <p><span className="identifier">Género: </span>{this.state.sex===0?'Não especificado':this.state.sex===1?'Masculino':'Feminino'}</p>
+                        <p><span className="identifier">Género: </span>{this.state.sex===0?'Feminino':this.state.sex===1?'Masculino':'Não especificado'}</p>
                         <p><span className="identifier">Idade: </span>{this.state.age}</p>
                     </div>  
                 </div>
