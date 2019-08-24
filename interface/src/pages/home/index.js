@@ -6,6 +6,8 @@ import api from '../../services/api';
 import './styles.css';
 import logo from '../../images/icon.png';
 
+import cipher from '../../ciphers/encryptor.js';
+
 var loginIntervalId = '';
 
 class General extends Component {
