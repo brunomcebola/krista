@@ -4,7 +4,7 @@ import Loader from 'react-loader-spinner';
 
 import api from '../../services/api';
 import PatientInfo from '../../components/patientInfo';
-import BackBtn from '../../components/backBtn';
+import {decipher,compareCipher} from '../../ciphers/encryptor.js';
 
 import './styles.css';
 import logo from '../../images/icon.png'
@@ -50,7 +50,7 @@ class Modal extends Component {
         username: '',
         firstName: '',
         lastName: '',
-        docNum: JSON.parse(localStorage.getItem('docInfo')),
+        docNum: decipher(JSON.parse(localStorage.getItem('docInfo'))),
         docName: '',
         boxNum: '',
         load: false,
@@ -216,13 +216,13 @@ export default class MedicalArea extends Component {
         const today = new Date();
         const date = today.getTime();
 
-        if((date-medicalLoginDate)/1000 > 10800){
+        if((date-Number(decipher(medicalLoginDate)))/1000 > 10800){
             alert('Por motivos de segurança é necessário realizar login novamente!');
             this.logout()
         }
 
         const loggedStorage = localStorage.getItem('medicalLogged');
-        if(loggedStorage!=='logged'){
+        if(!compareCipher(loggedStorage,'logged')){
             clearInterval(this.state.interval);
             this.props.history.push("/MedicalLogin");
         }

@@ -3,6 +3,7 @@ import Loader from 'react-loader-spinner';
 import api from '../../services/api';
 
 import BackBtn from '../../components/backBtn';
+import {cipher,compareCipher} from '../../ciphers/encryptor.js';
 import './styles.css';
 
 export default class MedicalLogIn extends Component {  
@@ -27,9 +28,9 @@ export default class MedicalLogIn extends Component {
             if(response.data.password === password){
                 const today = new Date();
                 const date = today.getTime();
-                localStorage.setItem('medicalLoginDate', date);
-                localStorage.setItem('medicalLogged','logged');
-                localStorage.setItem('docInfo', JSON.stringify(medicalNumber));
+                localStorage.setItem('medicalLoginDate', cipher(date.toString()));
+                localStorage.setItem('medicalLogged', cipher('logged'));
+                localStorage.setItem('docInfo', JSON.stringify(cipher(medicalNumber)));
                 this.props.history.push("/MedicalArea");
             } 
         }
@@ -40,7 +41,7 @@ export default class MedicalLogIn extends Component {
 
     checkLogin = () => {
         const loggedStorage = localStorage.getItem('medicalLogged');
-        if(loggedStorage==='logged') this.props.history.push("/MedicalArea");
+        if(compareCipher(loggedStorage,'logged')) this.props.history.push("/MedicalArea");
     }
 
     togglePassword = () => {

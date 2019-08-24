@@ -5,6 +5,8 @@ import male from '../../images/male.png'
 import female from '../../images/female.png'
 import other from '../../images/other.png'
 
+import {decipher,compareCipher} from '../../ciphers/encryptor.js';
+
 function goSchedule (hsn, intervalId) {
     localStorage.setItem('hsn', JSON.stringify(hsn));
     clearInterval(intervalId);
@@ -26,7 +28,7 @@ const PatientInfo = ({ data , intervalId }) =>
             <p><strong>Médico:</strong> {data.docName}</p>
         </div>
         <div id="schedule-btn-container">
-            <button onClick={() => goSchedule(data.hsn, intervalId)} disabled={data.docNum!==JSON.parse(localStorage.getItem('docInfo'))}>Manage</button>
+            <button onClick={() => goSchedule(data.hsn, intervalId)} disabled={!compareCipher(JSON.parse(localStorage.getItem('docInfo')),data.docNum)}>Manage</button>
         </div>
     </article>
 
