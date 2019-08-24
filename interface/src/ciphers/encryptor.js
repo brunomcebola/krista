@@ -44,6 +44,8 @@ function masterKeyCipher(word) {
     return(new_word);
 }
 
+
+
 function dataCipher(word) {
     let new_word = '';
     let match = false;
@@ -104,6 +106,64 @@ function navyCipher(word) {
     return(new_word);
 }
 
-export default function cipher(word) {
+
+
+function navyDecipher(word) {
+    let new_word = '';
+    let index;
+    let table = [
+        ['m','n','o','p','q'],
+        ['r','s','t','u','v'],
+        ['w','x','y','z','a'],
+        ['b','c','d','e','f'],
+        ['g','h','i','j','k']
+    ]
+    for(let i=0;i<word.length;i++){
+        if(!word[i].match(/^[0-9a-z]+$/)){new_word+=word[i];}
+        else{
+            index = i++;
+            new_word+=table[Number(word[i])][word.charCodeAt(index)-97]
+        }
+    }
+    return(new_word);
+}
+
+function numberJumperDecipher(word) {
+    let new_word = '';
+    let table = ['a','d','g','j','m','p','s','v','y','z'];
+    for(let i=0;i<word.length;i++){
+        if(!word[i].match(/^[a-z]+$/)){new_word+=word[i];}
+        else{new_word+=table.indexOf(word[i]).toString();}       
+    }
+    return(new_word);
+}
+
+function dataDecipher(word) {
+    let new_word = '';
+    let table = [
+        ['k','l','m','n','o','p','q','r','s','t'],
+        ['u','v','w','x','y','z','0','1','2','3'],
+        ['a','b','c','d','e','f','g','h','i','j'],
+        [],[],[],[],[],[],
+        ['4','5','6','7','8','9']
+    ]
+    for(let i=0;i<word.length;i++){
+        if(isNaN(word[i])){new_word+=word[i];}
+        else{new_word+=table[word[i]][word[++i]];}
+    }
+    return(new_word);
+}
+
+
+
+export function cipher(word) {
     return navyCipher(numberJumperCipher(dataCipher(masterKeyCipher(word))))
+}
+
+export function decipher(word) {
+    return masterKeyCipher(dataDecipher(numberJumperDecipher(navyDecipher(word))))
+}
+
+export function compareCipher(word1, word2) {
+    return(word1===cipher(word2))
 }

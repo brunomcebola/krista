@@ -50,10 +50,6 @@
     width: 100%
 }
 
-.home .navigation .navbar-brand {
-    color: #fff;
-}
-
 /*Botão área médica*/
 
 .home .navigation .navbar .container-fluid .nav .medBtn {
@@ -233,6 +229,7 @@
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
     position: relative;
+    z-index: -10;
 }
 
 @media only screen and (max-width: 875px) {
@@ -715,6 +712,7 @@
   font-size:15px;
   line-height:24px;
   color:#737373;
+  margin-top: 20px
 }
 
 .siteFooter .line {

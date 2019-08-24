@@ -71,7 +71,7 @@ export default class MedicalLogIn extends Component {
                         <h1>Área Médica</h1>
                         <form className="medical-form" onSubmit={e => this.login(e)}>
                             <label forhtml="nm">Número médico</label>
-                            <input id="nm" type="text" placeholder="Numero medico" autoComplete="on" required/>
+                            <input id="nm" type="text" placeholder="Numero medico" minLength='9' maxLength='9' autoComplete="on" required/>
                             <label forhtml="pw">Password</label>
                             <span id="pass-holder"><input id="pw" type="password" placeholder="Password" autoComplete="on" required/>
                             <i className="fa fa-eye" onClick={this.togglePassword}></i></span>

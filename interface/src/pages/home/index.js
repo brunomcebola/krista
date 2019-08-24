@@ -6,7 +6,7 @@ import api from '../../services/api';
 import './styles.css';
 import logo from '../../images/icon.png';
 
-import cipher from '../../ciphers/encryptor.js';
+import {cipher,decipher,compareCipher} from '../../ciphers/encryptor.js';
 
 var loginIntervalId = '';
 
@@ -232,7 +232,7 @@ class User extends Component {
     }
 
     componentDidMount() {
-        if(this.state.changed==="false"){
+        if(compareCipher(this.state.changed,'false')){
             const radio = document.querySelectorAll("input[type='radio']");
             switch(this.state.setup.sex){
                 case 0:
@@ -254,7 +254,7 @@ class User extends Component {
         const today = new Date();
         const date = today.getTime();
 
-        if((date-userLoginDate)/1000 > 10800){
+        if((date-Number(decipher(userLoginDate)))/1000 > 10800){
             alert('Por motivos de segurança é necessário realizar login novamente!')
             this.props.logout()
         }
@@ -280,7 +280,7 @@ class User extends Component {
     render() {
         return(
             <div className="userView">
-                {this.state.changed==="false"?
+                {compareCipher(this.state.changed,'false')?
                     <div className="setup">
                         <h2>Atualização de dados</h2>
                         <p>Bem vindo ao serviço <strong>Krista Health-Care</strong>!</p>
@@ -402,10 +402,10 @@ export default class Home extends Component {
         if(response.data!==""){
             const today = new Date();
             const date = today.getTime();
-            localStorage.setItem('userLogged', "logged");
-            localStorage.setItem('userHsn', response.data.hsn);
-            localStorage.setItem('userLoginDate', date);
-            if(response.data.changed==0) localStorage.setItem('changed', "false");
+            localStorage.setItem('userLogged', cipher('logged'));
+            localStorage.setItem('userHsn', cipher(response.data.hsn));
+            localStorage.setItem('userLoginDate', cipher(date.toString()));
+            if(response.data.changed===0) localStorage.setItem('changed', cipher('false'));
         } 
         this.forceUpdate();
     }
@@ -438,7 +438,7 @@ export default class Home extends Component {
 
     render() {
         const {loading, data} = this.state
-        const userLogged = localStorage.getItem('userLogged');
+        const userLogged = localStorage.getItem('userLogged') || '';
         return(
             <div className="home">
                 <div className="page-header">
@@ -454,7 +454,7 @@ export default class Home extends Component {
                                     <ul className="nav navbar-nav navbar-right">
                                         <li>  
                                             <button className="medBtn"><Link to='/MedicalLogin' className="logBtn">Área médica</Link></button>
-                                            {userLogged==="logged"
+                                            {compareCipher(userLogged,'logged')
                                                 ?<span className="logged">
                                                     <div className="dropdown">
                                                         <button className="dropbtn">Área pessoal <i className="fa fa-caret-down"></i></button>
@@ -479,7 +479,7 @@ export default class Home extends Component {
                         </div>
                     }
                     </Sticky>
-                    {userLogged==="logged"?<User data={data} logout={this.logout}/>:<General/>}
+                    {compareCipher(userLogged,'logged')?<User data={data} logout={this.logout}/>:<General/>}
                     <Foot/>
                 </StickyContainer>
             </div>

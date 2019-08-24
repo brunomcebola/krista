@@ -245,7 +245,7 @@ export default class MedicalArea extends Component {
                         {({ style }) => 
                             <div style={style} className="medicalNav">
                                 <div className="leftContainer">
-                                    <input id="search-patient" type="text" placeholder="Número de paciente" name="search" maxLength='9' onKeyDown={this.handleKeyDown}/>
+                                    <input id="search-patient" type="text" placeholder="Número de paciente" name="search" minLength='9' maxLength='9' onKeyDown={this.handleKeyDown}/>
                                     <button id="search-btn" onClick={this.search}><i className="fa fa-search"></i></button>
                                     <button id="new-patient" onClick={this.switchModal}>Novo Paciente</button>   
                                 </div>
