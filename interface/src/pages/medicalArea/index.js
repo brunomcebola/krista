@@ -216,16 +216,18 @@ export default class MedicalArea extends Component {
         const today = new Date();
         const date = today.getTime();
 
-        if((date-Number(decipher(medicalLoginDate)))/1000 > 10800){
-            alert('Por motivos de segurança é necessário realizar login novamente!');
-            this.logout()
-        }
-
         const loggedStorage = localStorage.getItem('medicalLogged');
         if(!compareCipher(loggedStorage,'logged')){
             clearInterval(this.state.interval);
             this.props.history.push("/MedicalLogin");
         }
+
+        else if((date-Number(decipher(medicalLoginDate)))/1000 > 10800){
+            alert('Por motivos de segurança é necessário realizar login novamente!');
+            this.logout()
+        }
+
+        
     }
 
     handleKeyDown = (e) => {

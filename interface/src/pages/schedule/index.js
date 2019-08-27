@@ -5,7 +5,7 @@ import CreatableSelect from 'react-select/creatable';
 
 import './styles.css';
 import User from '../../images/user.png';
-
+import {decipher,compareCipher} from '../../ciphers/encryptor.js';
 import BackBtn from '../../components/backBtn';
 
 const options = [
@@ -17,7 +17,7 @@ const options = [
 
 class Table extends Component {
     state = {
-        hsn: JSON.parse(localStorage.getItem('hsn')),
+        hsn: decipher(JSON.parse(localStorage.getItem('hsn'))),
         saving: 3,
         qnt: 28
     }
@@ -35,6 +35,7 @@ class Table extends Component {
     hours = ['__h__','00h00','01h00','02h00','03h00','04h00','05h00','06h00','07h00','08h00','09h00','10h00','11h00','12h00',
              '13h00','14h00','15h00','16h00','17h00','18h00','19h00','20h00','21h00','22h00','23h00'];
 
+    //vai buscar os medicamentos a base de dados e guarda em medList
     getMeds = async () => {
         const list = [[],[],[],[]]
         var index=0;
@@ -58,6 +59,7 @@ class Table extends Component {
         this.forceUpdate();
     }
 
+    //guarda os medicamentos na base de dados e insere o novo medicamento na lista atual 
     getValuesMedSelect = async (newValue, id) => {
         const name = id.substring(2);
         const meds = [];
@@ -66,7 +68,7 @@ class Table extends Component {
 
         if(newValue!==null){
             this.medicamentos[id[2].charCodeAt(0)-97].map(function(e) { if(e.id===name) change=1 })
-            if(change===0){ this.medicamentos[id[2].charCodeAt(0)-97].push({id: name, option: [newValue[0]]}) }
+            if(change===0){this.medicamentos[id[2].charCodeAt(0)-97].push({id: name, option: [newValue[0]]}) }
             else if(change===1) {
                 this.medicamentos[id[2].charCodeAt(0)-97][this.medicamentos[id[2].charCodeAt(0)-97].map(function(e) { return e.id; }).indexOf(name)].option=[]
                 for(let i=0;i<newValue.length;i++){
@@ -94,6 +96,7 @@ class Table extends Component {
             this.state.saving = 2;
             this.forceUpdate();
         }
+
         else if(newValue===null){
             this.state.saving = 1;
             this.forceUpdate();
@@ -104,6 +107,7 @@ class Table extends Component {
         }
     };
 
+    //guarda os medicamentos na base de dados
     getValuesHourSelect = async (e, id) => {
         const hour = e.target.value;
         const name = id.substring(2);
@@ -130,6 +134,7 @@ class Table extends Component {
         
     };
 
+    //indica se existe alguma hora selecionada
     disable = (letter, number, hour) => {
         const index = letter.charCodeAt(0)-97;
         const length = this.medList[index].length;
@@ -141,6 +146,7 @@ class Table extends Component {
         return false
     };
 
+    //insere os valores das horas e dos medicamentos na base de dados
     selectMeds = (letter, number) => {
         const list = [];
         const index = letter.charCodeAt(0)-97;
@@ -188,6 +194,33 @@ class Table extends Component {
         return list      
     }
 
+    //controla a criação de uma nova opção
+    handleCreate = async (inputValue, id) => {
+        const hour = document.getElementById('h_'+id).value;
+        let match = false;
+
+        options.push({value: inputValue, label: inputValue})
+        this.medicamentos[id[0].charCodeAt(0)-97].map(function(e){if(e.id===id){
+            e.option.push({value: inputValue, label: inputValue})
+            match = true;
+        }})
+        if(!match){this.medicamentos[id[0].charCodeAt(0)-97].push({id, option: [{value: inputValue, label: inputValue}]})}
+
+        if(hour !== '__h__'){
+            this.state.saving = 1;
+            this.forceUpdate();
+            let meds = [];
+            this.medicamentos[id[0].charCodeAt(0)-97].map(function(e){if(e.id===id){
+                for(let i=0; i<e.option.length; i++) meds.push(e.option[i].value);
+            }});            
+            Object.assign(this.medication, {name: id, hour, meds});
+            await api.put(`/schedules/med/${'u'+this.state.hsn}`,this.medication);
+            this.state.saving = 2;
+        }
+
+        this.forceUpdate()
+    }
+
     createRow = (letter) => {
         let row = [];
         for (let i = 0; i < 7; i++) {
@@ -199,7 +232,7 @@ class Table extends Component {
                         </select>}
                       </td> );
             row.push( <td key={i}>
-                        <CreatableSelect value={this.selectMeds(letter, i)} isClearable={false} onCreateOption={this.handleCreate} isMulti options={options} className="basic-multi-select" onChange={e => this.getValuesMedSelect(e, 'h_'+letter+'_'+i)} id={'m_'+letter+'_'+i}/>
+                        <CreatableSelect value={this.selectMeds(letter, i)} isClearable={false} onCreateOption={e => this.handleCreate(e,letter+'_'+i)} isMulti options={options} className="basic-multi-select" onChange={e => this.getValuesMedSelect(e, 'h_'+letter+'_'+i)} id={'m_'+letter+'_'+i}/>
                       </td> )
           }
         return row
@@ -226,7 +259,7 @@ class Table extends Component {
                 :
                     <div>
                         <div id="loader">
-                            {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Em espera...</div>}
+                            {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Pronto a utilizar...</div>}
                         </div>
                         <table>
                             <tbody>
@@ -268,7 +301,7 @@ class Table extends Component {
 
 class Info extends Component {
     state = {
-        hsn: JSON.parse(localStorage.getItem('hsn')),
+        hsn: decipher(JSON.parse(localStorage.getItem('hsn'))),
         nome: '',
         sex: 0,
         age: 0,
@@ -288,7 +321,7 @@ class Info extends Component {
         this.forceUpdate();
 
         const logged = localStorage.getItem('medicalLogged');
-        if(logged==='logged'){
+        if(compareCipher(logged,'logged')){
             const PatientsResponse = await api.get(`patients/${this.state.hsn}`);
             const {firstName, lastName, sex, age} = PatientsResponse.data;
 
@@ -324,7 +357,7 @@ class Info extends Component {
         return(
             <div id="info">
                 <div id="loader">
-                    {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Em espera...</div>}
+                    {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Pronto a utilizar...</div>}
                 </div>
                 <textarea id="text" value={this.info.text} onChange={e => this.updateInfo(e)}></textarea>
                 <button className="save" onClick={this.activateLoad}>Guardar</button>
@@ -345,16 +378,38 @@ class Info extends Component {
 }
 
 export default class Schedule extends Component {
+    state = {
+        intervalID: ''
+    }
+
+    componentDidMount() {
+        this.state.intervalID = setInterval(this.checkLogin, 1000);
+        this.forceUpdate()
+    }
+
     checkLogin = () => {
+        const medicalLoginDate = localStorage.getItem('medicalLoginDate');
+        const today = new Date();
+        const date = today.getTime();
+
         const loggedStorage = localStorage.getItem('medicalLogged');
-        if(loggedStorage!=='logged') this.props.history.push("/MedicalLogin");
+        if(!compareCipher(loggedStorage,'logged')){
+            clearInterval(this.state.intervalID);
+            this.props.history.push("/MedicalLogin");
+        }
+
+        else if((date-Number(decipher(medicalLoginDate)))/1000 > 10800){
+            alert('Por motivos de segurança é necessário realizar login novamente!');
+            this.logout()
+        }
+
     }
 
     render() {
         this.checkLogin();
         return(
             <div className="schedule">
-                <BackBtn path="/MedicalArea" text="Página anterior"/>
+                <BackBtn path="/MedicalArea" text="Página anterior" intervalID={this.state.intervalID}/>
                 <h3 id="title">Horário da medicação</h3>
                 <Table />
                 <h3 id="title">Informação médica</h3>

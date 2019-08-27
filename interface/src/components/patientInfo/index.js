@@ -5,10 +5,10 @@ import male from '../../images/male.png'
 import female from '../../images/female.png'
 import other from '../../images/other.png'
 
-import {decipher,compareCipher} from '../../ciphers/encryptor.js';
+import {cipher,compareCipher} from '../../ciphers/encryptor.js';
 
 function goSchedule (hsn, intervalId) {
-    localStorage.setItem('hsn', JSON.stringify(hsn));
+    localStorage.setItem('hsn', JSON.stringify(cipher(hsn)));
     clearInterval(intervalId);
     window.location.href = "/MedicalArea/Schedules";
 }

@@ -253,11 +253,16 @@ class User extends Component {
         const userLoginDate = localStorage.getItem('userLoginDate');
         const today = new Date();
         const date = today.getTime();
+        const userLogged = localStorage.getItem('userLogged') || '';
 
-        if((date-Number(decipher(userLoginDate)))/1000 > 10800){
-            alert('Por motivos de segurança é necessário realizar login novamente!')
-            this.props.logout()
+        if(compareCipher(userLogged,'logged')){
+            if((date-Number(decipher(userLoginDate)))/1000 > 10800){
+                alert('Por motivos de segurança é necessário realizar login novamente!')
+                this.props.logout()
+            }
         }
+        else{this.props.logout()}
+        
     }
 
     togglePassword = () => {
