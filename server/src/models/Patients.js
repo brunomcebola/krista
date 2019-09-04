@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
+const crypto = require('crypto');
 
 const PatientSchema = new mongoose.Schema({
     username: {
         type: String,
         default: 'user'    //alterar para gerar aleatorio
     },
-    password: {
-        type: String,
-        default: 'krista'   //alterar para gerar aleatoria
-    },
+    password: String,
     hsn: {
         type: String,
         minlength : 9,
@@ -51,8 +49,19 @@ const PatientSchema = new mongoose.Schema({
         minlength : 12,
         maxlength : 12,
         required: true
-    }
+    },
+    salt: String
 });
+
+PatientSchema.methods.setPassword = function(password) { 
+    this.salt = crypto.randomBytes(16).toString('hex'); 
+    this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 64, `sha512`).toString(`hex`); 
+}; 
+
+PatientSchema.methods.validPassword = function(password) { 
+    var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, `sha512`).toString(`hex`); 
+    return this.password === hash; 
+}; 
 
 PatientSchema.plugin(mongoosePaginate);
 

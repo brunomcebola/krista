@@ -41,7 +41,7 @@ class Table extends Component {
         var index=0;
         for(let line of 'abcd'){
             for(let column=0; column<7; column++){
-                const response = await api.get(`/schedules/med/${'u'+this.state.hsn}/${line+'_'+column}`);
+                const response = await api.post(`/schedules/med/${'u'+this.state.hsn}/${line+'_'+column}`);
                 if(response.data!==null){
                     for(let i=0;i<response.data.meds.length;i++){
                         let exists = false;
@@ -259,7 +259,7 @@ class Table extends Component {
                 :
                     <div>
                         <div id="loader">
-                            {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Pronto a utilizar...</div>}
+                            {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Pronto a utilizar</div>}
                         </div>
                         <table>
                             <tbody>
@@ -357,7 +357,7 @@ class Info extends Component {
         return(
             <div id="info">
                 <div id="loader">
-                    {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Pronto a utilizar...</div>}
+                    {saving===1?<Loader type="ThreeDots" color="green" height="30" width="30"/>:saving===2?<div id="succ">Informação salva com sucesso</div>:<div id="wait">Pronto a utilizar</div>}
                 </div>
                 <textarea id="text" value={this.info.text} onChange={e => this.updateInfo(e)}></textarea>
                 <button className="save" onClick={this.activateLoad}>Guardar</button>

@@ -16,11 +16,12 @@ routes.get('/patients/:hsn', PatientsController.show);
 routes.post('/patients/log', PatientsController.log);
 routes.post('/patients/new', PatientsController.store);
 routes.post('/patients/update/:id', PatientsController.update);
+routes.post('/patients/checkUser', PatientsController.checkUsername);
 
 routes.get('/schedules/:col', Schedules.new);   //cria nova colleção
 routes.get('/schedules/info/:col', Schedules.info);     //obtem info medica
 routes.put('/schedules/info/:col', Schedules.updateInfo);       //atualiza info medica
-routes.get('/schedules/med/:col/:name', Schedules.medicine);       //obtem os medicamentos
+routes.post('/schedules/med/:col/:name', Schedules.medicine);       //obtem os medicamentos
 routes.put('/schedules/med/:col', Schedules.newMed);      //cria ou atualiza medicamentos
 routes.delete('/schedules/med/:col/:name', Schedules.delMed);     //elimina horario de medicação
 

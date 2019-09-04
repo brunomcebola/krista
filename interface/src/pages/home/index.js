@@ -5,7 +5,6 @@ import Loader from 'react-loader-spinner';
 import api from '../../services/api';
 import './styles.css';
 import logo from '../../images/icon.png';
-
 import {cipher,decipher,compareCipher} from '../../ciphers/encryptor.js';
 
 var loginIntervalId = '';
@@ -99,12 +98,30 @@ class General extends Component {
 
     componentDidMount() {
         this.slide(1);
+
+        let userMenuButton = document.getElementsByClassName('dropdown')[0];
+        if(userMenuButton!==undefined){
+            let moldura = document.getElementsByClassName('generalView')[0];
+            userMenuButton.addEventListener("mouseover", (event) => {
+                if(moldura!==undefined){
+                    for(let i=0; i<3; i++){
+                        moldura.childNodes[i].style.zIndex = -1
+                    }
+                }           
+            })
+            userMenuButton.addEventListener("mouseout", (event) => {
+                if(moldura!==undefined){
+                    for(let i=0; i<3; i++){
+                        moldura.childNodes[i].style.zIndex = 1
+                    }
+                }              
+            })
+        }
     }
 
     render() {
         return(
             <div className="generalView">
-
                 <div className="mainInfo fade active" id="mainInfo1" onScroll={() => this.scrollControl(1)}>
 
                     <div className="info">
@@ -188,11 +205,14 @@ class User extends Component {
     state = {
         data: this.props.data,
         setup: this.props.data,
-        changed: localStorage.getItem('changed'),
+        changed: localStorage.getItem('changed') || '',
         correct: true,
         loading: false,
-        pass: false
+        pass: false,
+        userMenu: this.props.userMenu,
     }
+
+    medication = [];
 
     formSubmit = async (e) => {
         e.preventDefault();
@@ -200,16 +220,21 @@ class User extends Component {
         this.state.loading = true;
         this.forceUpdate();
 
-        const pass = document.getElementById('pass');
+        const pass = document.getElementById('pass-holder');
         const user = document.getElementById('user');
         const sex = document.querySelectorAll('#sex');
 
-        if(this.state.setup.password==='krista'){
+        const response = await api.post('/patients/checkUser', {user: this.state.setup.username});
+
+        pass.style.borderColor = '#5B5F97';
+        user.style.borderColor = '#5B5F97';
+
+        if(this.state.setup.password==='krista' || !this.state.setup.password.match(/^[A-Za-z_-]+$/)){
             pass.style.borderColor = 'red';
             this.state.correct = false;
         }  
 
-        if(!isNaN(this.state.setup.username)){
+        if(!this.state.setup.username.match(/^[A-Za-z_-]+$/) || response.data===false){
             user.style.borderColor = 'red';
             this.state.correct = false;
         }  
@@ -223,6 +248,7 @@ class User extends Component {
             localStorage.removeItem('changed');
             this.state.changed = '';
             this.forceUpdate();
+            this.getMeds();
         }
 
         this.state.correct = true;
@@ -245,6 +271,20 @@ class User extends Component {
                     radio[2].checked=true;
                     break;
             } 
+        }
+        else if(compareCipher(localStorage.getItem('userMenu'),'horario')){
+            this.getMeds();
+
+            let userMenuButton = document.getElementsByClassName('dropdown')[0];
+            if(userMenuButton!==undefined){
+                let dayZoneA6 = document.getElementsByClassName('dayZone day6')
+                userMenuButton.addEventListener("mouseover", (event) => {
+                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = -1}           
+                })
+                userMenuButton.addEventListener("mouseout", (event) => {
+                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = 'auto'}                     
+                })
+            }
         }
         loginIntervalId = setInterval(this.checkLoginTime, 1000);
     }
@@ -282,7 +322,105 @@ class User extends Component {
         }   
     }
 
+    componentWillReceiveProps({userMenu}) {
+        this.setState({userMenu})
+        if(compareCipher(userMenu,'horario')){
+            this.getMeds();
+
+            let userMenuButton = document.getElementsByClassName('dropdown')[0];
+            if(userMenuButton!==undefined){
+                let dayZoneA6 = document.getElementsByClassName('dayZone day6')
+                userMenuButton.addEventListener("mouseover", (event) => {
+                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = -1}           
+                })
+                userMenuButton.addEventListener("mouseout", (event) => {
+                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = 'auto'}                     
+                })
+            }
+        }
+    }
+
+    createDay = (dayOfWeek) => {
+        let dias;
+        window.innerWidth > 750? dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'] : dias = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+
+        const dayZone = document.getElementsByClassName('dayZone day'+dayOfWeek);
+        if(dayZone.length!==0){
+            for(let letter=0;letter<4;letter++){
+                this.medication.map(e => {if(e.name===String.fromCharCode(letter+97)+'_'+dayOfWeek){
+
+                    let info = document.createElement("div");
+                    let spanHora = document.createElement("p");
+                    let horaTitle = document.createElement("strong")
+                    let horaTitleText = document.createTextNode("Hora: ");
+                    let hora = document.createTextNode(e.hour)
+                    let spanMeds = document.createElement("p");
+                    let medsTitle = document.createElement("strong");
+                    let medsTitleText = document.createTextNode("Medicamentos: ");
+                    let medsLineBreak = document.createElement("br");
+                    let meds = document.createTextNode(e.meds)
+
+                    horaTitle.appendChild(horaTitleText);
+                    spanHora.appendChild(horaTitle);
+                    spanHora.appendChild(hora);
+
+                    medsTitle.appendChild(medsTitleText);
+                    spanMeds.appendChild(medsTitle);
+                    spanMeds.appendChild(medsLineBreak);
+                    spanMeds.appendChild(meds);
+
+                    info.appendChild(spanMeds)
+                    info.appendChild(spanHora);
+                    info.classList.add('info')
+
+                    dayZone[letter].appendChild(info)
+
+                    dayZone[letter].style.backgroundColor='rgb(2, 179, 2)'}
+                })
+            }
+        }
+        
+        return( 
+            <div className="userSchedule" id={'dia_'+dayOfWeek}>
+                <h4 className="dayOfWeek">{dias[dayOfWeek]}</h4>
+                <div className={"dayZone day"+dayOfWeek}></div>
+                <div className={"dayZone day"+dayOfWeek}></div>
+                <div className={"dayZone day"+dayOfWeek}></div>
+                <div className={"dayZone day"+dayOfWeek}></div>
+            </div> 
+        )
+    }
+
+    getMeds = async () => {        
+        for(let day=0;day<7;day++){
+            for(let letter=0;letter<4;letter++){
+                let resp = await api.post(`/schedules/med/u${decipher(localStorage.getItem('userHsn'))}/${String.fromCharCode(letter+97)}_${day}`);
+                if(resp.data!==null){
+                    let {_id, ...data} = resp.data;
+                    this.medication.push(data)
+                }
+            }
+        }
+
+        const table = document.getElementsByClassName('horario');
+
+        if(table[0]!==undefined) {
+            for(let i=0;i<table[0].childNodes.length-1;i++){
+                table[0].childNodes[i].style.display = 'block'
+            }
+            table[0].childNodes[table[0].childNodes.length-1].style.display = 'none'
+        }
+        
+        this.forceUpdate()
+    }
+
     render() {
+        if(compareCipher(this.state.changed,'false') && !compareCipher(this.state.userMenu,'default')){
+            alert('É necessário atualizar a sua informação primeiro');
+            localStorage.setItem('userMenu', cipher('default'));
+            this.props.parentUpdate()
+        }
+
         return(
             <div className="userView">
                 {compareCipher(this.state.changed,'false')?
@@ -318,6 +456,20 @@ class User extends Component {
                             </p>
                             <button type="submit">{this.state.loading?<Loader type="ThreeDots" color='rgb(56, 59, 94)' height="10" width="30"/>:'Atualizar'}</button>
                         </form>
+                    </div>
+                :compareCipher(this.state.userMenu,'perfil')?
+                    null
+                :compareCipher(this.state.userMenu,'horario')?
+                    <div className="horario">
+                        {this.createDay(0)}
+                        {this.createDay(1)}
+                        {this.createDay(2)}
+                        {this.createDay(3)}
+                        {this.createDay(4)}
+                        {this.createDay(5)}
+                        {this.createDay(6)}
+                        <h5>Coloque o rato sobre os quadrados verdes para ver a medicação</h5>
+                        <Loader type="Oval" color="green" height={225.6} width={80} />
                     </div>
                 :
                     <General/>
@@ -391,7 +543,8 @@ export default class Home extends Component {
     state = {
         loading: false,
         data: '',
-        pass: false
+        pass: false,
+        userMenu: localStorage.getItem('userMenu') || cipher('default')
     }
 
     login = async () => {
@@ -404,13 +557,13 @@ export default class Home extends Component {
         this.setState({data: response.data})
         user.value="";
         pass.value="";
-        if(response.data!==""){
+        if(response.data!==null){
             const today = new Date();
             const date = today.getTime();
             localStorage.setItem('userLogged', cipher('logged'));
             localStorage.setItem('userHsn', cipher(response.data.hsn));
             localStorage.setItem('userLoginDate', cipher(date.toString()));
-            if(response.data.changed===0) localStorage.setItem('changed', cipher('false'));
+            if(response.data.changed===0) localStorage.setItem('changed', cipher('false'));            
         } 
         this.forceUpdate();
     }
@@ -420,6 +573,8 @@ export default class Home extends Component {
         localStorage.removeItem('changed');
         localStorage.removeItem('userHsn')
         localStorage.removeItem('userLoginDate');
+        localStorage.setItem('userMenu',cipher('default'))
+        this.state.userMenu = cipher('default');
         clearInterval(loginIntervalId);
         this.forceUpdate();
     }
@@ -439,6 +594,23 @@ export default class Home extends Component {
             pass.type = "text";
             this.state.pass = true
         }   
+    }
+
+    userChange = (option) => {
+        localStorage.setItem('userMenu', cipher(option))
+        this.setState({userMenu: localStorage.getItem('userMenu')})
+        this.forceUpdate();
+    }
+
+    componentDidMount() {
+        if(localStorage.getItem('userMenu') === null) localStorage.setItem('userMenu', cipher('default'))
+
+        
+        
+    }
+
+    parentUpdate = () => {
+        this.setState({userMenu: localStorage.getItem('userMenu')})
     }
 
     render() {
@@ -464,8 +636,9 @@ export default class Home extends Component {
                                                     <div className="dropdown">
                                                         <button className="dropbtn">Área pessoal <i className="fa fa-caret-down"></i></button>
                                                         <div className="dropdown-content">
-                                                            <a href="#">Perfil</a>
-                                                            <a href="#">Horário</a>
+                                                            {compareCipher(this.state.userMenu,'default')?null:<p onClick={() => this.userChange('default')}>Página inicial</p>}
+                                                            {compareCipher(this.state.userMenu,'perfil')?null:<p onClick={() => this.userChange('perfil')}>Perfil</p>}
+                                                            {compareCipher(this.state.userMenu,'horario')?null:<p onClick={() => this.userChange('horario')}>Horário</p>}
                                                         </div>
                                                     </div> 
                                                     <button onClick={this.logout} id="logout">Logout</button>
@@ -484,7 +657,7 @@ export default class Home extends Component {
                         </div>
                     }
                     </Sticky>
-                    {compareCipher(userLogged,'logged')?<User data={data} logout={this.logout}/>:<General/>}
+                    {compareCipher(userLogged,'logged')?<User data={data} logout={this.logout} userMenu={this.state.userMenu} parentUpdate={this.parentUpdate}/>:<General/>}
                     <Foot/>
                 </StickyContainer>
             </div>

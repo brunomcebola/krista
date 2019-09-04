@@ -85,7 +85,7 @@
     display: inline-block;
 }
 
-.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropbtn{
+.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropbtn {
     color: #fff;
     padding: 16px;
     font-size: 16px;
@@ -104,20 +104,26 @@
     background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    margin-left: -21px
+    margin-left: -21px;
+    z-index: 2;
 }
 
-.home .navigation .navbar .container-fluid .nav .logged .dropdown:hover .dropdown-content {display: block;}
-
-.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content a {
-    color: #000;
-    padding: 12px 16px;
-    text-decoration: none;
+.home .navigation .navbar .container-fluid .nav .logged .dropdown:hover .dropdown-content {
     display: block;
 }
 
-.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content a:hover {background-color: #ddd;}
+.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content p {
+    color: #000;
+    padding: 12px 16px;
+    margin:auto;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.home .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content p:hover {
+    background-color: #ddd;
+}
 
 @media only screen and (max-width: 600px) {
     .home .navigation .navbar .container-fluid .nav .logged .dropdown {
@@ -209,7 +215,7 @@
     height: 70vh;
     max-height: 460px;
     min-height: 320px;
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
 
 /*moldura*/
@@ -229,7 +235,6 @@
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
     position: relative;
-    z-index: -10;
 }
 
 @media only screen and (max-width: 875px) {
@@ -626,6 +631,8 @@
 
 /*USER CLASS STYLES*/
 
+/*Área de atualização de dados*/ 
+
 .userView .setup {
     width: 95vw;
     margin: auto
@@ -703,6 +710,147 @@
     opacity: 0.8
 }
 
+/*horário da medicação*/
+
+.userView .horario {
+    margin: auto;
+    width: 85%;
+    text-align: center;
+}
+
+.userView .horario .userSchedule {
+    float: left;
+    width: 14.27%;
+    margin-top: 0;
+    border-right: 1px solid #5B5F97;
+    display: none
+}
+
+.userView .horario .userSchedule#dia_0 {
+    border-left: 1px solid #5B5F97;
+    border-radius: 5px 0 0 5px
+}
+
+.userView .horario .userSchedule#dia_6 {
+    border-radius: 0 5px 5px 0
+}
+
+.userView .horario .userSchedule .dayOfWeek {
+    border-top: 1px solid #5B5F97;
+    border-bottom: 1px solid #5B5F97;
+    margin: 0 auto 0 auto;
+    padding: 13px 0 13px;
+    font-size: 19px;
+    font-weight: bold;
+    background-color: rgb(136, 135, 135);
+    color: #fff
+}
+
+.userView .horario .userSchedule#dia_0 .dayOfWeek {
+    border-top-left-radius: 5px
+}
+
+.userView .horario .userSchedule#dia_6 .dayOfWeek {
+    border-top-right-radius: 5px
+}
+
+.userView .horario .userSchedule .dayZone {
+    padding: 12px;
+    height: 44px;
+    background-color: rgb(241, 241, 241);
+    border-bottom: 1px solid #5B5F97;
+    position: relative;
+}
+
+.userView .horario .userSchedule#dia_0 .dayZone:last-child {
+    border-bottom-left-radius: 5px
+}
+
+.userView .horario .userSchedule#dia_6 .dayZone:last-child {
+    border-bottom-right-radius: 5px
+}
+
+.userView .horario .userSchedule .dayZone .info {
+    visibility: hidden;
+    width: 140px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 105%;
+    left: 50%;
+    margin-left: -70px;
+}
+
+.userView .horario .userSchedule .dayZone .info::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+.userView .horario .userSchedule .dayZone:hover .info {
+    visibility: visible
+}
+
+@media only screen and (max-width: 600px) {
+    .userView .horario .userSchedule#dia_0 .dayZone .info {
+        top: -25px;
+        left: 105%;
+        margin-left: 0
+    }
+
+    .userView .horario .userSchedule#dia_0 .dayZone .info::after {
+        display: none
+    }
+    
+    .userView .horario .userSchedule#dia_0 .dayZone .info::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent black transparent transparent;
+    }
+
+    .userView .horario .userSchedule#dia_6 .dayZone .info {
+        top: -25px;
+        right: 105%;
+        left: auto;
+        margin-left: 0
+    }
+
+    .userView .horario .userSchedule#dia_6 .dayZone .info::after {
+        display: none
+    }
+    
+    .userView .horario .userSchedule#dia_6 .dayZone .info::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent black;
+    }
+}
+
+.userView .horario h5 {
+    line-height: 30px;
+    margin-bottom: 0;
+    display: none;
+}
+
 
 /*PAGE FOOTER*/
 
@@ -712,7 +860,7 @@
   font-size:15px;
   line-height:24px;
   color:#737373;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 .siteFooter .line {
