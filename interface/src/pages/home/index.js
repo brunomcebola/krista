@@ -496,6 +496,7 @@ class User extends Component {
         }
     }
 
+    //faz as inicializações da classe
     componentDidMount() {
         if(compareCipher(this.state.changed,'false')){         //executa quando o user recarrega a página e se encontra na área de setup
             const radio = document.querySelectorAll("input[type='radio']");
@@ -534,6 +535,11 @@ class User extends Component {
 
         loginIntervalId = setInterval(this.checkLoginTime, 1000);       //guarda o ID do intervalo que verifica o login 
     }
+
+
+    //FALTA COMENTAR DAQUI PARA BAIXO
+
+
 
     render() {
         if(compareCipher(this.state.changed,'false') && !compareCipher(this.state.userMenu,'default')){
