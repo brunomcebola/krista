@@ -710,147 +710,199 @@
     opacity: 0.8
 }
 
-/*horário da medicação*/
+/*perfil do utilizador*/
 
-.userView .horario {
-    margin: auto;
-    width: 85%;
+.userView .perfil {
+    width: 50%;
+    margin-left: 25%
+}
+
+.userView .perfil #data-container{
+    display: flex
+}
+
+.userView .perfil #data-container #photo-container {
+    flex: 50%;
     text-align: center;
+    line-height: 25px;
+    margin-top: 25px;
+    min-width: 293px;
 }
 
-.userView .horario .userSchedule {
-    float: left;
-    width: 14.27%;
-    margin-top: 0;
-    border-right: 1px solid #5B5F97;
-    display: none
-}
-
-.userView .horario .userSchedule#dia_0 {
-    border-left: 1px solid #5B5F97;
-    border-radius: 5px 0 0 5px
-}
-
-.userView .horario .userSchedule#dia_6 {
-    border-radius: 0 5px 5px 0
-}
-
-.userView .horario .userSchedule .dayOfWeek {
-    border-top: 1px solid #5B5F97;
-    border-bottom: 1px solid #5B5F97;
-    margin: 0 auto 0 auto;
-    padding: 13px 0 13px;
-    font-size: 19px;
-    font-weight: bold;
-    background-color: rgb(136, 135, 135);
-    color: #fff
-}
-
-.userView .horario .userSchedule#dia_0 .dayOfWeek {
-    border-top-left-radius: 5px
-}
-
-.userView .horario .userSchedule#dia_6 .dayOfWeek {
-    border-top-right-radius: 5px
-}
-
-.userView .horario .userSchedule .dayZone {
-    padding: 12px;
-    height: 44px;
-    background-color: rgb(241, 241, 241);
-    border-bottom: 1px solid #5B5F97;
-    position: relative;
-}
-
-.userView .horario .userSchedule#dia_0 .dayZone:last-child {
-    border-bottom-left-radius: 5px
-}
-
-.userView .horario .userSchedule#dia_6 .dayZone:last-child {
-    border-bottom-right-radius: 5px
-}
-
-.userView .horario .userSchedule .dayZone .info {
-    visibility: hidden;
-    width: 140px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
+.userView .perfil #data-container #photo-container img {
+    width: 80%;
+    max-width: 280px;
+    min-width: 150px;
+    border: 1px solid #5B5F97;
     border-radius: 5px;
-    padding: 5px;
+    background-color: rgb(241, 241, 241)
+}
+
+.userView .perfil #data-container #information-container {
+    flex: 50%;
+    text-align: left;
+    padding-top: 0;
+    padding-left: 3%;
+    min-width: 293px;
+}
+
+.userView .perfil #data-container #information-container input {
+    font-size: 16px;
+    border: 1px solid #5B5F97;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding-left: 5px;
+} 
+
+.userView .perfil #data-container #information-container #pass-container {
+    background-color: rgb(235, 235, 228);
+    border-radius: 5px;
+    border: 1px solid #5B5F97;
+    width: 100%;
+    padding: 4px 0 3px 0
+}
+
+.userView .perfil #data-container #information-container input#pass {
+    width: 93%;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    background-color: transparent
+}
+
+.userView .perfil #data-container #information-container .fa {
+    width: 6%;
+    font-size: 16px;
+    background-color: transparent;
+    padding: 3.2px 0 3px 0;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid #5B5F97;
+    border: none;
+}
+
+.userView .perfil #data-container #information-container input[type=number]::-webkit-inner-spin-button, 
+.userView .perfil #data-container #information-container input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.userView .perfil #data-container #information-container input[type="radio"]:checked,
+.userView .perfil #data-container #information-container input[type="radio"]:not(:checked) {
     position: absolute;
-    z-index: 1;
-    top: 105%;
-    left: 50%;
-    margin-left: -70px;
+    left: -9999px;
 }
 
-.userView .horario .userSchedule .dayZone .info::after {
-    content: "";
+.userView .perfil #data-container #information-container input[type="radio"]:checked + label,
+.userView .perfil #data-container #information-container input[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 22px;
+    margin-right: 10px;
+    line-height: 20px;
+    display: inline-block;
+    font-weight: normal;
+    font-size: 16px
+}
+
+.userView .perfil #data-container #information-container input[type="radio"]:checked + label:before,
+.userView .perfil #data-container #information-container input[type="radio"]:not(:checked) + label:before {
+    content: '';
     position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent black transparent;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #5B5F97;
+    border-radius: 100%;
+    background: #fff;
+    cursor: pointer;
 }
 
-.userView .horario .userSchedule .dayZone:hover .info {
-    visibility: visible
+.userView .perfil #data-container #information-container input[type="radio"]:checked + label:after,
+.userView .perfil #data-container #information-container input[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #5B5F97;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
-@media only screen and (max-width: 600px) {
-    .userView .horario .userSchedule#dia_0 .dayZone .info {
-        top: -25px;
-        left: 105%;
-        margin-left: 0
-    }
-
-    .userView .horario .userSchedule#dia_0 .dayZone .info::after {
-        display: none
-    }
-    
-    .userView .horario .userSchedule#dia_0 .dayZone .info::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: 100%;
-        margin-top: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent black transparent transparent;
-    }
-
-    .userView .horario .userSchedule#dia_6 .dayZone .info {
-        top: -25px;
-        right: 105%;
-        left: auto;
-        margin-left: 0
-    }
-
-    .userView .horario .userSchedule#dia_6 .dayZone .info::after {
-        display: none
-    }
-    
-    .userView .horario .userSchedule#dia_6 .dayZone .info::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 100%;
-        margin-top: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent transparent black;
-    }
+.userView .perfil #data-container #information-container input[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
 }
 
-.userView .horario h5 {
-    line-height: 30px;
-    margin-bottom: 0;
+.userView .perfil #data-container #information-container input[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.userView .perfil #data-container #information-container input[type="radio"]:disabled + label:before,
+.userView .perfil #data-container #information-container input[type="radio"]:disabled + label:after {
+    cursor: not-allowed;
+}
+
+.userView .perfil #data-container #information-container input[type="radio"]:disabled + label:before {
+    background-color: rgb(235, 235, 228);
+}
+
+.userView .perfil #button-container {
+    text-align: center;
+    margin-top: 30px
+}
+
+.userView .perfil #button-container button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.userView .perfil #button-container button#cancelar,
+.userView .perfil #button-container button#guardar {
     display: none;
+    margin: auto 4.5px 0 4.5px
 }
 
+@media only screen and (max-width: 1100px) {
+    .userView .perfil #data-container {
+        display: block;
+        height: auto;
+        width: auto;
+    }
+
+    .userView .perfil #data-container #photo-container {
+        display: block;
+        margin-top: auto
+    }
+
+    .userView .perfil #data-container #photo-container img{
+        width: 40%;
+    }
+
+    .userView .perfil #data-container #information-container {
+        display: block;
+        width: 100%;
+        margin: auto;
+    }
+
+    .userView .perfil #data-container #information-container label:first-of-type {
+        margin-top: 20px
+    }
+}
 
 /*PAGE FOOTER*/
 

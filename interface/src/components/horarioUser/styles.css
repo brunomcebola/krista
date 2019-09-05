@@ -1,0 +1,138 @@
+#horarioUser {
+    margin: auto;
+    width: 85%;
+    text-align: center;
+}
+
+#horarioUser .userSchedule {
+    float: left;
+    width: 14.27%;
+    margin-top: 0;
+    border-right: 1px solid #5B5F97;
+    display: none
+}
+
+#horarioUser .userSchedule#dia_0 {
+    border-left: 1px solid #5B5F97;
+    border-radius: 5px 0 0 5px
+}
+
+#horarioUser .userSchedule#dia_6 {
+    border-radius: 0 5px 5px 0
+}
+
+#horarioUser .userSchedule .dayOfWeek {
+    border-top: 1px solid #5B5F97;
+    border-bottom: 1px solid #5B5F97;
+    margin: 0 auto 0 auto;
+    padding: 13px 0 13px;
+    font-size: 19px;
+    font-weight: bold;
+    background-color: rgb(136, 135, 135);
+    color: #fff
+}
+
+#horarioUser .userSchedule#dia_0 .dayOfWeek {
+    border-top-left-radius: 5px
+}
+
+#horarioUser .userSchedule#dia_6 .dayOfWeek {
+    border-top-right-radius: 5px
+}
+
+#horarioUser .userSchedule .dayZone {
+    padding: 12px;
+    height: 44px;
+    background-color: rgb(241, 241, 241);
+    border-bottom: 1px solid #5B5F97;
+    position: relative;
+}
+
+#horarioUser .userSchedule#dia_0 .dayZone:last-child {
+    border-bottom-left-radius: 5px
+}
+
+#horarioUser .userSchedule#dia_6 .dayZone:last-child {
+    border-bottom-right-radius: 5px
+}
+
+#horarioUser .userSchedule .dayZone .info {
+    visibility: hidden;
+    width: 140px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 105%;
+    left: 50%;
+    margin-left: -70px;
+}
+
+#horarioUser .userSchedule .dayZone .info::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+#horarioUser .userSchedule .dayZone:hover .info {
+    visibility: visible
+}
+
+@media only screen and (max-width: 600px) {
+    #horarioUser .userSchedule#dia_0 .dayZone .info {
+        top: -25px;
+        left: 105%;
+        margin-left: 0
+    }
+
+    #horarioUser .userSchedule#dia_0 .dayZone .info::after {
+        display: none
+    }
+    
+    #horarioUser .userSchedule#dia_0 .dayZone .info::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent black transparent transparent;
+    }
+
+    #horarioUser .userSchedule#dia_6 .dayZone .info {
+        top: -25px;
+        right: 105%;
+        left: auto;
+        margin-left: 0
+    }
+
+    #horarioUser .userSchedule#dia_6 .dayZone .info::after {
+        display: none
+    }
+    
+    #horarioUser .userSchedule#dia_6 .dayZone .info::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent black;
+    }
+}
+
+#horarioUser h5 {
+    line-height: 30px;
+    margin-bottom: 0;
+    display: none;
+}

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './styles.css';
 import male from '../../images/male.png'
 import female from '../../images/female.png'

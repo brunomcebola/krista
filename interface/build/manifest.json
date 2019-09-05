@@ -1,6 +1,6 @@
 {
-  "short_name": "Krista Site",
-  "name": "Krista Health-Care Website",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
