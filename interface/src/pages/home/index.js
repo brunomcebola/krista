@@ -1,38 +1,50 @@
+//REACT.JS COMPONENTS
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { StickyContainer, Sticky } from 'react-sticky';
 import Loader from 'react-loader-spinner';
-import api from '../../services/api';
+
+//COMPONENTS CREATED BY US
+import api from '../../services/api';   //ligação ao servidor
+import {cipher,decipher,compareCipher} from '../../ciphers/encryptor.js';   //ficheiro com as funcoes p/ encriptar a info salva no browser
+import HorarioUser from '../../components/horarioUser';     //componente que fornece o horário do utilizador
+
+//PAGE CSS STYLE SHEET
 import './styles.css';
-import logo from '../../images/icon.png';
-import {cipher,decipher,compareCipher} from '../../ciphers/encryptor.js';
-import male from '../../images/male.png'
-import female from '../../images/female.png'
-import other from '../../images/other.png'
 
-import HorarioUser from '../../components/horarioUser';
+//IMAGES
+import logo from '../../images/icon.png';   //logotipo do projeto
+import male from '../../images/male.png';   //icon usuario masculino
+import female from '../../images/female.png';   //icon usuario feminino
+import other from '../../images/other.png';     //icon usuario default 
 
+//ID DO INTERVALO QUE VERIFICA O LOGIN
 var loginIntervalId = '';
 
+//PÁGINA INICIAL DO SITE
 class General extends Component {
     state = {
         slide: 1,
         scroll: 0
     }
 
+    //permite recuar para o slide anterior
     prev = () => {
         this.showSlides(--this.state.slide)
     }
 
+    //permite avançar para o slide seguinte
     next = () => {
         this.showSlides(++this.state.slide)
     }
 
+    //permite mostra um determinado slide
     slide = (slide) => {
         this.state.slide = slide;
         this.showSlides(this.state.slide)
     }
 
+    //controla o display dos slides
     showSlides = (slide) => {
         const slides = document.getElementsByClassName("mainInfo");
 
@@ -41,18 +53,19 @@ class General extends Component {
 
         const dots = document.querySelectorAll('#mainInfo'+ this.state.slide +' .dot');        
 
-        for (let i = 0; i < slides.length; i++) {
+        for (let i = 0; i < slides.length; i++) {   //esconde todos os slides
             slides[i].style.display = "none";  
         }
 
-        for (let i = 0; i < dots.length; i++) {
+        for (let i = 0; i < dots.length; i++) {     //coloca todos os pontos indicadores do slide em stand-by
             dots[i].style.opacity = 0.6;
         }
 
-        slides[this.state.slide - 1].style.display = "block";  
-        dots[this.state.slide - 1].style.opacity = 1;
+        slides[this.state.slide - 1].style.display = "block";  //faz display do slide desejado
+        dots[this.state.slide - 1].style.opacity = 1;   //realça o ponto correspondente ao slide desejado
     }
 
+    //cria a animação do scroll dentro dos slides
     scroll = (n, active=0, scroll=1) => {
         const element = document.querySelector("#details"+n);
         const parent = document.querySelector("#mainInfo"+n);
@@ -62,7 +75,7 @@ class General extends Component {
 
         if(active===1) parent.classList.remove("active");
 
-        if(arrow.classList.contains('turnUp')){
+        if(arrow.classList.contains('turnUp')) {     //se estiver no fundo do slide controla o scroll de volta para o topo
             arrow.classList.remove('turnUp');
             dots.classList.remove('out');
             arrows.classList.remove('out');
@@ -72,7 +85,7 @@ class General extends Component {
             setTimeout(() => {arrow.classList.remove('turnDown'); dots.classList.remove('in'); arrows.classList.remove('in');},1000)
             if(scroll) parent.scrollTo({top: 0, behavior: 'smooth'});
         } 
-        else{
+        else {                                       //se estiver no topo do slide controla o scroll para baixo
             arrow.classList.remove('turnDown');
             dots.classList.remove('in');
             arrows.classList.remove('in');
@@ -83,6 +96,7 @@ class General extends Component {
         }
     }
 
+    //controla o scroll com rato ou touch
     scrollControl = (n) => {        
         const element = document.querySelector("#mainInfo"+n);
 
@@ -91,32 +105,35 @@ class General extends Component {
 
         if(element.classList.contains("active")){
 
-            if(element.scrollTop>=80 && !element.childNodes[3].classList.contains("out")){
+            if(element.scrollTop>=80 && !element.childNodes[3].classList.contains("out")){  //controla o scroll para baixo
                 this.scroll(n, undefined, 0);
             }
-            else if(element.scrollTop<79 && element.childNodes[3].classList.contains("out")){
+            else if(element.scrollTop<79 && element.childNodes[3].classList.contains("out")){   //controla o scroll para cima
                 this.scroll(n, undefined, 0);
             }
         }
     }
 
+    //faz as inicializações da classe
     componentDidMount() {
-        this.slide(1);
+        this.slide(1);  //coloca o slide 1 visivel
 
         let userMenuButton = document.getElementsByClassName('dropdown')[0];
         if(userMenuButton!==undefined){
             let moldura = document.getElementsByClassName('generalView')[0];
+            //adiciona um controlador para quando o rato se encontra em cima do menu de usuario
             userMenuButton.addEventListener("mouseover", (event) => {
                 if(moldura!==undefined){
                     for(let i=0; i<3; i++){
-                        moldura.childNodes[i].style.zIndex = -1
+                        moldura.childNodes[i].style.zIndex = -1     //os slides passam para segundo plano
                     }
                 }           
             })
+            //adiciona um controlador para quando o rato sai de cima do menu de usuario
             userMenuButton.addEventListener("mouseout", (event) => {
                 if(moldura!==undefined){
                     for(let i=0; i<3; i++){
-                        moldura.childNodes[i].style.zIndex = 1
+                        moldura.childNodes[i].style.zIndex = 1      //os slides voltam para a frente
                     }
                 }              
             })
@@ -126,30 +143,36 @@ class General extends Component {
     render() {
         return(
             <div className="generalView">
+                {/* SLIDE 1 */}
                 <div className="mainInfo fade active" id="mainInfo1" onScroll={() => this.scrollControl(1)}>
 
+                    {/* texto intrdução */}
                     <div className="info">
                         <h1><strong>Venha conhecer a nossa caixa mais recente!</strong></h1>
                         <h2>Construída em madeira e com o seu design minimalista,</h2>
                         <h2>esta caixa garante-lhe todas as comodidades.</h2>
                     </div>
 
+                    {/* seta com base circular no centro do slide */}
                     <div className="arrowContainer">
                         <div className="arrow-2" onClick={() => this.scroll(1 , 1)}><i className="fa fa-angle-down" id="arrow1"></i></div>
                         <div className="arrow-1 zoomIn"></div>
                     </div>
                     
+                    {/* setas para trocar de slide */}
                     <div className="arrowsContainer" id="arrows1">
-                        <a className="prev" onClick={this.prev}>&#10094;</a>
-                        <a className="next" onClick={this.next}>&#10095;</a>
+                        <a className="prev" onClick={this.prev}>&#10094;</a>    {/* seta esquerda */}
+                        <a className="next" onClick={this.next}>&#10095;</a>    {/* seta direita */}
                     </div>
 
+                    {/* pontos indicadores do slide */}
                     <div className="dotContainer" id="dots1">
                         <span className="dot" onClick={() => this.slide(1)}></span> 
                         <span className="dot" onClick={() => this.slide(2)}></span> 
                         <span className="dot" onClick={() => this.slide(3)}></span> 
                     </div>
                     
+                    {/* informação detalhada do produto */}
                     <div className="details" id="details1">
                         <h3>Informação do produto</h3>
                         <div><span className="identifier">Dimensões:</span> 17.0cm x 9.0cm x 4.0cm</div>
@@ -161,6 +184,7 @@ class General extends Component {
                     
                 </div>
 
+                {/* SLIDE 2 */}
                 <div className="mainInfo fade" id="mainInfo2">
 
                     <div className="arrowContainer">
@@ -181,6 +205,7 @@ class General extends Component {
 
                 </div>
 
+                {/* SLIDE 3 */}
                 <div className="mainInfo fade" id="mainInfo3">
 
                     <div className="arrowContainer">
@@ -205,6 +230,7 @@ class General extends Component {
     }
 }
 
+//ÁREA DE UTILIZADOR
 class User extends Component {
     state = {
         data: this.props.data,
@@ -222,31 +248,36 @@ class User extends Component {
 
     //FUNÇÕES DA ÁREA DE SETUP
 
+    //verifica os dados inseridos pelo user e atualiza as informações na base de dados
     setupFormSubmit = async (e) => {
         e.preventDefault();
 
-        this.state.loading = true;
+        this.state.loading = true;  //ativa a imagem de load no botao
         this.forceUpdate();
 
         const pass = document.getElementById('pass-holder');
         const user = document.getElementById('user');
         const sex = document.querySelectorAll('#sex');
 
+        //pedido para a api para verificar se existe um user com o username indicado
         const response = await api.post('/patients/checkUser', {user: this.state.setup.username});
 
         pass.style.borderColor = '#5B5F97';
         user.style.borderColor = '#5B5F97';
 
+        //saneamento da password
         if(this.state.setup.password==='krista' || !this.state.setup.password.match(/^[A-Za-z_-]+$/)){
             pass.style.borderColor = 'red';
             this.state.correct = false;
         }  
 
+        //saneamento do username
         if(!this.state.setup.username.match(/^[A-Za-z_-]+$/) || response.data===false){
             user.style.borderColor = 'red';
             this.state.correct = false;
         }  
 
+        //atualiza os dados se tudo estiver correto
         if(this.state.correct){
             this.state.setup.changed = 1;
             for(let i=0;i<3;i++){
@@ -265,16 +296,17 @@ class User extends Component {
 
     }
 
+    //alterna a visibilade da password
     setupTogglePassword = () => {
         const eye = document.querySelector("#pass-holder .fa");
         const pass = document.querySelector('#pass');
-        if(this.state.pass) {
+        if(this.state.pass) {                       //torna invisivel
             eye.classList.remove('fa-eye-slash');
             eye.classList.add('fa-eye');
             pass.type = "password";
             this.state.pass = false
         }
-        else {
+        else {                                  //torna visivel
             eye.classList.remove('fa-eye');
             eye.classList.add('fa-eye-slash');
             pass.type = "text";
@@ -282,8 +314,10 @@ class User extends Component {
         }   
     }
 
+
     //FUNÇÕES DA ÁREA DO PERFIL
 
+    //verifica os dados inseridos pelo user e atualiza as informações na base de dados
     profileSubmitData = async () => {
         this.state.loading = true;
         this.forceUpdate();
@@ -291,22 +325,26 @@ class User extends Component {
         const pass = document.getElementById('pass-container');
         const user = document.getElementById('user');
 
+        //pedido para a api para verificar se existe um user com o username indicado
         let response = await api.post('/patients/checkUser', {user: this.state.setup.username});
         if(this.state.setup.username === this.state.data.username) response.data=true;
 
         pass.style.borderColor = '#5B5F97';
         user.style.borderColor = '#5B5F97';
 
+        //saneamento da password
         if(this.state.setup.password==='krista' || !this.state.setup.password.match(/^[A-Za-z_-]+$/)){
             pass.style.borderColor = 'red';
             this.state.correct = false;
         }  
 
+        //saneamento do username
         if(!this.state.setup.username.match(/^[A-Za-z_-]+$/) || response.data===false){
             user.style.borderColor = 'red';
             this.state.correct = false;
         }  
 
+        //atualiza os dados se tudo estiver correto
         if(this.state.correct){
             await api.post(`/patients/update/${this.state.setup.hsn}`, this.state.setup);
             this.profileGetData()
@@ -319,6 +357,7 @@ class User extends Component {
         this.forceUpdate();
     }    
 
+    //obtem a informação do user
     profileGetData = async () => {
         let hsn = localStorage.getItem('userHsn');
         const resp = await api.get(`patients/${decipher(hsn)}`);
@@ -339,15 +378,16 @@ class User extends Component {
         this.forceUpdate()
     }
 
+    //controla os botões de 'atualizar informação', 'cancelar' e 'guardar'
     profileControlButtons = () => {
-        if(!this.state.changeData) {
+        if(!this.state.changeData) {                                            //torna possivel atualizar os dados
             document.getElementById('cancelar').style.display = 'initial';
             document.getElementById('guardar').style.display = 'initial';
             document.getElementById('atualizar').style.display = 'none';
             document.getElementById('pass-container').style.backgroundColor = '#fff';
             document.getElementById('profile-eye').style.cursor = 'pointer'
         }
-        else {
+        else {                                                                  //cancela as alterações efetuadas e bloqueia os inputs
             document.getElementById('cancelar').style.display = 'none';
             document.getElementById('guardar').style.display = 'none';
             document.getElementById('atualizar').style.display = 'initial';
@@ -373,16 +413,17 @@ class User extends Component {
         this.forceUpdate();
     }
 
+    //alterna a visibilade da password
     profileTogglePassword = () => {
         const eye = document.querySelector("#pass-container .fa");
         const pass = document.querySelector('#pass');
-        if(this.state.pass) {
+        if(this.state.pass) {                       //torna invisivel
             eye.classList.remove('fa-eye-slash');
             eye.classList.add('fa-eye');
             pass.type = "password";
             this.state.pass = false
         }
-        else {
+        else {                                  //torna visivel
             eye.classList.remove('fa-eye');
             eye.classList.add('fa-eye-slash');
             pass.type = "text";
@@ -390,15 +431,18 @@ class User extends Component {
         }   
     }
 
+
     //FUNÇÕES DA ÁREA DO HORÁRIO
 
+    //obtem o horario da medicação do user
     horarioGetMeds = async () => {        
         for(let day=0;day<7;day++){
             for(let letter=0;letter<4;letter++){
+                //pedido para a api para retornar a hora e os meds de um determinado slot do horário (a_0 a d_6)
                 let resp = await api.post(`/schedules/med/u${decipher(localStorage.getItem('userHsn'))}/${String.fromCharCode(letter+97)}_${day}`);
                 if(resp.data!==null){
                     let {_id, ...data} = resp.data;
-                    this.medication.push(data)
+                    this.medication.push(data)  //informação salva na variavel medication
                 }
             }
         }
@@ -410,14 +454,15 @@ class User extends Component {
 
     //FUNÇÕES RELATIVAS À CLASSE NO GERAL
 
+    //verifica os dados de login do user
     checkLoginTime = () => {
         const userLoginDate = localStorage.getItem('userLoginDate');
         const today = new Date();
         const date = today.getTime();
         const userLogged = localStorage.getItem('userLogged') || '';
 
-        if(compareCipher(userLogged,'logged')){
-            if((date-Number(decipher(userLoginDate)))/1000 > 10800){
+        if(compareCipher(userLogged,'logged')){     //verifica se existe um login efetuado
+            if((date-Number(decipher(userLoginDate)))/1000 > 10800){        //verifica o tempo de login (tem de ser inferior a 3h)
                 alert('Por motivos de segurança é necessário realizar login novamente!')
                 this.props.logout()
             }
@@ -426,30 +471,33 @@ class User extends Component {
         
     }
 
+    //controla a mudança de argumentos passados a classe
     componentWillReceiveProps({userMenu}) {
         this.setState({userMenu})
-        if(compareCipher(userMenu,'horario')){
+        if(compareCipher(userMenu,'horario')){      //executa quando o user clica em 'Área pessoal' > 'Horário'
             this.horarioGetMeds();
 
             let userMenuButton = document.getElementsByClassName('dropdown')[0];
             if(userMenuButton!==undefined){
                 let dayZoneA6 = document.getElementsByClassName('dayZone day6')
+                //adiciona um controlador para quando o rato se encontra em cima do menu de usuario
                 userMenuButton.addEventListener("mouseover", (event) => {
-                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = -1}           
+                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = -1}     //o horário passa para segundo plano      
                 })
+                //adiciona um controlador para quando o rato sai de cima do menu de usuario
                 userMenuButton.addEventListener("mouseout", (event) => {
-                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = 'auto'}                     
+                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = 'auto'}     //o horário volta para a frente              
                 })
             }
         }
-        else if(compareCipher(userMenu,'perfil')){
+        else if(compareCipher(userMenu,'perfil')){      //executa quando o user clica em 'Área pessoal' > 'Perfil'
             this.profileGetData();
             this.forceUpdate()
         }
     }
 
     componentDidMount() {
-        if(compareCipher(this.state.changed,'false')){
+        if(compareCipher(this.state.changed,'false')){         //executa quando o user recarrega a página e se encontra na área de setup
             const radio = document.querySelectorAll("input[type='radio']");
             switch(this.state.setup.sex){
                 case 0:
@@ -463,25 +511,28 @@ class User extends Component {
                     break;
             } 
         }
-        else if(compareCipher(localStorage.getItem('userMenu'),'horario')){
+        else if(compareCipher(localStorage.getItem('userMenu'),'horario')){     //executa quando o user recarrega a página e se encontra no 'Horário'
             this.horarioGetMeds();
 
             let userMenuButton = document.getElementsByClassName('dropdown')[0];
             if(userMenuButton!==undefined){
                 let dayZoneA6 = document.getElementsByClassName('dayZone day6')
+                //adiciona um controlador para quando o rato se encontra em cima do menu de usuario
                 userMenuButton.addEventListener("mouseover", (event) => {
-                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = -1}           
+                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = -1}    //o horário passa para segundo plano       
                 })
+                //adiciona um controlador para quando o rato sai de cima do menu de usuario
                 userMenuButton.addEventListener("mouseout", (event) => {
-                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = 'auto'}                     
+                    if(dayZoneA6[0]!==undefined){dayZoneA6[0].style.zIndex = 'auto'}    //o horário volta para a frente                   
                 })
             }
         }
-        else if(compareCipher(localStorage.getItem('userMenu'),'perfil')){
+        else if(compareCipher(localStorage.getItem('userMenu'),'perfil')){      //executa quando o user recarrega a página e se encontra no 'Perfil'
             this.profileGetData();
             this.forceUpdate()
         }
-        loginIntervalId = setInterval(this.checkLoginTime, 1000);
+
+        loginIntervalId = setInterval(this.checkLoginTime, 1000);       //guarda o ID do intervalo que verifica o login 
     }
 
     render() {
@@ -570,6 +621,7 @@ class User extends Component {
     }
 }
 
+//RODAPÉ DA PÁGINA
 class Foot extends Component {
     render() {
         return(
@@ -626,6 +678,7 @@ class Foot extends Component {
     }
 }
 
+//CLASSE CENTRAL
 export default class Home extends Component {
     state = {
         loading: false,
