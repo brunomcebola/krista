@@ -714,7 +714,7 @@
 
 .userView .perfil {
     width: 50%;
-    margin-left: 25%
+    margin: auto
 }
 
 .userView .perfil #data-container{
@@ -726,7 +726,6 @@
     text-align: center;
     line-height: 25px;
     margin-top: 25px;
-    min-width: 293px;
 }
 
 .userView .perfil #data-container #photo-container img {
@@ -878,6 +877,10 @@
 }
 
 @media only screen and (max-width: 1100px) {
+    .userView .perfil {
+        width: 80%
+    }
+
     .userView .perfil #data-container {
         display: block;
         height: auto;
@@ -897,10 +900,15 @@
         display: block;
         width: 100%;
         margin: auto;
+        min-width: initial;
     }
 
     .userView .perfil #data-container #information-container label:first-of-type {
         margin-top: 20px
+    }
+
+    .userView .perfil #data-container #information-container .fa {
+        padding-right: 3px 
     }
 }
 
