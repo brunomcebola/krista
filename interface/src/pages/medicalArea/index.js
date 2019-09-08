@@ -140,6 +140,7 @@ export default class MedicalArea extends Component {
 
     loadPatients = async (page = 1) => {
         const response = await api.get(`/patients?page=${page}`);
+
         const { docs, ...productInfo} = response.data;
 
         this.setState({ patients: docs, productInfo, page, exists: (response.data.length===0)?false:true , search: false, load: false});

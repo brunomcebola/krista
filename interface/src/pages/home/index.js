@@ -241,7 +241,8 @@ class User extends Component {
         pass: false,
         userMenu: this.props.userMenu,
         changeData: false,
-        spinner: true
+        spinner: true,
+        hsn: decipher(localStorage.getItem('userHsn'))
     }
 
     medication = [];
@@ -283,7 +284,11 @@ class User extends Component {
             for(let i=0;i<3;i++){
                 if(sex[i].checked) this.state.setup.sex = sex[i].value;
             }
-            await api.post(`/patients/update/${this.state.setup.hsn}`, this.state.setup);
+
+            const resp = await api.post(`/patients/update/${this.state.hsn}`, this.state.setup);
+
+            console.log(resp)
+
             localStorage.removeItem('changed');
             this.state.changed = '';
             this.forceUpdate();
@@ -346,7 +351,9 @@ class User extends Component {
 
         //atualiza os dados se tudo estiver correto
         if(this.state.correct){
-            await api.post(`/patients/update/${this.state.setup.hsn}`, this.state.setup);
+            this.state.setup.changed = 1;
+            this.state.setup.hsn = this.state.hsn;
+            await api.post(`/patients/update/${this.state.hsn}`, this.state.setup);
             this.profileGetData()
             this.forceUpdate();
             this.profileControlButtons()
@@ -698,7 +705,7 @@ export default class Home extends Component {
         this.forceUpdate();
         let user = document.querySelector('#user');
         let pass = document.querySelector('#pass');
-        const response = await api.post('/patients/log', {user: user.value, pass: pass.value});
+        const response = await api.post('/patients/log', {user: user.value, pass: pass.value});        
         this.state.loading = false;
         this.setState({data: response.data})
         user.value="";

@@ -11,7 +11,7 @@
     "react-cookie": "^4.0.0",
     "react-dom": "^16.8.6",
     "react-encrypt": "^1.0.1",
-    "react-loader-spinner": "^2.3.0",
+    "react-loader-spinner": "^3.1.2",
     "react-loading-overlay": "^1.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",

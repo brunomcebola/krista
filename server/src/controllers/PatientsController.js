@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
 const Patient = mongoose.model('Patient');
 const links = require('../links');
+const aes256 = require('aes256');
 
 function check(req){
     return (links.includes(req.headers.referer))
@@ -12,6 +12,23 @@ module.exports = {
         if (check(req)){
             const { page } = req.query;
             const patients = await Patient.paginate({},{ page , limit:10 });
+            patients.docs.map(patient => {
+                let patientAux = new Patient(); 
+                patientAux.saltUser = patient.saltUser;
+                let key = patientAux.getUserHash(patient.username);
+
+                patient.firstName = aes256.decrypt(key, patient.firstName);
+                patient.lastName = aes256.decrypt(key, patient.lastName);
+                patient.docName =  aes256.decrypt(key, patient.docName);
+                patient.docNum = aes256.decrypt(key, patient.docNum);
+
+                patient.boxNum = '';
+                patient.changed = '';
+                patient.hash = '';
+                patient.saltUser = '';
+                patient.saltPass = '';
+                patient.username = '';
+            })
             return res.json(patients);
         }
         else {
@@ -21,8 +38,28 @@ module.exports = {
 
     async show(req, res) {
         if (check(req)){
-            const patient = await Patient.findOne({'hsn':req.params.hsn});
-            return res.json(patient);
+            await Patient.findOne({'hsn':req.params.hsn}, function(err, patient){
+                if (patient === null) { 
+                    return res.json(null) 
+                } 
+                else { 
+                    let key = patient.getUserHash(patient.username);
+
+                    patient.firstName = aes256.decrypt(key, patient.firstName);
+                    patient.lastName = aes256.decrypt(key, patient.lastName);
+
+                    patient.boxNum = '';
+                    patient.changed = '';
+                    patient.hash = '';
+                    patient.saltUser = '';
+                    patient.saltPass = '';
+                    patient.docName = '';
+                    patient.docNum = '';
+                    patient.hsn = '';
+
+                    return res.json(patient)
+                }
+            });
         }
         else {
             return res.send('Não tem permissão para aceder a esta página')
@@ -31,18 +68,59 @@ module.exports = {
 
     async log(req, res) {
         if (check(req) || req.body.appToken === 'WR7mG@h3rx9hxAX6A.72dtWJn&uxfjYa'){
-            const patient = await Patient.findOne({'username': req.body.user, 'password': req.body.pass});
-            return res.json(patient);
+            await Patient.findOne({'username': req.body.user}, function(err, patient) {
+                if (patient === null) { 
+                    return res.json(null) 
+                } 
+                else { 
+                    if(patient.validPassword(req.body.pass)){
+                        let key = patient.getUserHash(patient.username);
+
+                        patient.firstName = aes256.decrypt(key, patient.firstName);
+                        patient.lastName = aes256.decrypt(key, patient.lastName);
+
+                        patient.boxNum = '';
+                        patient.hash = '';
+                        patient.saltUser = '';
+                        patient.saltPass = '';
+                        patient.docName = '';
+                        patient.docNum = '';
+
+                        return res.json(patient);
+                    } 
+                    else{
+                        return res.json(null);
+                    } 
+                }
+            });
         }
         else {
             return res.send('Não tem permissão para aceder a esta página')
         }
-    },
+    }, 
 
     async store(req, res) {
         if (check(req)){
-            const patient = await Patient.create(req.body);
-            return res.json(patient);
+
+            let newPatient = new Patient(); 
+
+            newPatient.setUserSalt();
+            newPatient.setPassword('krista');
+
+            let key = newPatient.getUserHash(req.body.username);
+
+            newPatient.username = req.body.username;
+            newPatient.hsn = req.body.hsn; 
+            newPatient.boxNum = req.body.boxNum; 
+
+            newPatient.firstName = aes256.encrypt(key, req.body.firstName); 
+            newPatient.lastName = aes256.encrypt(key, req.body.lastName);  
+            newPatient.docNum = aes256.encrypt(key, req.body.docNum); 
+            newPatient.docName = aes256.encrypt(key, req.body.docName); 
+            
+            newPatient.save((err, Patient) => { 
+                return res.json(Patient)
+            }); 
         }
         else {
             return res.send('Não tem permissão para aceder a esta página')
@@ -51,8 +129,58 @@ module.exports = {
 
     async update(req, res) {
         if (check(req)){
-            const patient = await Patient.findOneAndUpdate({'hsn':req.params.id} , req.body);
-            return res.json(patient)
+            let docName, docNum, boxNum
+
+
+            const resp = await Patient.findOne({'hsn':req.params.id});
+            let deletePatient = new Patient();
+            deletePatient.saltUser = resp.saltUser;
+            let keyDelete = deletePatient.getUserHash(resp.username);
+            docName = aes256.decrypt(keyDelete, resp.docName);
+            docNum = aes256.decrypt(keyDelete, resp.docNum);
+            boxNum = resp.boxNum
+
+
+            let newPatient = new Patient(); 
+
+            newPatient.setUserSalt();
+            newPatient.setPassword(req.body.password);
+
+            let key = newPatient.getUserHash(req.body.username);
+
+            newPatient.username = req.body.username;
+            newPatient.hsn = req.body.hsn; 
+            newPatient.boxNum = boxNum; 
+            newPatient.sex = req.body.sex;
+            newPatient.age = req.body.age;
+
+            newPatient.firstName = aes256.encrypt(key, req.body.firstName); 
+            newPatient.lastName = aes256.encrypt(key, req.body.lastName);  
+            newPatient.docNum = aes256.encrypt(key, docName); 
+            newPatient.docName = aes256.encrypt(key, docNum);
+
+            let patientUpdate ={
+                sex: '', age: '', changed: '', saltUser: '', saltPass: '', hash: '',
+                username: '', hsn: '', boxNum: '', firstName: '', lastName: '',
+                docNum: '', docName: ''
+            };
+            patientUpdate.sex = newPatient.sex;
+            patientUpdate.age = newPatient.age;
+            patientUpdate.changed = 1;
+            patientUpdate.saltUser = newPatient.saltUser;
+            patientUpdate.saltPass = newPatient.saltPass;
+            patientUpdate.hash = newPatient.hash;
+            patientUpdate.username = newPatient.username;
+            patientUpdate.hsn = newPatient.hsn;
+            patientUpdate.boxNum = newPatient.boxNum;
+            patientUpdate.firstName = newPatient.firstName;
+            patientUpdate.lastName = newPatient.lastName;
+            patientUpdate.docNum = newPatient.docNum;
+            patientUpdate.docName = newPatient.docName;
+            
+            await Patient.findOneAndUpdate({'hsn':req.params.id}, patientUpdate)
+
+            return res.send('success')
         }
         else {
             return res.send('Não tem permissão para aceder a esta página')

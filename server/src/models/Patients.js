@@ -3,15 +3,10 @@ const mongoosePaginate = require('mongoose-paginate');
 const crypto = require('crypto');
 
 const PatientSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        default: 'user'    //alterar para gerar aleatorio
-    },
-    password: String,
+    username: String,
     hsn: {
         type: String,
         minlength : 9,
-        maxlength : 9,
         required: true
     },
     firstName: {
@@ -37,7 +32,6 @@ const PatientSchema = new mongoose.Schema({
     docNum: {
         type: String,
         minlength : 9,
-        maxlength : 9,
         required: true
     },
     docName: {
@@ -47,20 +41,29 @@ const PatientSchema = new mongoose.Schema({
     boxNum: {
         type: String,
         minlength : 12,
-        maxlength : 12,
         required: true
     },
-    salt: String
+    hash : String, 
+    saltPass : String,
+    saltUser:  String,
 });
 
 PatientSchema.methods.setPassword = function(password) { 
-    this.salt = crypto.randomBytes(16).toString('hex'); 
-    this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 64, `sha512`).toString(`hex`); 
+    this.saltPass = crypto.randomBytes(16).toString('hex'); 
+    this.hash = crypto.pbkdf2Sync(password, this.saltPass, 1000, 64, `sha512`).toString(`hex`); 
 }; 
 
 PatientSchema.methods.validPassword = function(password) { 
-    var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, `sha512`).toString(`hex`); 
-    return this.password === hash; 
+    var hash = crypto.pbkdf2Sync(password, this.saltPass, 1000, 64, `sha512`).toString(`hex`); 
+    return this.hash === hash; 
+};
+
+PatientSchema.methods.setUserSalt = function() { 
+    this.saltUser = crypto.randomBytes(16).toString('hex');
+}; 
+
+PatientSchema.methods.getUserHash = function(username) { 
+    return crypto.pbkdf2Sync(username, this.saltUser, 1000, 64, `sha512`).toString(`hex`); 
 }; 
 
 PatientSchema.plugin(mongoosePaginate);

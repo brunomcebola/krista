@@ -254,7 +254,7 @@ class Table extends Component {
             <div id="table">
                 {saving===3?
                     <div id="load-wait">
-                        <Loader type="Ball-Triangle" color="green" height={300} width={125} />
+                        <Loader type="TailSpin" color="green" height={300} width={125} />
                     </div>
                 :
                     <div>
@@ -387,6 +387,15 @@ export default class Schedule extends Component {
         this.forceUpdate()
     }
 
+    logout = () => {
+        localStorage.removeItem('medicalLoginDate');
+        localStorage.removeItem('medicalLogged');
+        localStorage.removeItem('docInfo');
+        localStorage.removeItem('hsn');
+        clearInterval(this.state.intervalID);
+        this.props.history.push("/MedicalLogin");
+    }
+
     checkLogin = () => {
         const medicalLoginDate = localStorage.getItem('medicalLoginDate');
         const today = new Date();
@@ -394,13 +403,12 @@ export default class Schedule extends Component {
 
         const loggedStorage = localStorage.getItem('medicalLogged');
         if(!compareCipher(loggedStorage,'logged')){
-            clearInterval(this.state.intervalID);
-            this.props.history.push("/MedicalLogin");
+            this.logout();
         }
 
         else if((date-Number(decipher(medicalLoginDate)))/1000 > 10800){
             alert('Por motivos de segurança é necessário realizar login novamente!');
-            this.logout()
+            this.logout();
         }
 
     }

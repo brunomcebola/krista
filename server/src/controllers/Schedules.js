@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const db = mongoose.connection;
 const links = require('../links');
 const Patient = mongoose.model('Patient');
+const aes256 = require('aes256');
 
 //confirma o link de onde o pedido é originado para permitir ou negar acesso. Apenas o site tem acesso a estas funções
 function check(req){
@@ -78,14 +79,24 @@ module.exports = {
             return res.json(response)
         }
         else if(req.body.appToken === 'WR7mG@h3rx9hxAX6A.72dtWJn&uxfjYa') {
-            const patient = await Patient.findOne({'username': req.body.user, 'password': req.body.pass});
-            if(req.params.col.substring(1)===patient.hsn){
-                const response = await db.collection(req.params.col).findOne({ 'name': req.params.name });
-                return res.json(response)
-            }
-            else {
-                return res.send('Não tem permissão para aceder a esta informação')
-            }
+            await Patient.findOne({'username': req.body.user}, async function(err, patient) {
+                if (patient === null) { 
+                    return res.send('Não tem permissão para aceder a esta informação')
+                } 
+                else { 
+                    if(patient.validPassword(req.body.pass)){
+                        if(req.params.col.substring(1)===patient.hsn){
+                            const response = await db.collection(req.params.col).findOne({ 'name': req.params.name });
+                            return res.json(response)
+                        }
+
+                        return res.json(patient);
+                    } 
+                    else{
+                        return res.send('Não tem permissão para aceder a esta informação')
+                    } 
+                }
+            });
         }
         else {
             return res.send('Não tem permissão para aceder a esta página')
