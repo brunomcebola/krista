@@ -238,7 +238,8 @@ class User extends Component {
         changed: localStorage.getItem('changed') || '',
         correct: true,
         loading: false,
-        pass: false,
+        passOld: false,
+        passNew: false,
         userMenu: this.props.userMenu,
         changeData: false,
         spinner: true,
@@ -259,24 +260,48 @@ class User extends Component {
         const pass = document.getElementById('pass-holder');
         const user = document.getElementById('user');
         const sex = document.querySelectorAll('#sex');
+        const firstName = document.getElementById('fname');
+        const lastName = document.getElementById('lname');
+        const age = document.getElementById('age');
 
         //pedido para a api para verificar se existe um user com o username indicado
         const response = await api.post('/patients/checkUser', {user: this.state.setup.username});
 
         pass.style.borderColor = '#5B5F97';
         user.style.borderColor = '#5B5F97';
+        firstName.style.borderColor = '#5B5F97';
+        lastName.style.borderColor = '#5B5F97';
+        age.style.borderColor = '#5B5F97';
+
+        //saneamento do primeiro nome
+        if(!this.state.setup.firstName.match(/^[A-Za-z]+$/)){
+            firstName.style.borderColor = 'red';
+            this.state.correct = false;
+        } 
+
+        //saneamento do segundo nome
+        if(!this.state.setup.lastName.match(/^[A-Za-z]+$/)){
+            lastName.style.borderColor = 'red';
+            this.state.correct = false;
+        } 
 
         //saneamento da password
-        if(this.state.setup.password==='krista' || !this.state.setup.password.match(/^[A-Za-z_-]+$/)){
+        if(!isNaN(this.state.setup.password) || this.state.setup.password==='krista' || !this.state.setup.password.match(/^[A-Za-z0-9_-]+$/)){
             pass.style.borderColor = 'red';
             this.state.correct = false;
         }  
 
         //saneamento do username
-        if(!this.state.setup.username.match(/^[A-Za-z_-]+$/) || response.data===false){
+        if(!isNaN(this.state.setup.username) || !this.state.setup.username.match(/^[A-Za-z0-9_-]+$/) || response.data===false){
             user.style.borderColor = 'red';
             this.state.correct = false;
         }  
+
+        //confirmação da idade mínima
+        if(this.state.setup.age < 13){
+            age.style.borderColor = 'red';
+            this.state.correct = false;
+        }
 
         //atualiza os dados se tudo estiver correto
         if(this.state.correct){
@@ -323,31 +348,78 @@ class User extends Component {
     //FUNÇÕES DA ÁREA DO PERFIL
 
     //verifica os dados inseridos pelo user e atualiza as informações na base de dados
-    profileSubmitData = async () => {
+    profileSubmitData = async (e) => {
+        e.preventDefault();
+
         this.state.loading = true;
         this.forceUpdate();
 
-        const pass = document.getElementById('pass-container');
+        const passNew = document.getElementById('pass-container-new');
+        const passOld = document.getElementById('pass-container-old');
         const user = document.getElementById('user');
+        const firstName = document.getElementById('first-name');
+        const lastName = document.getElementById('last-name');
+        const age = document.getElementById('age');
+
+        passOld.style.borderColor = '#5B5F97';
+        passNew.style.borderColor = '#5B5F97';
+        user.style.borderColor = '#5B5F97';
+        firstName.style.borderColor = '#5B5F97';
+        lastName.style.borderColor = '#5B5F97';
+        age.style.borderColor = '#5B5F97';
 
         //pedido para a api para verificar se existe um user com o username indicado
-        let response = await api.post('/patients/checkUser', {user: this.state.setup.username});
-        if(this.state.setup.username === this.state.data.username) response.data=true;
+        let userExists = await api.post('/patients/checkUser', {user: this.state.setup.username});
+        if(this.state.setup.username === this.state.data.username) userExists.data=true;
 
-        pass.style.borderColor = '#5B5F97';
-        user.style.borderColor = '#5B5F97';
+        //saneamento da password nova
+        if(!isNaN(this.state.setup.passOld) || this.state.setup.passOld==='krista' || !this.state.setup.passOld.match(/^[A-Za-z0-9_-]+$/)){
+            passOld.style.borderColor = 'red';
+            this.state.correct = false;
+        } 
 
-        //saneamento da password
-        if(this.state.setup.password==='krista' || !this.state.setup.password.match(/^[A-Za-z_-]+$/)){
-            pass.style.borderColor = 'red';
+        //verifica a identidade do user
+        if(this.state.correct){
+            const userCheck = await api.post('/patients/log', {user: this.state.data.username, pass: this.state.setup.passOld});
+            if(userCheck.data === null) {
+                passOld.style.borderColor = 'red';
+                this.state.correct = false;
+                alert('Certifique-se que inseriu a sua password atual!')
+            }
+        }
+        
+        //saneamento do primeiro nome
+        if(!this.state.setup.firstName.match(/^[A-Za-z]+$/)){
+            firstName.style.borderColor = 'red';
+            this.state.correct = false;
+        }  
+
+        //saneamento do segundo nome
+        if(!this.state.setup.lastName.match(/^[A-Za-z]+$/)){
+            lastName.style.borderColor = 'red';
+            this.state.correct = false;
+        } 
+
+        //saneamento da password nova
+        if(this.state.setup.password===''){
+           this.state.setup.password = this.state.setup.passOld
+        }
+        else if(!isNaN(this.state.setup.password) || this.state.setup.password==='krista' || !this.state.setup.password.match(/^[A-Za-z0-9_-]+$/)){
+            passNew.style.borderColor = 'red';
             this.state.correct = false;
         }  
 
         //saneamento do username
-        if(!this.state.setup.username.match(/^[A-Za-z_-]+$/) || response.data===false){
+        if(!isNaN(this.state.setup.username) || !this.state.setup.username.match(/^[A-Za-z0-9_-]+$/) || userExists.data===false){
             user.style.borderColor = 'red';
             this.state.correct = false;
         }  
+
+        //confirmação da idade mínima
+        if(this.state.setup.age < 13){
+            age.style.borderColor = 'red';
+            this.state.correct = false;
+        } 
 
         //atualiza os dados se tudo estiver correto
         if(this.state.correct){
@@ -370,6 +442,10 @@ class User extends Component {
         const resp = await api.get(`patients/${decipher(hsn)}`);
         this.state.setup = resp.data;
         this.state.data = resp.data;
+        this.state.setup.password = '';
+        this.state.data.password = '';
+        this.state.setup.passOld = '';
+        this.state.data.passOld = '';
         const radio = document.querySelectorAll("input[type='radio']");
         switch(this.state.setup.sex){
             case 0:
@@ -391,16 +467,40 @@ class User extends Component {
             document.getElementById('cancelar').style.display = 'initial';
             document.getElementById('guardar').style.display = 'initial';
             document.getElementById('atualizar').style.display = 'none';
-            document.getElementById('pass-container').style.backgroundColor = '#fff';
-            document.getElementById('profile-eye').style.cursor = 'pointer'
+            document.getElementById('pass-container-old').style.backgroundColor = '#fff';
+            document.getElementById('pass-container-new').style.backgroundColor = '#fff';
+            document.getElementById('profile-eye-old').style.cursor = 'pointer';
+            document.getElementById('profile-eye-new').style.cursor = 'pointer'
         }
         else {                                                                  //cancela as alterações efetuadas e bloqueia os inputs
+            const passOld = document.getElementById('pass-container-old');
+            const passNew = document.getElementById('pass-container-new');
+            const user = document.getElementById('user');
+            const firstName = document.getElementById('first-name');
+            const lastName = document.getElementById('last-name');
+            const age = document.getElementById('age');
+
+            passOld.style.borderColor = '#5B5F97';
+            passOld.style.backgroundColor = 'rgb(235,235,228)';
+            passNew.style.borderColor = '#5B5F97';
+            passNew.style.backgroundColor = 'rgb(235,235,228)';
+
+            user.style.borderColor = '#5B5F97';
+            firstName.style.borderColor = '#5B5F97';
+            lastName.style.borderColor = '#5B5F97';
+            age.style.borderColor = '#5B5F97';
+
             document.getElementById('cancelar').style.display = 'none';
             document.getElementById('guardar').style.display = 'none';
             document.getElementById('atualizar').style.display = 'initial';
-            document.getElementById('pass-container').style.backgroundColor = 'rgb(235,235,228)';
-            document.getElementById('profile-eye').style.cursor = 'default';
-            if(this.state.pass) this.profileTogglePassword()
+            
+            document.getElementById('profile-eye-old').style.cursor = 'default';
+            document.getElementById('profile-eye-new').style.cursor = 'default';
+
+            if(this.state.passOld) this.profileTogglePassword(0);
+            if(this.state.passNew) this.profileTogglePassword(1);
+
+
             this.state.setup = this.state.data;
             const radio = document.querySelectorAll("input[type='radio']");
             switch(this.state.setup.sex){
@@ -421,21 +521,40 @@ class User extends Component {
     }
 
     //alterna a visibilade da password
-    profileTogglePassword = () => {
-        const eye = document.querySelector("#pass-container .fa");
-        const pass = document.querySelector('#pass');
-        if(this.state.pass) {                       //torna invisivel
-            eye.classList.remove('fa-eye-slash');
-            eye.classList.add('fa-eye');
-            pass.type = "password";
-            this.state.pass = false
+    profileTogglePassword = (eye) => {
+        const eyeOld = document.querySelector("#pass-container-old .fa");
+        const eyeNew = document.querySelector("#pass-container-new .fa");
+        const passOld = document.querySelector('#pass-old');
+        const passNew = document.querySelector('#pass-new');
+        if(eye === 0){      //pass antiga
+            if(this.state.passOld) {                       //torna invisivel
+                eyeOld.classList.remove('fa-eye-slash');
+                eyeOld.classList.add('fa-eye');
+                passOld.type = "password";
+                this.state.passOld = false
+            }
+            else {                                  //torna visivel
+                eyeOld.classList.remove('fa-eye');
+                eyeOld.classList.add('fa-eye-slash');
+                passOld.type = "text";
+                this.state.passOld = true
+            } 
         }
-        else {                                  //torna visivel
-            eye.classList.remove('fa-eye');
-            eye.classList.add('fa-eye-slash');
-            pass.type = "text";
-            this.state.pass = true
-        }   
+        else {      //pass nova
+            if(this.state.passNew) {                       //torna invisivel
+                eyeNew.classList.remove('fa-eye-slash');
+                eyeNew.classList.add('fa-eye');
+                passNew.type = "password";
+                this.state.passNew = false
+            }
+            else {                                  //torna visivel
+                eyeNew.classList.remove('fa-eye');
+                eyeNew.classList.add('fa-eye-slash');
+                passNew.type = "text";
+                this.state.passNew = true
+            } 
+        }
+          
     }
 
 
@@ -543,7 +662,6 @@ class User extends Component {
         loginIntervalId = setInterval(this.checkLoginTime, 1000);       //guarda o ID do intervalo que verifica o login 
     }
 
-
     //FALTA COMENTAR DAQUI PARA BAIXO
 
 
@@ -580,7 +698,7 @@ class User extends Component {
                             </p>
                             <p>Idade</p>
                             <p>
-                                <input id="age" type="number" required onChange={e => this.setState({setup: {...this.state.setup, age: e.target.value}})} value={this.state.setup.age}/>
+                                <input id="age" type="number" min='13' required onChange={e => this.setState({setup: {...this.state.setup, age: e.target.value}})} value={this.state.setup.age}/>
                             </p>
                             <p>Género</p>
                             <p>
@@ -597,26 +715,30 @@ class User extends Component {
                             <div id="photo-container">
                                 <img src={this.state.setup.sex===0?female:this.state.setup.sex===1?male:other} alt='user'/>
                             </div>
-                            <div id="information-container">
+                            <form id="information-container" onSubmit={e => this.profileSubmitData(e)}>
                                 <label for="nome">Primeiro nome:</label><br/>
-                                <input disabled={!this.state.changeData} id="first-name" type="text" onChange={e => this.setState({setup: {...this.state.setup, firstName: e.target.value}})} value={this.state.setup.firstName}/><br/>
+                                <input required disabled={!this.state.changeData} id="first-name" type="text" onChange={e => this.setState({setup: {...this.state.setup, firstName: e.target.value}})} value={this.state.setup.firstName}/><br/>
                                 <label for="nome">Último Nome:</label><br/>
-                                <input disabled={!this.state.changeData} id="last-name" type="text" onChange={e => this.setState({setup: {...this.state.setup, lastName: e.target.value}})} value={this.state.setup.lastName}/><br/>
+                                <input required disabled={!this.state.changeData} id="last-name" type="text" onChange={e => this.setState({setup: {...this.state.setup, lastName: e.target.value}})} value={this.state.setup.lastName}/><br/>
                                 <label for="user">Username:</label><br/>
-                                <input disabled={!this.state.changeData} id="user" type="text" onChange={e => this.setState({setup: {...this.state.setup, username: e.target.value}})} value={this.state.setup.username}/><br/>
-                                <label for="pass">Password:</label><br/>
-                                <span id="pass-container"><input disabled={!this.state.changeData} id="pass" type="password" onChange={e => this.setState({setup: {...this.state.setup, password: e.target.value}})} value={this.state.setup.password}/>
-                                <i className="fa fa-eye" id="profile-eye" onClick={!this.state.changeData?null:this.profileTogglePassword}></i></span><br/>
+                                <input required disabled={!this.state.changeData} id="user" type="text" onChange={e => this.setState({setup: {...this.state.setup, username: e.target.value}})} value={this.state.setup.username}/><br/>
+                                <label for="pass-old">Password Antiga:</label><br/>
+                                <span className="pass-container" id="pass-container-old"><input required disabled={!this.state.changeData} className='pass' id="pass-old" type="password" onChange={e => this.setState({setup: {...this.state.setup, passOld: e.target.value}})} value={this.state.setup.passOld}/>
+                                <i className="fa fa-eye" id="profile-eye-old" onClick={!this.state.changeData?null:() => this.profileTogglePassword(0)}></i></span><br/>
+                                <label for="pass-new">Password Nova:</label><br/>
+                                <span className="pass-container" id="pass-container-new"><input disabled={!this.state.changeData} className='pass' id="pass-new" type="password" onChange={e => this.setState({setup: {...this.state.setup, password: e.target.value}})} value={this.state.setup.password}/>
+                                <i className="fa fa-eye" id="profile-eye-new" onClick={!this.state.changeData?null:() => this.profileTogglePassword(1)}></i></span><br/>
                                 <label for="age">Idade:</label><br/>
-                                <input disabled={!this.state.changeData} id="age" type="number" onChange={e => this.setState({setup: {...this.state.setup, age: e.target.value}})} value={this.state.setup.age}/><br/>
+                                <input required disabled={!this.state.changeData} id="age" type="number" min='13' onChange={e => this.setState({setup: {...this.state.setup, age: e.target.value}})} value={this.state.setup.age}/><br/>
                                 <label>Género:</label><br/>                            
-                                <input disabled={!this.state.changeData} type="radio" name="gender" id="male" value='0' onChange={() => {this.state.setup.sex=0; this.forceUpdate()}}/>
+                                <input required disabled={!this.state.changeData} type="radio" name="gender" id="male" value='0' onChange={() => {this.state.setup.sex=0; this.forceUpdate()}}/>
                                 <label className="radioLabel" for="male">Feminino</label>
-                                <input disabled={!this.state.changeData} type="radio" name="gender" id="female" value='1' onChange={() => {this.state.setup.sex=1; this.forceUpdate()}}/>
+                                <input required disabled={!this.state.changeData} type="radio" name="gender" id="female" value='1' onChange={() => {this.state.setup.sex=1; this.forceUpdate()}}/>
                                 <label className="radioLabel" for="female">Masculino</label>
-                                <input disabled={!this.state.changeData} type="radio" name="gender" id="other" value='2' onChange={() => {this.state.setup.sex=2; this.forceUpdate()}}/>
-                                <label className="radioLabel" for="other">Outro</label>                         
-                            </div>
+                                <input required disabled={!this.state.changeData} type="radio" name="gender" id="other" value='2' onChange={() => {this.state.setup.sex=2; this.forceUpdate()}}/>
+                                <label className="radioLabel" for="other">Outro</label>   
+                                <button type="submit"></button>                      
+                            </form>
                         </div>
                         <div id="button-container">
                             <button id="atualizar" onClick={this.profileControlButtons}>Atualizar informação</button>
@@ -700,24 +822,48 @@ export default class Home extends Component {
         userMenu: localStorage.getItem('userMenu') || cipher('default')
     }
 
-    login = async () => {
+    login = async (e) => {
+        e.preventDefault();
         this.state.loading = true;
         this.forceUpdate();
+
+        let allow=true;
+
         let user = document.querySelector('#user');
         let pass = document.querySelector('#pass');
-        const response = await api.post('/patients/log', {user: user.value, pass: pass.value});        
+        let passHolder = document.querySelector('#pass-holder');
+
+        user.style.border = 'none';
+        passHolder.style.border = 'none';
+
+        if(!user.value.match(/^[A-Za-z0-9-_]+$/)){
+            user.style.border = '1px solid red'
+            allow = false;
+        }
+
+        if(!pass.value.match(/^[A-Za-z0-9_-]+$/)){
+            passHolder.style.border = '1px solid red'
+            allow = false;
+        }
+
+        if(allow) {
+            const response = await api.post('/patients/log', {user: user.value, pass: pass.value});   
+
+            this.state.loading = false;
+            this.setState({data: response.data})
+            user.value="";
+            pass.value="";
+            if(response.data!==null){
+                const today = new Date();
+                const date = today.getTime();
+                localStorage.setItem('userLogged', cipher('logged'));
+                localStorage.setItem('userHsn', cipher(response.data.hsn));
+                localStorage.setItem('userLoginDate', cipher(date.toString()));
+                if(response.data.changed===0) localStorage.setItem('changed', cipher('false'));            
+            } 
+        }
+        
         this.state.loading = false;
-        this.setState({data: response.data})
-        user.value="";
-        pass.value="";
-        if(response.data!==null){
-            const today = new Date();
-            const date = today.getTime();
-            localStorage.setItem('userLogged', cipher('logged'));
-            localStorage.setItem('userHsn', cipher(response.data.hsn));
-            localStorage.setItem('userLoginDate', cipher(date.toString()));
-            if(response.data.changed===0) localStorage.setItem('changed', cipher('false'));            
-        } 
         this.forceUpdate();
     }
 
@@ -794,12 +940,12 @@ export default class Home extends Component {
                                                     </div> 
                                                     <button onClick={this.logout} id="logout">Logout</button>
                                                 </span>
-                                                :<span className="logging">
-                                                    <input placeholder="username" type="text" id="user" autoComplete="on"></input>
-                                                    <span id="pass-holder"><input placeholder="password" type="password" id="pass" autoComplete="on"></input>
+                                                :<form className="logging" onSubmit={e => this.login(e)}>
+                                                    <input placeholder="username" type="text" id="user" autoComplete="on" required></input>
+                                                    <span id="pass-holder"><input placeholder="password" type="password" id="pass" autoComplete="on" required></input>
                                                     <i className="fa fa-eye" onClick={this.togglePassword}></i></span>
-                                                    <button onClick={this.login} id="login">{loading?<Loader type="ThreeDots" color='rgb(56, 59, 94)' height="10" width="30"/>:'Login'}</button>
-                                                </span>
+                                                    <button type="submit" id="login">{loading?<Loader type="ThreeDots" color='rgb(56, 59, 94)' height="10" width="30"/>:'Login'}</button>
+                                                </form>
                                             }
                                         </li>
                                     </ul>

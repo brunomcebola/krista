@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-const Patient = mongoose.model('Patient');
 const links = require('../links');
 const aes256 = require('aes256');
+const randomstring = require("randomstring");
+
+const Patient = mongoose.model('Patient');
 
 function check(req){
     return (links.includes(req.headers.referer))
@@ -104,23 +106,30 @@ module.exports = {
 
             let newPatient = new Patient(); 
 
+            let pass = randomstring.generate({
+                length: 10,
+                readable: true,
+                charset: 'alphanumeric'
+            });
+
             newPatient.setUserSalt();
-            newPatient.setPassword('krista');
+            newPatient.setPassword(pass);
 
             let key = newPatient.getUserHash(req.body.username);
 
             newPatient.username = req.body.username;
             newPatient.hsn = req.body.hsn; 
             newPatient.boxNum = req.body.boxNum; 
+            newPatient.age = req.body.age;
 
             newPatient.firstName = aes256.encrypt(key, req.body.firstName); 
             newPatient.lastName = aes256.encrypt(key, req.body.lastName);  
             newPatient.docNum = aes256.encrypt(key, req.body.docNum); 
             newPatient.docName = aes256.encrypt(key, req.body.docName); 
             
-            newPatient.save((err, Patient) => { 
-                return res.json(Patient)
-            }); 
+            newPatient.save((err, Patient) => {}); 
+
+            return res.json(pass);
         }
         else {
             return res.send('Não tem permissão para aceder a esta página')
@@ -156,8 +165,8 @@ module.exports = {
 
             newPatient.firstName = aes256.encrypt(key, req.body.firstName); 
             newPatient.lastName = aes256.encrypt(key, req.body.lastName);  
-            newPatient.docNum = aes256.encrypt(key, docName); 
-            newPatient.docName = aes256.encrypt(key, docNum);
+            newPatient.docNum = aes256.encrypt(key, docNum); 
+            newPatient.docName = aes256.encrypt(key, docName);
 
             let patientUpdate ={
                 sex: '', age: '', changed: '', saltUser: '', saltPass: '', hash: '',

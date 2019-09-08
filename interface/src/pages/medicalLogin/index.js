@@ -16,24 +16,45 @@ export default class MedicalLogIn extends Component {
         this.state.loading=true;
         this.forceUpdate();
 
-        const medicalNumber = document.getElementById("nm").value;
-        const password = document.getElementById("pw").value;
+        let allow = true;
 
-        const response = await api.get(`/doctors/${medicalNumber}`);
+        const nm = document.getElementById("nm");
+        const pw = document.getElementById("pw");
+        const passHolder = document.getElementById("pass-holder")
 
-        document.getElementById("nm").value = '';
-        document.getElementById("pw").value = '';
-        
-        if(response.data != null){
-            if(response.data.password === password){
-                const today = new Date();
-                const date = today.getTime();
-                localStorage.setItem('medicalLoginDate', cipher(date.toString()));
-                localStorage.setItem('medicalLogged', cipher('logged'));
-                localStorage.setItem('docInfo', JSON.stringify(cipher(medicalNumber)));
-                this.props.history.push("/MedicalArea");
-            } 
+        const medicalNumber = nm.value;
+        const password = pw.value;
+
+        nm.style.borderColor = '#5B5F97';
+        passHolder.style.borderColor = '#5B5F97';
+
+        //saneamento do numero medico
+        if(!medicalNumber.match(/^[A-Za-z0-9]+$/)){
+            nm.style.borderColor = 'red'
+            allow = false;
         }
+
+        if(!password.match(/^[A-Za-z0-9]+$/)){
+            passHolder.style.borderColor = 'red'
+            allow = false;
+        }
+
+        if(allow){
+            const response = await api.get(`/doctors/${medicalNumber}`);
+            document.getElementById("nm").value = '';
+            document.getElementById("pw").value = '';
+            if(response.data != null){
+                if(response.data.password === password){
+                    const today = new Date();
+                    const date = today.getTime();
+                    localStorage.setItem('medicalLoginDate', cipher(date.toString()));
+                    localStorage.setItem('medicalLogged', cipher('logged'));
+                    localStorage.setItem('docInfo', JSON.stringify(cipher(medicalNumber)));
+                    this.props.history.push("/MedicalArea");
+                } 
+            }
+        }
+        
         this.state.loading=false;
         
         this.forceUpdate();

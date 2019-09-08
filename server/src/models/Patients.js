@@ -3,7 +3,6 @@ const mongoosePaginate = require('mongoose-paginate');
 const crypto = require('crypto');
 
 const PatientSchema = new mongoose.Schema({
-    username: String,
     hsn: {
         type: String,
         minlength : 9,
@@ -20,10 +19,6 @@ const PatientSchema = new mongoose.Schema({
     sex: {
         type: Number,
         default: 2,
-    },
-    age: {
-        type: Number,
-        default: 18
     },
     changed: {
         type: Number,
@@ -43,6 +38,8 @@ const PatientSchema = new mongoose.Schema({
         minlength : 12,
         required: true
     },
+    username: String,
+    age: Number,
     hash : String, 
     saltPass : String,
     saltUser:  String,
