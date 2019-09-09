@@ -15,7 +15,7 @@ import HorarioUser from '../../components/horarioUser';
 //CSS STYLE SHEET DA PÁGINA
 import './styles.css';
 
-//IMAGES
+//IMAGENS
 import logo from '../../images/icon.png';   //logotipo do projeto
 import male from '../../images/male.png';   //icon usuario masculino
 import female from '../../images/female.png';   //icon usuario feminino
@@ -583,7 +583,7 @@ class User extends Component {
 
     //FUNÇÕES RELATIVAS À CLASSE NO GERAL
 
-    //verifica os dados de login do utilizador periodicamente
+    //verifica periodicamente os dados de login do utilizador
     checkLoginTime = () => {
         const userLoginDate = localStorage.getItem('userLoginDate');
         const today = new Date();

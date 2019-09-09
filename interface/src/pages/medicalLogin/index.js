@@ -13,6 +13,7 @@ import {cipher,compareCipher} from '../../ciphers/encryptor.js';
 //CSS STYLE SHEET DA PÁGINA
 import './styles.css';
 
+//CRIA A ÁREA DE LOGIN PARA OS MÉDICOS
 export default class MedicalLogin extends Component {  
     state = {
         loading: false

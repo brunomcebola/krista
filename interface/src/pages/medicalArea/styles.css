@@ -1,31 +1,40 @@
-/*DEFAULT BACKGROUND COLOR*/
-
+/* define a cor de fundo por defeito */
 #medical-area {
     background-color: #F8F8FF
 }
 
 
-/*HEADER CLASS*/
 
-.header {
+
+/* Header CLASS STYLES */
+
+#header {
     display: flex;
 }
 
-.header h2 {
+#header h2 {
     flex: 40%
 }
 
-.header img {
+#header img {
     width: 50px;
     margin-left: 0.5%;
 }
 
 
-/*MEDICALAREA CLASS*/
 
-/*zona de navegação*/
 
-.medicalNav {
+
+
+
+
+
+
+/* MedicalArea CLASS STYLES */
+
+/* Cabeçalho */
+
+#medical-nav {
     display: flex;
     margin-top: 17px ;
     padding: 10px;
@@ -35,17 +44,28 @@
     justify-content: space-between;
 }
 
-.medicalNav .leftContainer {
+/* Cabeçalho - Área de dados */
+
+#medical-nav #left-container {
     flex: 93%;
 }
 
-.medicalNav .leftContainer #search-patient {
+/* Cabeçalho - Área de dados - Zona de pesquisa */
+
+#medical-nav #left-container #search-patient {
     max-height: 37px;
     border-radius: 5px 0 0 5px;
-    border-right: none
+    font-size: 16px;
+    padding: 6px;
+    margin-left: 2%;
+    width: 15%;
+    min-width: 160px;
+    border: 1px solid black;
+    border-right: none;
 }
 
-.medicalNav .leftContainer #search-btn {
+
+#medical-nav #left-container #search-btn {
   background: #5B5F97;
   color: #fff;
   border: 1px solid black;
@@ -55,26 +75,13 @@
   transition: all 0.3s 
 }
 
-.medicalNav .leftContainer #search-btn:hover {
+#medical-nav #left-container #search-btn:hover {
     opacity: 0.8
 }
 
-.medicalNav .leftContainer input {
-    font-size: 16px;
-    padding: 6px;
-    margin-left: 2%;
-    width: 15%;
-    min-width: 160px;
-    border: 1px solid black;
-}
+/* Cabeçalho - Área de dados - Zona de novo paciente */
 
-.medicalNav .rightContainer {
-    flex: 7%;
-    margin: auto
-}
-
-.medicalNav .rightContainer #logout-btn,
-.medicalNav .leftContainer #new-patient {
+#medical-nav #left-container #new-patient {
     padding: 6px;
     border-radius: 5px;
     border: 0;
@@ -86,72 +93,80 @@
     transition: all 0.3s;
     max-height: 37px;
     min-width: 105px;
-}
-
-.medicalNav .rightContainer #logout-btn {
-    margin-right: 20px;
-}
-
-.medicalNav .rightContainer #logout-btn:hover,
-.medicalNav .leftContainer #new-patient:hover {
-    opacity: 0.8
-}
-
-.medicalNav .leftContainer #new-patient {
     margin-left: 40px
 }
 
-@media only screen and (max-width: 600px) {
-    .medicalNav {
-        display: block
-    }
-
-    .medicalNav .leftContainer #search-patient {
-        width: 90%;
-        margin: auto
-    }
-
-    .medicalNav .leftContainer #search-btn{
-        width: 10%;
-    }
-
-    .medicalNav .leftContainer #new-patient {
-        float: left;
-        margin-left: 0;
-        margin-top: 2%
-    }
-
-    .medicalNav .rightContainer {
-        text-align: right;
-        margin-top: 2%
-    }
-
-    .medicalNav .rightContainer #logout-btn {
-        margin-left: 0;
-        margin-right: 0
-    }
-} 
+#medical-nav #left-container #new-patient:hover {
+    opacity: 0.8
+}
 
 
-/*LIST CLASS*/
+/* Cabeçalho - Zona de logout */
 
-.patient-list {
+#medical-nav #right-container {
+    flex: 7%;
+    margin: auto
+}
+
+#medical-nav #right-container #logout-btn {
+    padding: 6px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    max-height: 37px;
+    min-width: 105px;
+    margin-right: 20px;
+}
+
+#medical-nav #right-container #logout-btn:hover {
+    opacity: 0.8
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* List CLASS STYLES */
+
+/* Definições gerais da classe */
+
+#patient-list {
     max-width: 80%;
     margin: 20px auto 0;
     padding: 0 20px;
 }
 
-.patient-list #pacient-error {
+/* Definição da mensagem de erro */
+
+#patient-list #pacient-error {
     color: #f00;
 }
 
-.patient-list #actions {
+/* Butões de ação */
+
+#patient-list #actions {
     display: flex;
     justify-content: space-between;
     margin: 20px auto 20px auto;
 }
 
-.patient-list #actions button {
+#patient-list #actions button {
     padding: 10px;
     border-radius: 5px;
     border: 0;
@@ -163,36 +178,39 @@
     transition: all 0.3s;
 }
 
-.patient-list #actions button #formLink {
+#patient-list #actions button #formLink {
     color: #fff;
     text-decoration: none;
 }
 
-.patient-list #actions button[disabled]{
+#patient-list #actions button[disabled]{
     opacity: 0.6;
     filter: grayscale(100%);
     cursor: default;
 }
 
-.patient-list #actions button:hover {
+#patient-list #actions button:hover {
     opacity: 0.8;
 }
 
-.patient-list #actions button[disabled]:hover{
+#patient-list #actions button[disabled]:hover {
     opacity: 0.6;
 }
 
-@media only screen and (max-width: 700px) {
-    .patient-list {
-        max-width: 90%;
-    }
-
-}
 
 
-/*MODAL CLASS*/
 
-.contentor {
+
+
+
+
+
+
+/* Modal CLASS STYLES */
+
+/* Definições gerais da classe */
+
+#modal-container {
     position: fixed;
     z-index: 1;
     padding-top: 50px;
@@ -205,7 +223,9 @@
     background-color: rgba(0,0,0,0.4);
 }
 
-.contentor .modalContent {
+/* Interior do modal */
+
+#modal-container #modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -213,43 +233,49 @@
     border-radius: 5px;
     box-shadow: 2px 2px 10px;
     width: 30%;
-    min-width: 230px;
+    min-width: 308px;
 }
 
-.contentor .modalContent #warn {
+/* Interior do modal - Mensagens */
+
+#modal-container #modal-content #warn {
     color: rgb(255, 217, 0)
 }
 
-.contentor .modalContent #succ {
+#modal-container #modal-content #succ {
     color: green;
 }
 
-.contentor .modalContent #erro {
+#modal-container #modal-content #erro {
     color: #f00
 }
 
-.contentor .modalContent .data-form {
+/* Interior do modal - Zona de dados */
+
+#modal-container #modal-content #data-form {
     padding-top: 20px
 }
 
-.contentor .modalContent .data-form p label {
+#modal-container #modal-content #data-form p label {
     font-weight: normal;
     margin-right: 10px
 }
 
-.contentor .modalContent .data-form p input {
+#modal-container #modal-content #data-form p input {
     border-radius: 5px;
     border: 1px solid #5B5F97;
     font-size: 16px;
+    width: 50%;
+    min-width: 184px
 }
 
-.contentor .modalContent .data-form p input[type=number]::-webkit-inner-spin-button, 
-.contentor .modalContent .data-form p input[type=number]::-webkit-outer-spin-button { 
+#modal-container #modal-content #data-form p input[type=number]::-webkit-inner-spin-button, 
+#modal-container #modal-content #data-form p input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
 }
 
-.contentor .modalContent .data-form button {
+#modal-container #modal-content #data-form button {
     margin:-5px;
     margin-top: 20px;
     padding: 6px;
@@ -263,26 +289,93 @@
     transition: all 0.3s;
 }
 
-.contentor .modalContent .data-form button:hover {
+#modal-container #modal-content #data-form button:hover {
     opacity: 0.8;
 }
 
-.contentor .close {
-    color: #747474;
+/* Interior do modal - Cruz para fechar */
+
+#modal-container #close {
+    color: #8d8d8d;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.contentor .close:hover,
-.contentor .close:focus {
-    color: #000;
+#modal-container #close:hover,
+#modal-container #close:focus {
+    color: rgb(82, 82, 82);
     text-decoration: none;
     cursor: pointer;
 }
 
+
+
+
+
+
+
+
+
+
+/* REDIMENSIONAMENTO PARA ECRÃ MENOR/VISTA MÓVEL */
+
+@media only screen and (max-width: 600px) {
+    /* MedicalArea CLASS STYLES */
+    
+    /* Cabeçalho */
+    #medical-nav {
+        display: block
+    }
+
+    /* Cabeçalho - Área de dados - Zona de pesquisa */
+    #medical-nav #left-container #search-patient {
+        width: 90%;
+        margin: auto
+    }
+
+    #medical-nav #left-container #search-btn{
+        width: 10%;
+    }
+
+    /* Cabeçalho - Área de dados - Zona de novo paciente */
+    #medical-nav #left-container #new-patient {
+        float: left;
+        margin-left: 0;
+        margin-top: 2%
+    }
+
+    /* Cabeçalho - Zona de logout */
+    #medical-nav #right-container {
+        text-align: right;
+        margin-top: 2%
+    }
+
+    #medical-nav #right-container #logout-btn {
+        margin-left: 0;
+        margin-right: 0
+    }
+} 
+
+@media only screen and (max-width: 700px) {
+    /* List CLASS STYLES */
+
+    /* Definições gerais da classe */
+    #patient-list {
+        max-width: 90%;
+    }
+}
+
 @media only screen and (max-width: 1100px) {
-    .contentor .modalContent .data-form p input {
+    /* Modal CLASS STYLES */
+
+    /* Interior do modal */
+    #modal-container #modal-content {
+        margin-bottom: 40px
+    }
+
+    /* Interior do modal - Zona de dados */
+    #modal-container #modal-content #data-form p input {
         width: 100%;
     }
 }
