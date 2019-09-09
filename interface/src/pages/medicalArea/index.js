@@ -207,6 +207,7 @@ export default class MedicalArea extends Component {
     }
 
     componentDidMount() {
+        document.body.style.overflowX = "hidden";
         this.state.interval = setInterval(this.checkLogin, 1000);
         this.loadPatients();
     }

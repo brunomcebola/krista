@@ -1,21 +1,32 @@
+//REACT.JS COMPONENTS
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import api from '../../services/api';
 
+//COMPONENTES CRIADOS POR NOS
+//ligação ao servidor
+import api from '../../services/api';
+//componente que permite voltar para uma página especificada
 import BackBtn from '../../components/backBtn';
-import {cipher,compareCipher} from '../../ciphers/encryptor.js';
+//ficheiro com as funcoes para encriptar a info salva no browser
+import {cipher,compareCipher} from '../../ciphers/encryptor.js';  
+
+//CSS STYLE SHEET DA PÁGINA
 import './styles.css';
 
-export default class MedicalLogIn extends Component {  
+export default class MedicalLogin extends Component {  
     state = {
         loading: false
     }
     
+    //realiza o login do médico
     login = async (e) => {
         e.preventDefault();
+
+        //ativa a animação de load no botão de login
         this.state.loading=true;
         this.forceUpdate();
 
+        //indica se tudo se encontra corrreto para fazer login
         let allow = true;
 
         const nm = document.getElementById("nm");
@@ -47,34 +58,41 @@ export default class MedicalLogIn extends Component {
                 if(response.data.password === password){
                     const today = new Date();
                     const date = today.getTime();
+                    //GUARDA INFO ENCRIPTADA NO LOCAL STORAGE:
+                    //indica a hora de login 
                     localStorage.setItem('medicalLoginDate', cipher(date.toString()));
+                    //indica que o médico tem sessão iniciada
                     localStorage.setItem('medicalLogged', cipher('logged'));
+                    //indica o número do médico
                     localStorage.setItem('docInfo', JSON.stringify(cipher(medicalNumber)));
                     this.props.history.push("/MedicalArea");
                 } 
             }
         }
         
+        //desativa a animação de load no botão de login
         this.state.loading=false;
-        
         this.forceUpdate();
     };
 
+    //verifica os dados de login do médico
     checkLogin = () => {
         const loggedStorage = localStorage.getItem('medicalLogged');
+        //se existir sessão iniciada redireciona para a área médica
         if(compareCipher(loggedStorage,'logged')) this.props.history.push("/MedicalArea");
     }
 
+    //alterna a visibilade da password
     togglePassword = () => {
         const eye = document.querySelector("#pass-holder .fa");
         const pass = document.querySelector('#pass-holder #pw');
-        if(this.state.pass) {
+        if(this.state.pass) {                       //torna invisivel
             eye.classList.remove('fa-eye-slash');
             eye.classList.add('fa-eye');
             pass.type = "password";
             this.state.pass = false
         }
-        else {
+        else {                                      //torna visivel
             eye.classList.remove('fa-eye');
             eye.classList.add('fa-eye-slash');
             pass.type = "text";
@@ -82,16 +100,21 @@ export default class MedicalLogIn extends Component {
         }   
     }
 
+    //define propriedades da classe
+    componentDidMount() {
+        document.body.style.overflowX = "hidden";
+    }
+
     render(){
         this.checkLogin();
 
         return(
-            <div className="medical-login">
+            <div id="medical-login">
                 <BackBtn path='/' text="Página inicial"/>
-                <div className="form-container">
-                    <div className="blue-ball">
+                <div id="form-container">
+                    <div id="blue-ball">
                         <h1>Área Médica</h1>
-                        <form className="medical-form" onSubmit={e => this.login(e)}>
+                        <form id="medical-form" onSubmit={e => this.login(e)}>
                             <label forhtml="nm">Número médico</label>
                             <input id="nm" type="text" placeholder="Numero medico" minLength='9' maxLength='9' autoComplete="on" required/>
                             <label forhtml="pw">Password</label>

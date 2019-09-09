@@ -1,0 +1,1145 @@
+/* UserArea CLASS STYLES */
+
+/* Definições default para os botões */
+
+#user-area button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor:pointer;
+}
+
+
+/* Cabeçalho da página c/ o logo e nome */
+
+#user-area .page-header {
+    position:static;
+    width: 100%;
+    height: 20%;
+    margin:0;
+    background-color:#D0E0FF;
+    text-align: center;
+}
+
+#user-area .page-header img {
+    display:inline-block; 
+    width:7.5%;
+    min-width: 74px;
+    margin-top: 1%;
+}
+
+#user-area .page-header h1{
+    display:block;
+    margin-top: 1%;
+    font-size: 2.5vw;
+}
+
+
+/* Barra de navegação */
+
+#user-area .navigation {
+    display: flex;
+    z-index: 1;
+    width: 100%
+}
+
+#user-area .navigation .navbar-inverse {
+    border-radius: 0px;
+    width: 100%
+}
+
+/* Barra de navegação - Botão para acesso à área médica */
+
+#user-area .navigation .navbar .container-fluid .nav .medBtn {
+    color: #fff;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    text-align: left
+}
+
+#user-area .navigation .navbar .container-fluid .nav .medBtn:hover {
+    transition: 0.4s; 
+    background-color: #808080;
+    border-radius: 5px;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .medBtn #med-btn-link {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Barra de navegação - Área pessoal */
+
+#user-area .navigation .navbar .container-fluid .nav .logged .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logged .dropdown .dropbtn {
+    color: #fff;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logged .dropdown:hover .dropbtn {
+    transition: 0.4s; 
+    background-color: #808080;
+    border-radius: 5px 5px 0 0;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    margin-left: -21px;
+    z-index: 2;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logged .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content p {
+    color: #000;
+    padding: 12px 16px;
+    margin:auto;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logged .dropdown .dropdown-content p:hover {
+    background-color: #ddd;
+}
+
+/* Barra de navegação - Área login e logout */
+
+#user-area .navigation .navbar .container-fluid .nav .logging {
+    display: inline;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logging input {
+    padding: 7px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 16px;
+    width: 150px;
+    margin: auto 2px;
+} 
+
+#user-area .navigation .navbar .container-fluid .nav .logging #pass-holder {
+    background-color: rgb(232, 240, 254);
+    padding: 9.5px 0 9.5px 0;
+    border-radius: 5px;
+    border: 0;
+    font-size: 16px;
+    margin: auto 2px;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logging #pass {
+    margin: 0;
+    border-radius: 5px;
+    width: 114px;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logging .fa.fa-eye,
+#user-area .navigation .navbar .container-fluid .nav .logging .fa.fa-eye-slash {
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    border: 0;
+    font-size: 16px;
+    margin: auto 2px auto 0;
+    cursor: pointer;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logged #logout,
+#user-area .navigation .navbar .container-fluid .nav .logging #login {
+    padding: 8px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: auto 8px auto 3px;
+    transition: all 0.3s;
+}
+
+#user-area .navigation .navbar .container-fluid .nav .logged #logout:hover,
+#user-area .navigation .navbar .container-fluid .nav .logging #login:hover {
+    opacity: 0.8
+}
+
+
+
+
+
+
+
+
+
+
+/* Home CLASS STYLES */
+
+/* Definições default para a classe */
+
+#home {
+    width: 99vw;
+    height: 70vh;
+    max-height: 460px;
+    min-height: 320px;
+    margin-bottom: 20px;
+}
+
+
+/* Moldura */
+
+#home .moldura {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    border: 3px solid #5B5F97;
+    border-radius: 5px;
+    background-size: cover;
+    text-align: center;
+    color: #000;
+    text-shadow: 0 0 8px #fff;
+    font-weight: bolder;
+    overflow: scroll;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+    position: relative;
+}
+
+/* Moldura - Barra de scroll */
+
+#home .moldura::-webkit-scrollbar { 
+    display: none; 
+} 
+
+/* Moldura - Informação geral sobre o produto */
+
+#home .moldura .info h1 {
+    font-size: 2.5vw
+}
+
+#home .moldura .info h2 {
+    font-size: 2vw
+}
+
+/* Moldura - Seta para aceder aos detalhes do produto */
+
+#home .moldura .arrowContainer {
+    width: 100px;
+    height: 100px;
+    margin: 2% auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+  
+#home .moldura .arrow-1 {
+    width: 100px;
+    height: 100px;
+    background: #5B5F97;
+    opacity: 0.5;
+    border-radius: 50%;
+    position: absolute;
+}
+  
+#home .moldura .arrow-2 {
+    width: 60px;
+    height: 60px;
+    background: #5B5F97;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    display: table;
+    cursor: pointer;
+    transition: opacity 0.3s ease;   
+}
+  
+#home .moldura .arrow-2:before {
+    width: 52px;
+    height: 52px;
+    content: "";
+    border: 2px solid rgb(56, 59, 94);
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+#home .moldura .arrow-2:hover {
+    opacity: 0.9;
+}
+  
+#home .moldura .arrow-2 i.fa {
+    font-size: 30px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: rgb(56, 59, 94);
+}
+
+/*animação seta a rodar para cima*/
+#home .moldura .arrow-2 i.fa.turnUp {
+    -webkit-animation-name: turnUp;
+    -webkit-animation-duration: 500ms;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode:forwards;
+    animation-name: turnUp;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode:forwards
+}
+
+@-webkit-keyframes turnUp {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(180deg);
+    }
+}
+
+@keyframes turnUp {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(180deg);
+    }
+}
+
+/*animação seta a rodar para baixo*/
+#home .moldura .arrow-2 i.fa.turnDown {
+    -webkit-animation-name: turnDown;
+    -webkit-animation-duration: 500ms;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode:forwards;
+    animation-name: turnDown;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode:forwards
+}
+
+@-webkit-keyframes turnDown {
+    from {
+        transform:rotate(180deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes turnDown {
+    from {
+        transform:rotate(180deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+/*animação da bola à volta da seta*/
+#home .moldura .zoomIn {
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-iteration-count:infinite;
+    animation-iteration-count:infinite;
+    -webkit-animation-name: zoomIn;
+    animation-name: zoomIn;
+}
+  
+@-webkit-keyframes zoomIn {
+    0% {
+      opacity: 0;
+      -webkit-transform: scale3d(.4, .4, .4);
+       transform: scale3d(.4, .4, .4);
+    }
+  
+    50% {
+      opacity: 0.5;
+    }
+    
+    100% {
+      opacity: 0;
+    }
+}
+  
+@keyframes zoomIn {
+    0% {
+      opacity: 0;
+      -webkit-transform: scale3d(.4, .4, .4);
+       transform: scale3d(.4, .4, .4);
+    }
+  
+    50% {
+      opacity: 0.5;
+    }
+    
+    100% {
+      opacity: 0;
+    }
+}
+
+/* Moldura - Pontos na parte de baixo */
+
+#home .moldura .dotContainer{
+    position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#home .moldura .dotContainer .dot {
+    cursor: pointer;
+    height: 17px;
+    width: 17px;
+    margin: 0 2px;
+    background-color: #5B5F97;
+    opacity: 0.6;
+    border-radius: 50%;
+    display: inline-block;
+    transition: 0.6s ease;
+}
+
+#home .moldura .dotContainer .dot:hover {
+    opacity: 1;
+}
+
+/*animação da cor dos pontos a desvanescer*/
+#home .moldura .dotContainer.out{
+    pointer-events:none;
+    -webkit-animation: fadeout_dot 0.8s ease 1 normal forwards;
+    animation: fadeout_dot 0.8s ease 1 normal forwards;
+}
+
+@-webkit-keyframes fadeout_dot{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fadeout_dot{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/*animação da cor dos pontos a ficar forte*/
+#home .moldura .dotContainer.in{
+    -webkit-animation: fadein_dot 0.8s ease 1 normal forwards;
+    animation: fadein_dot 0.8s ease 1 normal forwards;
+}
+
+@-webkit-keyframes fadein_dot{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadein_dot{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Moldura - Imagem background e Display das molduras */
+
+#home #moldura1 {  
+    background-image: url('../../images/pills.jpg');
+    background-color: #ddd; 
+    display: block;
+}
+
+#home #moldura2 {
+    background-color: #ddd;  
+    display: none
+}
+
+#home #moldura3 {
+    background-color: #ddd; 
+    display: none
+}
+
+/*Moldura - Troca de molduras */
+
+/*animação de cor a aparecer*/
+#home .moldura.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode:forwards;
+    animation-name: fade;
+    animation-duration: 1s;
+    animation-fill-mode:forwards
+}
+  
+@-webkit-keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+  
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+
+/*Moldura - Setas para mudar de moldura */
+
+#home .moldura .prev, 
+#home .moldura .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    text-decoration: none
+}
+
+#home .moldura .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+#home .moldura .prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+#home .moldura .prev:hover,
+#home .moldura .next:hover {
+    background-color: rgba(0,0,0,0.8);
+    border-radius: 0px 5px 5px 0px
+}
+
+#home .moldura .next:hover {
+    border-radius: 5px 0px 0px 5px
+}
+
+/*animação da caixa preta a desaparecer à volta das setas*/
+#home .moldura .arrowsContainer.out{
+    pointer-events:none;
+    -webkit-animation: fadeout_arrow 0.8s ease 1 normal forwards;
+    animation: fadeout_arrow 0.8s ease 1 normal forwards;
+}
+
+@-webkit-keyframes fadeout_arrow{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fadeout_arrow{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/*animação da caixa preta a aparecer à volta das setas*/
+#home .moldura .arrowsContainer.in{
+    -webkit-animation: fadein_arrow 0.8s ease 1 normal forwards;
+    animation: fadein_arrow 0.8s ease 1 normal forwards;
+}
+
+@-webkit-keyframes fadein_arrow{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadein_arrow{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Moldura - Detalhes sobre o produto */
+
+#home .moldura .details {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    text-align: left;
+    width: 29%;
+    margin: auto;
+    margin-bottom: 0.5%;
+}
+
+#home .moldura .details h3 {
+    text-align: center;
+    font-size: 1.8vw
+}
+
+#home .moldura .details .identifier {
+    font-size: 1.25vw
+}
+
+
+
+
+
+
+
+
+
+
+/*User CLASS STYLES*/
+
+/* Área de setup */ 
+
+#user #setup {
+    width: 95vw;
+    margin: auto
+}
+
+#user #setup form {
+    width: 25vw;
+    min-width: 300px;
+    margin: auto;
+    margin-top: 2%;
+    font-size: 16px
+}
+
+#user #setup form p input {
+    border-radius: 5px;
+    border: 1px solid #5B5F97;
+    padding: 0.5%; 
+}
+
+/* Área de setup - Definições dos inputs */
+
+#user #setup form p input[type=number]::-webkit-inner-spin-button, 
+#user #setup form p input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+#user #setup form p .divided {
+    width:49%
+}
+
+#user #setup form p .divided.first {
+    margin-right:2%
+}
+
+#user #setup form p .full {
+    width: 100%
+}
+
+#user #setup form #pass-holder{
+    width: 100%;
+    border-radius: 5px;
+    border-right: none;
+    background-color: #fff;
+    border: 1px solid #5B5F97
+}
+
+#user #setup form #pass-holder #pass {
+    width: 92.5%;
+    border-radius: 5px 0 0 5px;
+    border: none
+}
+
+#user #setup form #pass-holder .fa {
+    font-size: 18px;
+    cursor: pointer
+}
+
+#user #setup form p .options{
+    margin-right: 10%
+}
+
+/* Área de setup - Definições do botão de submit */
+
+#user #setup form button {
+    padding: 8px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: auto 8px auto 3px;
+    transition: all 0.3s;
+}
+
+#user #setup form button:hover {
+    opacity: 0.8
+}
+
+
+/* Perfil do utilizador */
+
+#user #perfil {
+    width: 50%;
+    margin: auto
+}
+
+#user #perfil #data-container{
+    display: flex
+}
+
+/* Perfil do utilizador - Imagem e moldura */
+
+#user #perfil #data-container #photo-container {
+    flex: 50%;
+    text-align: center;
+    line-height: 25px;
+    margin-top: 25px;
+}
+
+#user #perfil #data-container #photo-container img {
+    width: 80%;
+    max-width: 280px;
+    min-width: 150px;
+    border: 1px solid #5B5F97;
+    border-radius: 5px;
+    background-color: rgb(241, 241, 241)
+}
+
+/* Perfil do utilizador - Informação sobre o utilizador */
+
+#user #perfil #data-container #information-container {
+    flex: 50%;
+    text-align: left;
+    padding-top: 0;
+    padding-left: 3%;
+    min-width: 293px;
+}
+
+#user #perfil #data-container #information-container input {
+    font-size: 16px;
+    border: 1px solid #5B5F97;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding-left: 5px;
+} 
+
+#user #perfil #data-container #information-container .pass-container {
+    background-color: rgb(235, 235, 228);
+    border-radius: 5px;
+    border: 1px solid #5B5F97;
+    width: 100%;
+    padding: 4px 0 3px 0
+}
+
+#user #perfil #data-container #information-container input.pass {
+    width: 93%;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    background-color: transparent
+}
+
+#user #perfil #data-container #information-container .fa {
+    width: 6%;
+    font-size: 16px;
+    background-color: transparent;
+    padding: 3.2px 0 3px 0;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid #5B5F97;
+    border: none;
+}
+
+/* Perfil do utilizador - Informação sobre o utilizador - Definições dos inputs */
+
+#user #perfil #data-container #information-container input[type=number]::-webkit-inner-spin-button, 
+#user #perfil #data-container #information-container input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+#user #perfil #data-container #information-container input[type="radio"]:checked,
+#user #perfil #data-container #information-container input[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+#user #perfil #data-container #information-container input[type="radio"]:checked + label,
+#user #perfil #data-container #information-container input[type="radio"]:not(:checked) + label {
+    position: relative;
+    padding-left: 22px;
+    margin-right: 10px;
+    line-height: 20px;
+    display: inline-block;
+    font-weight: normal;
+    font-size: 16px
+}
+
+#user #perfil #data-container #information-container input[type="radio"]:checked + label:before,
+#user #perfil #data-container #information-container input[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #5B5F97;
+    border-radius: 100%;
+    background: #fff;
+    cursor: pointer;
+}
+
+#user #perfil #data-container #information-container input[type="radio"]:checked + label:after,
+#user #perfil #data-container #information-container input[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #5B5F97;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+#user #perfil #data-container #information-container input[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+#user #perfil #data-container #information-container input[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+#user #perfil #data-container #information-container input[type="radio"]:disabled + label:before,
+#user #perfil #data-container #information-container input[type="radio"]:disabled + label:after {
+    cursor: not-allowed;
+}
+
+#user #perfil #data-container #information-container input[type="radio"]:disabled + label:before {
+    background-color: rgb(235, 235, 228);
+}
+
+/* Perfil do utilizador - Definições dos botões */
+
+#user #perfil #button-container {
+    text-align: center;
+    margin-top: 30px
+}
+
+#user #perfil #button-container button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#user #perfil #button-container button#cancelar,
+#user #perfil #button-container button#guardar {
+    display: none;
+    margin: auto 4.5px 0 4.5px
+}
+
+
+
+
+
+
+
+
+
+
+/* Foot CLASS STYLES */
+
+/* Definições default para a classe */
+
+#foot {
+  background-color: #26272b;
+  padding:20px 0 20px;
+  font-size:15px;
+  line-height:24px;
+  color:#737373;
+  margin-top: 20px;
+}
+
+/* Linha no meio do rodapé */
+#foot #line {
+  border-top-color: #4e515c;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 15px
+}
+
+/* Container-up */
+
+#foot #container-up #map {
+    border: 0.5px solid #4e515c;
+    width: 100%;
+    height: 100%;
+}
+
+#foot #container-up h6 {
+  color:#fff;
+  font-size:16px;
+  text-transform:uppercase;
+  margin-top:5px;
+  letter-spacing:2px
+}
+
+/* Container-up - Contactos */
+
+#foot #container-up .footer-contacts {
+  padding-left:0;
+  list-style:none
+}
+
+#foot #container-up .footer-contacts li {
+  display:block
+}
+
+
+/* Container-down */
+
+/* Container-down - Mensagem de copyrights */
+
+#foot #container-down .copyright-text {
+    margin:0
+}
+
+/* Container-down - Icons sociais */
+
+#foot #container-down .social-icons {
+    text-align:right;
+    padding-left:0;
+    margin-bottom:0;
+    list-style:none
+}
+
+#foot #container-down .social-icons li {
+    display:inline-block;
+    margin-bottom:4px
+}
+
+#foot #container-down .social-icons li a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 6px;
+    margin-right: 0;
+    border-radius: 100%;
+    background-color: #33353d;
+    color: #818a91;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+    -webkit-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
+}
+
+#foot #container-down .social-icons li a.facebook:active,
+#foot #container-down .social-icons li a.facebook:focus,
+#foot #container-down .social-icons li a.facebook:hover {
+  background-color:#3b5998;
+  text-decoration:none;
+  color: #fff
+}
+
+#foot #container-down .social-icons li a.twitter:active,
+#foot #container-down .social-icons li a.twitter:focus,
+#foot #container-down .social-icons li a.twitter:hover {
+  background-color:#00aced;
+  text-decoration:none;
+  color: #fff
+}
+
+#foot #container-down .social-icons li a.instagram:active,
+#foot #container-down .social-icons li a.instagram:focus,
+#foot #container-down .social-icons li a.instagram:hover {
+    background-image: radial-gradient(farthest-corner at 0% 100%, #FFDC80, #FCAF45, #F77737, #F56040, #FD1D1D, #E1306C, #C13584, #833AB4, #5851DB, #405DE6);
+    text-decoration: none;
+    color: #fff
+}
+
+#foot #container-down .social-icons li a.linkedin:active,
+#foot #container-down .social-icons li a.linkedin:focus,
+#foot #container-down .social-icons li a.linkedin:hover {
+  background-color:#007bb6;
+  text-decoration:none;
+  color: #fff
+}
+
+
+
+
+
+
+
+
+
+
+/* REDIMENSIONAMENTO PARA ECRÃ MENOR/VISTA MÓVEL */
+
+@media only screen and (max-width: 600px) {
+    /* UserArea CLASS STYLES */
+
+    /* Barra de navegação - Botão para acesso à área médica */
+    #user-area .navigation .navbar .container-fluid .nav .medBtn {
+        width: 31%;
+        margin-right: 25%;
+        margin-left: 7%;
+        padding-left: 1.5%
+    }
+
+    /* Barra de navegação - Área pessoal */
+    #user-area .navigation .navbar .container-fluid .nav .logged .dropdown {
+        width: 35%;
+    }
+
+    /* Barra de navegação - Área login e logout */
+
+    #user-area .navigation .navbar .container-fluid .nav .logging input[type="text"] {
+        width: 35%;
+        margin-left: 7%;
+        margin-top: 17px
+    }
+
+    #user-area .navigation .navbar .container-fluid .nav .logging #pass {
+        width: 25%;
+    }
+
+    #user-area .navigation .navbar .container-fluid .nav .logging #login {
+        width: 15%
+    }
+
+    #user-area .navigation .navbar .container-fluid .nav .logged #logout {
+        width: 20%;
+        margin-left: 7%;
+        margin-top: 17px;
+    }
+} 
+
+@media only screen and (max-width: 875px) {
+    /* UserArea CLASS STYLES */
+
+    /* Cabeçalho da página c/ o logo e nome - texto */
+    #user-area .page-header h1{
+        font-size: 24px
+    }
+
+
+
+    /* Home CLASS STYLES */
+
+    /* Moldura */
+    #home .moldura {
+        margin-bottom: 20px
+    }
+
+    /* Moldura - Texto */
+    #home .moldura .info h1 {
+        font-size: 21px
+    }
+    
+    #home .moldura .info h2 {
+        font-size: 17px
+    }
+
+    /* Moldura - Detalhes sobre o produto */
+    #home .moldura .details h3 {
+        font-size: 18px
+    }
+    
+    #home .moldura .details .identifier {
+        font-size: 18px
+    }
+
+    #home .moldura .details {
+        width: 275px;
+    }
+
+
+
+    /* Foot CLASS STYLES */
+
+    /* Definições default para a classe */
+    #foot {
+        padding-bottom: 0
+    }
+
+    /* Container-down - Mensagem de copyrights */
+    /* Container-down - Icons sociais */
+    #foot #foot #container-down .copyright-text,
+    #foot #foot #container-down .social-icons {
+        text-align: center
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    /* User CLASS STYLES */
+
+    /* Perfil do utilizador */
+    #user #perfil {
+        width: 80%
+    }
+
+    #user #perfil #data-container {
+        display: block;
+        height: auto;
+        width: auto;
+    }
+
+    /* Perfil do utilizador - Imagem e moldura */
+    #user #perfil #data-container #photo-container {
+        display: block;
+        margin-top: auto
+    }
+
+    #user #perfil #data-container #photo-container img{
+        width: 40%;
+    }
+
+    /* Perfil do utilizador - Informação sobre o utilizador */
+    #user #perfil #data-container #information-container {
+        display: block;
+        width: 100%;
+        margin: auto;
+        min-width: initial;
+    }
+
+    #user #perfil #data-container #information-container label:first-of-type {
+        margin-top: 20px
+    }
+
+    #user #perfil #data-container #information-container .fa {
+        padding-right: 3px 
+    }
+
+
+
+    /* Foot CLASS STYLES */
+
+    /* Definições default para a classe */
+    #foot [class^=col-] {
+      margin-bottom: 30px
+    }
+
+    #foot #line {
+        width: 90%
+    }
+}

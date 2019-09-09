@@ -22,7 +22,8 @@
 
 .schedule table tbody tr td .hours {
     font-size: 12px;
-    border: none
+    border: none;
+    overflow-y: scroll;
 } 
 
 .schedule table tbody tr td .basic-multi-select {

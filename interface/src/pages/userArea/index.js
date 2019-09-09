@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import { StickyContainer, Sticky } from 'react-sticky';
 import Loader from 'react-loader-spinner';
 
-//COMPONENTS CREATED BY US
-import api from '../../services/api';   //ligação ao servidor
-import {cipher,decipher,compareCipher} from '../../ciphers/encryptor.js';   //ficheiro com as funcoes p/ encriptar a info salva no browser
-import HorarioUser from '../../components/horarioUser';     //componente que fornece o horário do utilizador
+//COMPONENTES CRIADOS POR NOS:
+//ligação ao servidor
+import api from '../../services/api';
+//ficheiro com as funcoes para encriptar a info salva no browser
+import {cipher,decipher,compareCipher} from '../../ciphers/encryptor.js';
+//componente que fornece o horário do utilizador 
+import HorarioUser from '../../components/horarioUser';
 
-//PAGE CSS STYLE SHEET
+//CSS STYLE SHEET DA PÁGINA
 import './styles.css';
 
 //IMAGES
@@ -22,7 +25,7 @@ import other from '../../images/other.png';     //icon usuario default
 var loginIntervalId = '';
 
 //PÁGINA INICIAL DO SITE
-class General extends Component {
+class Home extends Component {
     state = {
         slide: 1,
         scroll: 0
@@ -46,12 +49,12 @@ class General extends Component {
 
     //controla o display dos slides
     showSlides = (slide) => {
-        const slides = document.getElementsByClassName("mainInfo");
+        const slides = document.getElementsByClassName("moldura");
 
         if (slide > slides.length) {this.state.slide = 1}    
         if (slide < 1) {this.state.slide = slides.length}
 
-        const dots = document.querySelectorAll('#mainInfo'+ this.state.slide +' .dot');        
+        const dots = document.querySelectorAll('#moldura'+ this.state.slide +' .dot');        
 
         for (let i = 0; i < slides.length; i++) {   //esconde todos os slides
             slides[i].style.display = "none";  
@@ -68,7 +71,7 @@ class General extends Component {
     //cria a animação do scroll dentro dos slides
     scroll = (n, active=0, scroll=1) => {
         const element = document.querySelector("#details"+n);
-        const parent = document.querySelector("#mainInfo"+n);
+        const parent = document.querySelector("#moldura"+n);
         const dots = document.querySelector("#dots"+n);
         const arrow = document.querySelector("#arrow"+n);
         const arrows = document.querySelector("#arrows"+n);
@@ -98,7 +101,7 @@ class General extends Component {
 
     //controla o scroll com rato ou touch
     scrollControl = (n) => {        
-        const element = document.querySelector("#mainInfo"+n);
+        const element = document.querySelector("#moldura"+n);
 
         if(element.offsetHeight + element.scrollTop === element.scrollHeight && this.state.scroll === 0){ element.classList.add("active"); this.state.scroll = 1 }
         else if(element.scrollTop === 0 && this.state.scroll === 1){ element.classList.add("active"); this.state.scroll = 0 }
@@ -120,7 +123,7 @@ class General extends Component {
 
         let userMenuButton = document.getElementsByClassName('dropdown')[0];
         if(userMenuButton!==undefined){
-            let moldura = document.getElementsByClassName('generalView')[0];
+            let moldura = document.getElementById('home');
             //adiciona um controlador para quando o rato se encontra em cima do menu de usuario
             userMenuButton.addEventListener("mouseover", (event) => {
                 if(moldura!==undefined){
@@ -133,7 +136,7 @@ class General extends Component {
             userMenuButton.addEventListener("mouseout", (event) => {
                 if(moldura!==undefined){
                     for(let i=0; i<3; i++){
-                        moldura.childNodes[i].style.zIndex = 1      //os slides voltam para a frente
+                        moldura.childNodes[i].style.zIndex = 'auto'      //os slides voltam para a frente
                     }
                 }              
             })
@@ -142,9 +145,9 @@ class General extends Component {
 
     render() {
         return(
-            <div className="generalView">
+            <div id="home">
                 {/* SLIDE 1 */}
-                <div className="mainInfo fade active" id="mainInfo1" onScroll={() => this.scrollControl(1)}>
+                <div className="moldura fade active" id="moldura1" onScroll={() => this.scrollControl(1)}>
 
                     {/* texto intrdução */}
                     <div className="info">
@@ -185,7 +188,7 @@ class General extends Component {
                 </div>
 
                 {/* SLIDE 2 */}
-                <div className="mainInfo fade" id="mainInfo2">
+                <div className="moldura fade" id="moldura2">
 
                     <div className="arrowContainer">
                         <div className="arrow-2" onClick={() => this.scroll(2)}><i className="fa fa-angle-down" id="arrow2"></i></div>
@@ -206,7 +209,7 @@ class General extends Component {
                 </div>
 
                 {/* SLIDE 3 */}
-                <div className="mainInfo fade" id="mainInfo3">
+                <div className="moldura fade" id="moldura3">
 
                     <div className="arrowContainer">
                         <div className="arrow-2" onClick={() => this.scroll(3)}><i className="fa fa-angle-down" id="arrow3"></i></div>
@@ -238,8 +241,8 @@ class User extends Component {
         changed: localStorage.getItem('changed') || '',
         correct: true,
         loading: false,
-        passOld: false,
-        passNew: false,
+        passOld: false,     //visibilidade da pass antiga na área de perfil
+        passNew: false,     //visibilidade da pass nova na área de perfil
         userMenu: this.props.userMenu,
         changeData: false,
         spinner: true,
@@ -436,7 +439,7 @@ class User extends Component {
         this.forceUpdate();
     }    
 
-    //obtem a informação do user
+    //obtem a informação do utilizador
     profileGetData = async () => {
         let hsn = localStorage.getItem('userHsn');
         const resp = await api.get(`patients/${decipher(hsn)}`);
@@ -560,7 +563,7 @@ class User extends Component {
 
     //FUNÇÕES DA ÁREA DO HORÁRIO
 
-    //obtem o horario da medicação do user
+    //obtem o horario da medicação do utilizador
     horarioGetMeds = async () => {        
         for(let day=0;day<7;day++){
             for(let letter=0;letter<4;letter++){
@@ -580,7 +583,7 @@ class User extends Component {
 
     //FUNÇÕES RELATIVAS À CLASSE NO GERAL
 
-    //verifica os dados de login do user
+    //verifica os dados de login do utilizador periodicamente
     checkLoginTime = () => {
         const userLoginDate = localStorage.getItem('userLoginDate');
         const today = new Date();
@@ -662,11 +665,8 @@ class User extends Component {
         loginIntervalId = setInterval(this.checkLoginTime, 1000);       //guarda o ID do intervalo que verifica o login 
     }
 
-    //FALTA COMENTAR DAQUI PARA BAIXO
-
-
-
     render() {
+        //alerta caso o user tente aceder à área de usuário antes de atualizar os dados
         if(compareCipher(this.state.changed,'false') && !compareCipher(this.state.userMenu,'default')){
             alert('É necessário atualizar a sua informação primeiro');
             localStorage.setItem('userMenu', cipher('default'));
@@ -674,9 +674,10 @@ class User extends Component {
         }
 
         return(
-            <div className="userView">
+            <div id="user"> 
                 {compareCipher(this.state.changed,'false')?
-                    <div className="setup">
+                    /*área de atualização primária de dados*/
+                    <div id="setup">
                         <h2>Atualização de dados</h2>
                         <p>Bem vindo ao serviço <strong>Krista Health-Care</strong>!</p>
                         <p>Sendo esta a primeira vez que acede à sua área pessoal é necessário realizar uma atualização/verificação
@@ -710,7 +711,8 @@ class User extends Component {
                         </form>
                     </div>
                 :compareCipher(this.state.userMenu,'perfil')?
-                    <div className="perfil">
+                    /*área de perfil*/
+                    <div id="perfil">
                         <div id="data-container">
                             <div id="photo-container">
                                 <img src={this.state.setup.sex===0?female:this.state.setup.sex===1?male:other} alt='user'/>
@@ -747,9 +749,11 @@ class User extends Component {
                         </div>
                     </div>
                 :compareCipher(this.state.userMenu,'horario')?
+                    /*horário do utilizador*/
                     <HorarioUser medication={this.medication} spinner={this.state.spinner}/>
                 :
-                    <General/>
+                    /*página inicial (default)*/
+                    <Home/>
                 }
             </div>
         )
@@ -760,26 +764,30 @@ class User extends Component {
 class Foot extends Component {
     render() {
         return(
-            <footer className="siteFooter">
-                <div className="container">
+            <footer id="foot">
+                <div className="container" id="container-up">
                     <div className="row">
+                    {/* descrição do projeto */}
                     <div className="col-sm-12 col-md-6">
                         <h6>Sobre</h6>
                         <p className="text-justify">
                             KRISTA HEALTH-CARE foi criada no âmbito de uma competição universitária 
                             e teve como objetivo a criação de um sistema para auxiliar os pacientes na toma
                             da medicação. Neste contexto, desenvolvemos o site (<i>kristahealthcare.netlify.com</i>)
-                            e criámos a caixa, que se pode visualizar acima, que facilita a tomada diária da medicação.</p>
+                            e criámos a caixa, que se pode visualizar acima, que facilita a tomada diária da medicação.
+                        </p>
                     </div>
 
+                    {/* localização */}
                     <div className={window.innerWidth < 875?"col-sm-12":"col-xs-6 col-md-3"}>
                         <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3112.1718215239475!2d-9.140893684677636!3d38.73681917959569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1933a24aa81f17%3A0x880c7c731a54423!2sInstituto+Superior+T%C3%A9cnico!5e0!3m2!1sen!2spt!4v1565711555277!5m2!1sen!2spt"></iframe>
                         {window.innerWidth < 875?<p className="exists"><i className="fa fa-map-marker"></i> Av. Rovisco Pais 1, 1049-001 Lisboa</p>:null}
                     </div>
 
+                    {/* contactos */}
                     <div className={window.innerWidth < 875?"col-sm-12":"col-xs-6 col-md-3"}>
                         <h6>Contactos</h6>
-                        <ul className="footer-links">
+                        <ul className="footer-contacts">
                             <li><i className="fa fa-phone-square" aria-hidden="true"></i> 96xxxxxxx</li>
                             <li><i className="fa fa-envelope" aria-hidden="true"></i> kristahealthcare@gmail.com</li>
                             <li><br/></li>
@@ -789,15 +797,15 @@ class Foot extends Component {
                     </div>
                 </div>
 
-                <hr className="line"/>
+                <hr id="line"/>
 
-                <div className="container">
+                <div className="container" id="container-down">
                     <div className="row">
                         <div className="col-md-8 col-sm-6 col-xs-12">
-                            <p className="copyright-text">Copyright &copy; 2019 All Rights Reserved by KRISTA INC.
-                            </p>
+                            <p className="copyright-text">Copyright &copy; 2019 All Rights Reserved by KRISTA INC.</p>
                         </div>
 
+                        {/* redes sociais */}
                         <div className="col-md-4 col-sm-6 col-xs-12">
                             <ul className="social-icons">
                                 <li><a className="facebook" href="#" target="_blank"><i className="fa fa-facebook"></i></a></li>
@@ -814,7 +822,7 @@ class Foot extends Component {
 }
 
 //CLASSE CENTRAL
-export default class Home extends Component {
+export default class UserArea extends Component {
     state = {
         loading: false,
         data: '',
@@ -822,11 +830,15 @@ export default class Home extends Component {
         userMenu: localStorage.getItem('userMenu') || cipher('default')
     }
 
+    //realiza o login do utilizador
     login = async (e) => {
         e.preventDefault();
+
+        //ativa a animação de load no botão de login
         this.state.loading = true;
         this.forceUpdate();
 
+        //indica se tudo se encontra corrreto para fazer login
         let allow=true;
 
         let user = document.querySelector('#user');
@@ -836,11 +848,13 @@ export default class Home extends Component {
         user.style.border = 'none';
         passHolder.style.border = 'none';
 
+        //saneamento do username
         if(!user.value.match(/^[A-Za-z0-9-_]+$/)){
             user.style.border = '1px solid red'
             allow = false;
         }
 
+        //saneamento da password
         if(!pass.value.match(/^[A-Za-z0-9_-]+$/)){
             passHolder.style.border = '1px solid red'
             allow = false;
@@ -856,38 +870,49 @@ export default class Home extends Component {
             if(response.data!==null){
                 const today = new Date();
                 const date = today.getTime();
-                localStorage.setItem('userLogged', cipher('logged'));
-                localStorage.setItem('userHsn', cipher(response.data.hsn));
-                localStorage.setItem('userLoginDate', cipher(date.toString()));
-                if(response.data.changed===0) localStorage.setItem('changed', cipher('false'));            
+                //GUARDA INFO ENCRIPTADA NO LOCAL STORAGE:
+                //indica que o utilizador tem sessão iniciada
+                localStorage.setItem('userLogged', cipher('logged'));  
+                //indica o hsn do utilizador
+                localStorage.setItem('userHsn', cipher(response.data.hsn));   
+                //indica a hora de login      
+                localStorage.setItem('userLoginDate', cipher(date.toString())); 
+                //indica se o utilizador já atualizou a informação    
+                if(response.data.changed===0) localStorage.setItem('changed', cipher('false'))          
             } 
         }
         
+        //desativa a animação de load no botão de login
         this.state.loading = false;
         this.forceUpdate();
     }
 
+    //efetua o logout do utilizador
     logout = () => {
+        //remove todos os dados da local storage
         localStorage.removeItem('userLogged');
         localStorage.removeItem('changed');
         localStorage.removeItem('userHsn')
         localStorage.removeItem('userLoginDate');
+        //repoe o valor de defeito do menu de usuário
         localStorage.setItem('userMenu',cipher('default'))
         this.state.userMenu = cipher('default');
+        //termina o intervalo que verifica o login
         clearInterval(loginIntervalId);
         this.forceUpdate();
     }
 
+    //alterna a visibilade da password
     togglePassword = () => {
         const eye = document.querySelector("#pass-holder .fa");
         const pass = document.querySelector('#pass-holder #pass');
-        if(this.state.pass) {
+        if(this.state.pass) {               //torna invisivel
             eye.classList.remove('fa-eye-slash');
             eye.classList.add('fa-eye');
             pass.type = "password";
             this.state.pass = false
         }
-        else {
+        else {                              //torna visivel
             eye.classList.remove('fa-eye');
             eye.classList.add('fa-eye-slash');
             pass.type = "text";
@@ -895,17 +920,22 @@ export default class Home extends Component {
         }   
     }
 
+    //altera a página em que o utilizador se encontra
+    //com base no selecionado na 'Área pessoal'
     userChange = (option) => {
-        localStorage.setItem('userMenu', cipher(option))
+        localStorage.setItem('userMenu', cipher(option))    //altera o valor do userMenu
         this.setState({userMenu: localStorage.getItem('userMenu')})
-        this.forceUpdate();
+        this.forceUpdate();     //faz o update para a nova visulaização da página
     }
 
+    //define comportamentos padrão da classe
     componentDidMount() {
+        document.body.style.overflowX = "hidden";
         if(localStorage.getItem('userMenu') === null) localStorage.setItem('userMenu', cipher('default'))
         window.addEventListener('resize', () => this.forceUpdate(), false);
     }
 
+    //permite as classes fazer update da classe-mãe (UserArea)
     parentUpdate = () => {
         this.setState({userMenu: localStorage.getItem('userMenu')})
     }
@@ -914,11 +944,12 @@ export default class Home extends Component {
         const {loading, data} = this.state
         const userLogged = localStorage.getItem('userLogged') || '';
         return(
-            <div className="home">
+            <div id="user-area">
                 <div className="page-header">
                     <img src={logo} alt="krista logo"/>
                     <h1>Krista Health-Care</h1>
                 </div>
+                {/* permite que o cabeçalho se fixe no topo da página durante o scroll */}
                 <StickyContainer>
                     <Sticky>
                     {({ style }) => 
@@ -927,9 +958,9 @@ export default class Home extends Component {
                                 <div className="container-fluid">
                                     <ul className="nav navbar-nav navbar-right">
                                         <li>  
-                                            <button className="medBtn"><Link to='/MedicalLogin' className="logBtn">Área médica</Link></button>
+                                            <button className="medBtn"><Link to='/MedicalLogin' id="med-btn-link">Área médica <i className="fa fa-sign-in"></i></Link></button>
                                             {compareCipher(userLogged,'logged')
-                                                ?<span className="logged">
+                                                ?<span className="logged">  {/* área pós login */}
                                                     <div className="dropdown">
                                                         <button className="dropbtn">Área pessoal <i className="fa fa-caret-down"></i></button>
                                                         <div className="dropdown-content">
@@ -940,7 +971,7 @@ export default class Home extends Component {
                                                     </div> 
                                                     <button onClick={this.logout} id="logout">Logout</button>
                                                 </span>
-                                                :<form className="logging" onSubmit={e => this.login(e)}>
+                                                :<form className="logging" onSubmit={e => this.login(e)}>   {/* área pré login */}
                                                     <input placeholder="username" type="text" id="user" autoComplete="on" required></input>
                                                     <span id="pass-holder"><input placeholder="password" type="password" id="pass" autoComplete="on" required></input>
                                                     <i className="fa fa-eye" onClick={this.togglePassword}></i></span>
@@ -954,7 +985,7 @@ export default class Home extends Component {
                         </div>
                     }
                     </Sticky>
-                    {compareCipher(userLogged,'logged')?<User data={data} logout={this.logout} userMenu={this.state.userMenu} parentUpdate={this.parentUpdate}/>:<General/>}
+                    {compareCipher(userLogged,'logged')?<User data={data} logout={this.logout} userMenu={this.state.userMenu} parentUpdate={this.parentUpdate}/>:<Home/>}
                     <Foot/>
                 </StickyContainer>
             </div>
