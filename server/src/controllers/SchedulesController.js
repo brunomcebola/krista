@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const db = mongoose.connection;
 const links = require('../links');
 const Patient = mongoose.model('Patient');
-const aes256 = require('aes256');
 
 //confirma o link de onde o pedido é originado para permitir ou negar acesso. Apenas o site tem acesso a estas funções
 function check(req){
