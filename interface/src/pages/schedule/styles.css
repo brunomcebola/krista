@@ -6,11 +6,11 @@
     margin: auto
 }
 
-.schedule table tbody #header {
+.schedule table tbody #table-header {
     font-size: 18px;
 }
 
-.schedule table tbody #header td {
+.schedule table tbody #table-header td {
     background-color: #E0E0E0
 }
 

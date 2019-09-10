@@ -265,7 +265,7 @@ class Table extends Component {
                         </div>
                         <table>
                             <tbody>
-                                <tr id="header">
+                                <tr id="table-header">
                                     <td>Hora</td>
                                     <td>Segunda</td>
                                     <td>Hora</td>
