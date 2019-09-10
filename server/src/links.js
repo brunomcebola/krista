@@ -1,3 +1,5 @@
+/* lista de links válidos nas requisições para a api */
+
 module.exports = [
     'https://kristahealthcare.netlify.com/',
     'https://kristahealthcare.netlify.com/MedicalLogin', 
