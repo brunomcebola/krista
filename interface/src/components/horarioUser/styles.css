@@ -1,8 +1,17 @@
+/* HorarioUser COMPONENT STYLES */
+
+/* Definições gerias do componente */
+
 #horarioUser {
     margin: auto;
     width: 85%;
     text-align: center;
 }
+
+
+
+
+/* Dias do horário */
 
 #horarioUser .userSchedule {
     float: left;
@@ -20,6 +29,8 @@
 #horarioUser .userSchedule#dia_6 {
     border-radius: 0 5px 5px 0
 }
+
+/* Dias do horário - Dia da semana */
 
 #horarioUser .userSchedule .dayOfWeek {
     border-top: 1px solid #5B5F97;
@@ -40,6 +51,8 @@
     border-top-right-radius: 5px
 }
 
+/* Dia do horário - Zona do dia */
+
 #horarioUser .userSchedule .dayZone {
     padding: 12px;
     height: 44px;
@@ -55,6 +68,8 @@
 #horarioUser .userSchedule#dia_6 .dayZone:last-child {
     border-bottom-right-radius: 5px
 }
+
+/* Dia do horário - Zona do dia - Informação da medicação */
 
 #horarioUser .userSchedule .dayZone .info {
     visibility: hidden;
@@ -86,7 +101,24 @@
     visibility: visible
 }
 
+
+/* Rodapé do horário */
+
+#horarioUser h5 {
+    line-height: 30px;
+    margin-bottom: 0;
+    display: none;
+}
+
+
+
+
+/* REDIMENSIONAMENTO PARA ECRÃ MENOR/VISTA MÓVEL */
+
 @media only screen and (max-width: 600px) {
+    /* HorarioUser COMPONENT STYLES */
+
+    /* Dia do horário - Zona do dia - Informação da medicação */
     #horarioUser .userSchedule#dia_0 .dayZone .info {
         top: -25px;
         left: 105%;
@@ -129,10 +161,4 @@
         border-style: solid;
         border-color: transparent transparent transparent black;
     }
-}
-
-#horarioUser h5 {
-    line-height: 30px;
-    margin-bottom: 0;
-    display: none;
 }

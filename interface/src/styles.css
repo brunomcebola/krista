@@ -9,7 +9,8 @@
 
 body {
     background-color: #F8F8FF;
-    overflow-x: hidden
+    overflow-x: hidden;
+    scrollbar-arrow-color: green;
 }
 
 @media only screen and (min-width: 600px) {
@@ -20,7 +21,7 @@ body {
     }
 } 
 
-/* scrool bar do site */
+/* scroolbar do site */
 
 ::-webkit-scrollbar {
     width: 12.5px;
@@ -29,11 +30,13 @@ body {
 /* Track */
 ::-webkit-scrollbar-track {
     background: #c9c7c7; 
+    border-radius: 15px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #5B5F97;
+    border-radius: 15px;
 }
 
 /* Handle on hover */

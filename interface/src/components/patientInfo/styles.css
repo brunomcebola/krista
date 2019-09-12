@@ -1,3 +1,7 @@
+/* HorarioUser COMPONENT STYLES */
+
+/* Informação */
+
 #patient-info {
     background: #FFF;
     border: 1px solid #DDD;
@@ -6,6 +10,8 @@
     margin-bottom: 10px;
     display: flex;
 }
+
+/* Informação - Icon */
 
 #patient-info #patient-photo-container {
     flex: 9%;
@@ -17,6 +23,8 @@
     width: 100%;
     min-width: 86px
 }
+
+/* Informação - Detalhes */
 
 #patient-info #patient-data-container {
     flex: 83%;
@@ -30,6 +38,8 @@
     margin-top: 5px;
     line-height: 24px;
 }
+
+/* Informação - Botão */
 
 #patient-info #schedule-btn-container {
     flex: 8%;
@@ -62,11 +72,20 @@
     opacity: 0.6;
 }
 
+
+
+
+/* REDIMENSIONAMENTO PARA ECRÃ MENOR/VISTA MÓVEL */
+
 @media only screen and (max-width: 700px) {
+    /* HorarioUser COMPONENT STYLES */
+
+    /* Informação */
     #patient-info {
         display: block;
     }
 
+    /* Informação - Icon */
     #patient-info #patient-photo-container {
         text-align: center;
     }
@@ -77,6 +96,7 @@
         margin-top: 2%
     }
 
+    /* Informação - Botão */
     #patient-info #schedule-btn-container {
         margin: auto 2% 2% auto;
         text-align: right

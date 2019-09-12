@@ -24,12 +24,6 @@
 
 
 
-
-
-
-
-
-
 /* MedicalArea CLASS STYLES */
 
 /* Cabeçalho */
@@ -130,18 +124,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* List CLASS STYLES */
 
 /* Definições gerais da classe */
@@ -196,12 +178,6 @@
 #patient-list #actions button[disabled]:hover {
     opacity: 0.6;
 }
-
-
-
-
-
-
 
 
 
@@ -308,12 +284,6 @@
     text-decoration: none;
     cursor: pointer;
 }
-
-
-
-
-
-
 
 
 

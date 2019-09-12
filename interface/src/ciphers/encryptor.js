@@ -1,7 +1,9 @@
+//encripta/desencripta a palavra passada com base numa palavra-chave
 function masterKeyCipher(word) {
     let new_word = '';
     for(let i=0;i<word.length; i++){
         switch(word[i].toLowerCase()){
+            //troca as letras
             case 'a':new_word+='x';break;
             case 'b':new_word+='y';break;
             case 'c':new_word+='z';break;
@@ -45,7 +47,7 @@ function masterKeyCipher(word) {
 }
 
 
-
+//encripta a palavra passada com base numa data
 function dataCipher(word) {
     let new_word = '';
     let match = false;
@@ -56,6 +58,7 @@ function dataCipher(word) {
         [],[],[],[],[],[],
         ['4','5','6','7','8','9']
     ]
+    //passa cada letra/numero para um conjunto de 2 numeros
     for(let i=0;i<word.length;i++){
         match = false
         for(let index1=0;index1<table.length;index1++){
@@ -66,21 +69,26 @@ function dataCipher(word) {
                 } 
             }
         }
+        //se nao for letra/numero mantem o caracter
         if(!match){new_word+=word[i];}
     }
     return(new_word);
 }
 
+//encripta a palavra passada trocando os numeros por letras
 function numberJumperCipher(word) {
     let new_word = '';
     let table = ['a','d','g','j','m','p','s','v','y','z'];
     for(let i=0;i<word.length;i++){
+        //se não for um numero, mantem o caracter
         if(isNaN(word[i])){new_word+=word[i];}
+        //obtem a letra no index correspondente ao numero
         else{new_word+=table[word[i]];}       
     }
     return(new_word);
 }
 
+//encripta a palavra passada com coordenadas
 function navyCipher(word) {
     let new_word = '';
     let match = false;
@@ -93,6 +101,7 @@ function navyCipher(word) {
     ]
     for(let i=0;i<word.length;i++){
         match = false;
+        //passa cada letra para um conjunto de coordenadas
         for(let index1=0;index1<table.length;index1++){
             for(let index2=0;index2<table[index1].length;index2++){
                 if(word[i]===table[index1][index2]){
@@ -101,13 +110,14 @@ function navyCipher(word) {
                 } 
             }
         }
+        //se não for uma letra, mantem o caracter
         if(!match){new_word+=word[i];}
     }
     return(new_word);
 }
 
 
-
+//desencripta a palavra passada com base nas coordenadas
 function navyDecipher(word) {
     let new_word = '';
     let index;
@@ -119,7 +129,9 @@ function navyDecipher(word) {
         ['g','h','i','j','k']
     ]
     for(let i=0;i<word.length;i++){
+        //se não for uma coordenada, mantem o caracter
         if(!word[i].match(/^[0-9a-z]+$/)){new_word+=word[i];}
+        //obtem a letra correspondente à coordenada
         else{
             index = i++;
             new_word+=table[Number(word[i])][word.charCodeAt(index)-97]
@@ -128,16 +140,20 @@ function navyDecipher(word) {
     return(new_word);
 }
 
+//desencripta a palavra passada trocando as letras por numeros
 function numberJumperDecipher(word) {
     let new_word = '';
     let table = ['a','d','g','j','m','p','s','v','y','z'];
     for(let i=0;i<word.length;i++){
+        //se não for uma letra, mantem o caracter
         if(!word[i].match(/^[a-z]+$/)){new_word+=word[i];}
+        //substitui a letra pelo index da sua posição
         else{new_word+=table.indexOf(word[i]).toString();}       
     }
     return(new_word);
 }
 
+//desencripta a palavra passada com base numa data
 function dataDecipher(word) {
     let new_word = '';
     let table = [
@@ -148,22 +164,26 @@ function dataDecipher(word) {
         ['4','5','6','7','8','9']
     ]
     for(let i=0;i<word.length;i++){
+        //se não for um numero, mantem o caracter
         if(isNaN(word[i])){new_word+=word[i];}
+        //obtem a letra na posição indica por 2 numeros conseguintes
         else{new_word+=table[word[i]][word[++i]];}
     }
     return(new_word);
 }
 
 
-
+//aplica as várias funções e encripta a palavra passada
 export function cipher(word) {
     return navyCipher(numberJumperCipher(dataCipher(masterKeyCipher(word))))
 }
 
+//aplica as várias funções e desencripta a palavra passada
 export function decipher(word) {
     return masterKeyCipher(dataDecipher(numberJumperDecipher(navyDecipher(word))))
 }
 
+//aplica a função de cifragem e confirma se word1 combina com word2
 export function compareCipher(word1, word2) {
     return(word1===cipher(word2))
 }

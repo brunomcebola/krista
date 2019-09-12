@@ -1,7 +1,12 @@
+//REACT.JS COMPONENTS
 import React from 'react';
-import './styles.css';
 import Loader from 'react-loader-spinner';
 
+//CSS STYLE SHEET DO COMPONENTE
+import './styles.css';
+
+
+//cria os dias do horário do utilizador
 function horarioCreateDay(dayOfWeek, medication) {
     let dias;
     window.innerWidth > 750? dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'] : dias = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
@@ -11,6 +16,7 @@ function horarioCreateDay(dayOfWeek, medication) {
         for(let letter=0;letter<4;letter++){
             medication.map(e => {if(e.name===String.fromCharCode(letter+97)+'_'+dayOfWeek){
 
+                //criação dos blocos com a informação de cada parcela
                 let info = document.createElement("div");
                 let spanHora = document.createElement("p");
                 let horaTitle = document.createElement("strong")
@@ -43,6 +49,7 @@ function horarioCreateDay(dayOfWeek, medication) {
     }
     
     return( 
+        //criação do titulo e das quatro zonas de cada dia
         <div className="userSchedule" id={'dia_'+dayOfWeek}>
             <h4 className="dayOfWeek">{dias[dayOfWeek]}</h4>
             <div className={"dayZone day"+dayOfWeek}></div>
@@ -53,8 +60,10 @@ function horarioCreateDay(dayOfWeek, medication) {
     )
 }
 
+//cria o horário do utilizador
 function horarioCreateSchedule(medication) {
     let horario = [];
+    //cria os 7 dias da semana
     for(let i=0;i<7;i++){
         horario.push(horarioCreateDay(i, medication))
     }
@@ -62,7 +71,9 @@ function horarioCreateSchedule(medication) {
     
 }
 
+//mostra o horário
 function showSchedule(spinner) {
+    //aletra a visibilidade se a informação já tiver sido toda carregada
     if(!spinner){
         const table = document.getElementById('horarioUser');
         if(table!==null) {
@@ -74,6 +85,7 @@ function showSchedule(spinner) {
     }    
 }
 
+//gere o elemento a ser apresentado
 const HorarioUser = ({medication, spinner}) =>
     <div id="horarioUser">
         {horarioCreateSchedule(medication, spinner)}
