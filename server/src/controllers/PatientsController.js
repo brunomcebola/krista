@@ -49,15 +49,14 @@ module.exports = {
 
                     patient.firstName = aes256.decrypt(key, patient.firstName);
                     patient.lastName = aes256.decrypt(key, patient.lastName);
+                    patient.docName = aes256.decrypt(key, patient.docName);
+                    patient.docNum = aes256.decrypt(key, patient.docNum);
 
                     patient.boxNum = '';
                     patient.changed = '';
                     patient.hash = '';
                     patient.saltUser = '';
                     patient.saltPass = '';
-                    patient.docName = '';
-                    patient.docNum = '';
-                    patient.hsn = '';
 
                     return res.json(patient)
                 }

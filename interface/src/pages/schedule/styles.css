@@ -1,37 +1,96 @@
-.schedule #title {
+/* Schedule CLASS STYLES */
+
+/* Títulos das diversas partes da página */
+#schedule #title {
     text-align: center
 }
 
-.schedule table {
+
+
+
+/* Table CLASS STYLES */
+
+/* Caixa de load do horário */
+
+#table #secure-wait-container {
+    width: 1440px;
+    height: 300px;
+    background-color: rgb(243, 243, 243);
+    margin:auto;
+    text-align: center;
+    border: 1px solid black;
+}
+
+
+/* Mensagem de load */
+
+#table #message-container {
+    text-align: center
+}
+
+/* Mensagem de load - Salvo com sucesso */
+
+#table #message-container #succ {
+    color: green;
+    font-size: 15px;
+    margin-bottom: 15px
+}
+
+/* Mensagem de load - Pronto para receber informacao */
+
+#table #message-container #wait {
+    color: rgb(255, 187, 0);
+    font-size: 15px;
+    margin-bottom: 15px
+}
+
+
+/* Horário */
+
+#table #horario-container {
     margin: auto
 }
 
-.schedule table tbody #table-header {
+/* Horário - Título de cada coluna */
+
+#table #horario-container #data #data-title {
     font-size: 18px;
 }
 
-.schedule table tbody #table-header td {
-    background-color: #E0E0E0
-}
+/* Horário - Definições das parcelas */
 
-.schedule table tbody tr td{
+#table #horario-container #data td {
     border: 1px solid black;
     padding: 3px;
+    text-align: center;
+}
+
+#table #horario-container #data #data-title td {
+    background-color: #E0E0E0;
+}
+
+#table #horario-container #data .dataLine td {
     background-color: #fff
 }
 
-.schedule table tbody tr td .hours {
+/* Horário - Definições das parcelas - Horas */
+
+#table #horario-container #data .dataLine td .hours {
     font-size: 12px;
     border: none;
     overflow-y: scroll;
 } 
 
-.schedule table tbody tr td .basic-multi-select {
+/* Horário - Definições das parcelas - Medicamentos */
+
+#table #horario-container #data .dataLine td .basic-multi-select {
     width: 136.1px;
     font-size: 10px
 }
 
-.schedule .save {
+/* Horário - Botão para guardar */
+
+#table #btn-container #save-btn{
     float: right;
     margin-top: 10px;
     padding: 6px;
@@ -45,44 +104,47 @@
     transition: all 0.3s;
 }
 
-.schedule .save:hover {
+#table #btn-container #save-btn:hover {
     opacity: 0.8;
 }
 
-.schedule #info {
+
+
+
+/* List CLASS STYLES */
+
+#info {
     width: 1440px;
     margin: auto
 }
 
-.schedule #table #load-wait{
-    width: 1440px;
-    height: 300px;
-    background-color: rgb(243, 243, 243);
-    margin:auto;
-    text-align: center;
-    border: 1px solid black
-}
+/* Informação médica */
 
-.schedule #table #loader,
-.schedule #info #loader {
+/* Informação médica - Mensagens */
+
+#info #medical-info-container #message-container {
     text-align: center
 }
 
-.schedule #table #loader #succ,
-.schedule #info #loader #succ {
-    color: green;
-    font-size: 15px;
-    margin-bottom: 15px
-}
+/* Informação médica - Mensagens - Pronto para receber informação */
 
-.schedule #table #loader #wait,
-.schedule #info #loader #wait {
+#info #medical-info-container #message-container #wait {
     color: rgb(255, 187, 0);
     font-size: 15px;
     margin-bottom: 15px
 }
 
-.schedule #text {
+/* Informação médica - Mensagens - Salvo com sucesso */
+
+#info #medical-info-container #message-container #succ {
+    color: green;
+    font-size: 15px;
+    margin-bottom: 15px
+}
+
+/* Informação médica - Área de texto */
+
+#info #medical-info-container #text {
     display: block;
     margin: auto 0px;
     max-width: 1440px;
@@ -91,26 +153,52 @@
     font-size: 18px
 }
 
-.schedule #info #personalInfo {
+/* Informação médica - Botão para guardar */
+
+#info #medical-info-container #save-btn {
+    float: right;
+    margin-top: 10px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 0;
+    background: #5B5F97;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#info #medical-info-container #save-btn:hover {
+    opacity: 0.8;
+}
+
+
+/* Informação pessoal */
+
+#info #personal-info-container {
     margin: 40px 0 40px;
     display: flex;
 }
 
-.schedule #info #personalInfo #userPic-container {
+/* Informação pessoal - Fotografia */
+
+#info #personal-info-container #user-photo-container {
     flex: 17%
 }
 
-.schedule #info #personalInfo #userPic-container img {
+#info #personal-info-container #user-photo-container img {
     width: 200px;
     border-radius: 5px;
     border: 1px solid black
 }
 
-.schedule #info #personalInfo #detail {
+/* Informação pessoal - Detalhes pessoais */
+
+#info #personal-info-container #details-container {
     flex: 83%
 }
 
-.schedule #info #personalInfo #detail p .identifier {
+#info #personal-info-container #details-container p .identifier {
     font-size: 19px
 }
-
