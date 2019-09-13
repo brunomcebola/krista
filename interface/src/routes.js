@@ -15,7 +15,7 @@ const Routes = () => (
         <BrowserRouter>
             <Switch>
                 {/* DEFINE AS PÁGINAS A MOSTRAR DE ACORDO COM O LINK */}
-<Route exact path='/' component={UserArea} />   {/* HOME PAGE / AREA USUARIO */}
+                <Route exact path='/' component={UserArea} />   {/* HOME PAGE / AREA USUARIO */}
                 <Route exact path='/MedicalLogin' component={MedicalLogin} /> {/* LOGIN MEDICO */}
                 <Route exact path='/MedicalArea' component={MedicalArea} /> {/* AREA MEDICA */}
                 <Route exact path='/MedicalArea/Schedules' component={Schedule} /> {/* PÁGINA HORARIO */}
