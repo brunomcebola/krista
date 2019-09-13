@@ -73,10 +73,12 @@ module.exports = {
 
     //obtem os dados de um slot de medicaçao presente na coleção
     async medicine(req, res) {
+        //lida com os pedidos vindos do site
         if (check(req)){
             const response = await db.collection(req.params.col).findOne({ 'name': req.params.name });
             return res.json(response)
         }
+        //lida com os pedidos vindos da aplicação
         else if(req.body.appToken === 'WR7mG@h3rx9hxAX6A.72dtWJn&uxfjYa') {
             await Patient.findOne({'username': req.body.user}, async function(err, patient) {
                 if (patient === null) { 
@@ -84,6 +86,7 @@ module.exports = {
                 } 
                 else { 
                     if(patient.validPassword(req.body.pass)){
+                        //retorna a informaçao se todos os dados estiverem corretos
                         if(req.params.col.substring(1)===patient.hsn){
                             const response = await db.collection(req.params.col).findOne({ 'name': req.params.name });
                             return res.json(response)

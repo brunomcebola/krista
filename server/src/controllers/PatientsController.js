@@ -10,6 +10,7 @@ function check(req){
 }
 
 module.exports = {
+    //retorna todos os pacientes
     async index(req, res) {
         if (check(req)){
             const { page } = req.query;
@@ -19,11 +20,13 @@ module.exports = {
                 patientAux.saltUser = patient.saltUser;
                 let key = patientAux.getUserHash(patient.username);
 
+                //desencripta a informação necessária
                 patient.firstName = aes256.decrypt(key, patient.firstName);
                 patient.lastName = aes256.decrypt(key, patient.lastName);
                 patient.docName =  aes256.decrypt(key, patient.docName);
                 patient.docNum = aes256.decrypt(key, patient.docNum);
 
+                //elimina da resposta dados não necessários e secretos
                 patient.boxNum = '';
                 patient.changed = '';
                 patient.hash = '';
@@ -38,6 +41,7 @@ module.exports = {
         }
     },
 
+    //retorna um paciente em específico
     async show(req, res) {
         if (check(req)){
             await Patient.findOne({'hsn':req.params.hsn}, function(err, patient){
@@ -47,11 +51,13 @@ module.exports = {
                 else { 
                     let key = patient.getUserHash(patient.username);
 
+                    //desencripta a informação necessária
                     patient.firstName = aes256.decrypt(key, patient.firstName);
                     patient.lastName = aes256.decrypt(key, patient.lastName);
                     patient.docName = aes256.decrypt(key, patient.docName);
                     patient.docNum = aes256.decrypt(key, patient.docNum);
 
+                    //elimina informação confidencial da resposta
                     patient.boxNum = '';
                     patient.changed = '';
                     patient.hash = '';
@@ -67,7 +73,9 @@ module.exports = {
         }
     },
 
+    //lida com os logins dos pacientes
     async log(req, res) {
+        //confirma a origem do pedido (site / app)
         if (check(req) || req.body.appToken === 'WR7mG@h3rx9hxAX6A.72dtWJn&uxfjYa'){
             await Patient.findOne({'username': req.body.user}, function(err, patient) {
                 if (patient === null) { 
@@ -77,9 +85,11 @@ module.exports = {
                     if(patient.validPassword(req.body.pass)){
                         let key = patient.getUserHash(patient.username);
 
+                        //desencripta a informeção necessária
                         patient.firstName = aes256.decrypt(key, patient.firstName);
                         patient.lastName = aes256.decrypt(key, patient.lastName);
 
+                        //esconde a informação confidencial da resposta
                         patient.boxNum = '';
                         patient.hash = '';
                         patient.saltUser = '';
@@ -100,27 +110,33 @@ module.exports = {
         }
     }, 
 
+    //permite criar novos pacientes
     async store(req, res) {
         if (check(req)){
 
             let newPatient = new Patient(); 
 
+            //gera uma pass aleatoria com numeros e letras
             let pass = randomstring.generate({
                 length: 10,
                 readable: true,
                 charset: 'alphanumeric'
             });
 
+            //gera os salt da pass e do username e o hash da pass
             newPatient.setUserSalt();
             newPatient.setPassword(pass);
 
+            //obtem o hash do username para encriptar a informação
             let key = newPatient.getUserHash(req.body.username);
 
+            //informação não encriptada
             newPatient.username = req.body.username;
             newPatient.hsn = req.body.hsn; 
             newPatient.boxNum = req.body.boxNum; 
             newPatient.age = req.body.age;
 
+            //infomração encriptada
             newPatient.firstName = aes256.encrypt(key, req.body.firstName); 
             newPatient.lastName = aes256.encrypt(key, req.body.lastName);  
             newPatient.docNum = aes256.encrypt(key, req.body.docNum); 
@@ -135,11 +151,12 @@ module.exports = {
         }
     },
 
+    //atualiza os dados de um paciente especifico
     async update(req, res) {
         if (check(req)){
             let docName, docNum, boxNum
 
-
+            //obtem os dados anteriores e desencripta-os
             const resp = await Patient.findOne({'hsn':req.params.id});
             let deletePatient = new Patient();
             deletePatient.saltUser = resp.saltUser;
@@ -151,22 +168,26 @@ module.exports = {
 
             let newPatient = new Patient(); 
 
+            //gera novo salt para pass e user e novo hash para pass
             newPatient.setUserSalt();
             newPatient.setPassword(req.body.password);
 
             let key = newPatient.getUserHash(req.body.username);
 
+            //info não encriptada
             newPatient.username = req.body.username;
             newPatient.hsn = req.body.hsn; 
             newPatient.boxNum = boxNum; 
             newPatient.sex = req.body.sex;
             newPatient.age = req.body.age;
 
+            //encripta os dados com base no novo hash do username
             newPatient.firstName = aes256.encrypt(key, req.body.firstName); 
             newPatient.lastName = aes256.encrypt(key, req.body.lastName);  
             newPatient.docNum = aes256.encrypt(key, docNum); 
             newPatient.docName = aes256.encrypt(key, docName);
 
+            //cria um novo objeto e insere todos os dados para poder atulizar
             let patientUpdate ={
                 sex: '', age: '', changed: '', saltUser: '', saltPass: '', hash: '',
                 username: '', hsn: '', boxNum: '', firstName: '', lastName: '',
@@ -195,6 +216,7 @@ module.exports = {
         }
     },
 
+    //verifica a existencia de um username
     async checkUsername(req, res) {
         if(check(req)) {
             const patient = await Patient.findOne({'username': req.body.user});
