@@ -262,7 +262,7 @@ class User extends Component {
         this.forceUpdate();
 
         const pass = document.getElementById('pass-holder');
-        const user = document.getElementById('user');
+        const user = document.getElementById('username');
         const sex = document.querySelectorAll('#sex');
         const firstName = document.getElementById('fname');
         const lastName = document.getElementById('lname');
@@ -359,7 +359,7 @@ class User extends Component {
         const passNew = document.getElementById('pass-container-new');
         const passNewCheck = document.getElementById('pass-container-new-check');
         const passOld = document.getElementById('pass-container-old');
-        const user = document.getElementById('user');
+        const user = document.getElementById('username');
         const firstName = document.getElementById('first-name');
         const lastName = document.getElementById('last-name');
         const age = document.getElementById('age');
@@ -492,7 +492,7 @@ class User extends Component {
             const passOld = document.getElementById('pass-container-old');
             const passNew = document.getElementById('pass-container-new');
             const passNewCheck = document.getElementById('pass-container-new-check');
-            const user = document.getElementById('user');
+            const user = document.getElementById('username');
             const firstName = document.getElementById('first-name');
             const lastName = document.getElementById('last-name');
             const age = document.getElementById('age');
@@ -741,7 +741,7 @@ class User extends Component {
                                 <input className="divided" id="lname" placeholder="Último Nome" type="text" required onChange={e => this.setState({setup: {...this.state.setup, lastName: e.target.value}})} value={this.state.setup.lastName}/>
                             </p>
                             <p>
-                                <input className="full" id="user" placeholder="Nome de Utilizador" type="text" required onChange={e => this.setState({setup: {...this.state.setup, username: e.target.value}})} value={this.state.setup.username}/>
+                                <input className="full" id="username" placeholder="Nome de Utilizador" type="text" required onChange={e => this.setState({setup: {...this.state.setup, username: e.target.value}})} value={this.state.setup.username}/>
                             </p>
                             <p id="pass-holder">
                                 <input className="full" id="pass" placeholder="Password" type="password" required autoComplete="new-password" onChange={e => this.setState({setup: {...this.state.setup, password: e.target.value}})} value={this.state.setup.password}/>
@@ -772,8 +772,8 @@ class User extends Component {
                                 <input required disabled={!this.state.changeData} id="first-name" type="text" onChange={e => this.setState({setup: {...this.state.setup, firstName: e.target.value}})} value={this.state.setup.firstName}/><br/>
                                 <label for="nome">Último Nome:</label><br/>
                                 <input required disabled={!this.state.changeData} id="last-name" type="text" onChange={e => this.setState({setup: {...this.state.setup, lastName: e.target.value}})} value={this.state.setup.lastName}/><br/>
-                                <label for="user">Username:</label><br/>
-                                <input required disabled={!this.state.changeData} id="user" type="text" onChange={e => this.setState({setup: {...this.state.setup, username: e.target.value}})} value={this.state.setup.username}/><br/>
+                                <label for="username">Username:</label><br/>
+                                <input required disabled={!this.state.changeData} id="username" type="text" onChange={e => this.setState({setup: {...this.state.setup, username: e.target.value}})} value={this.state.setup.username}/><br/>
                                 <label for="pass-old">Password Antiga:</label><br/>
                                 <span className="pass-container" id="pass-container-old"><input required disabled={!this.state.changeData} className='pass' id="pass-old" type="password" onChange={e => this.setState({setup: {...this.state.setup, passOld: e.target.value}})} value={this.state.setup.passOld}/>
                                 <i className="fa fa-eye" id="profile-eye-old" onClick={!this.state.changeData?null:() => this.profileTogglePassword(0)}></i></span><br/>
