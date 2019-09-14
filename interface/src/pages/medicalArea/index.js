@@ -43,8 +43,6 @@ class List extends Component {
     
     render() {
         const {patients, search, exists, page, productInfo, load} = this.props.estado;
-        
-        console.log(patients)
 
         return(
             <div id = "patient-list">
@@ -197,7 +195,7 @@ class Modal extends Component {
                     <h3>Informação do paciente</h3>
             
                     {/* Mensagems/animação de load */}
-                    {this.state.load?<Loader type="ThreeDots" color="green"height="30" width="30"/>:this.state.exists?<div id="warn">Paciente já existente</div>:this.state.success?<div id="succ">{"Paciente criado com sucesso - Password: "+ randoomPass /* mostra a pass do paciente para o médico lha poder dar */}</div>:this.state.erro?<div id="erro">Dados introduzidos inválidos</div>:null}
+                    {this.state.load?<Loader type="ThreeDots" color="green"height="30" width="30"/>:this.state.exists?<div id="warn">Paciente já existente</div>:this.state.success?<div id="succ">{/* mostra a pass do paciente para o médico lha poder dar */ "Paciente criado com sucesso - Password: "+ randoomPass}</div>:this.state.erro?<div id="erro">Dados introduzidos inválidos</div>:null}
 
                     {/* zona para introduzir os dados do novo paciente */}
                     <form id="data-form" onSubmit={e => this.formSubmit(e)}>

@@ -178,7 +178,7 @@ class Home extends Component {
                     {/* informação detalhada do produto */}
                     <div className="details" id="details1">
                         <h3>Informação do produto</h3>
-                        <div><span className="identifier">Dimensões:</span> 17.0cm x 9.0cm x 4.0cm</div>
+                        <div><span className="identifier">Dimensões:</span> 17.0cm x 9.5cm x 4.0cm</div>
                         <div><span className="identifier">Peso:</span> 100g</div>
                         <div><span className="identifier">Alimentação:</span> Pilha 9V</div>
                         <div><span className="identifier">Conectividade:</span> Wifi</div>
@@ -314,9 +314,7 @@ class User extends Component {
                 if(sex[i].checked) this.state.setup.sex = sex[i].value;
             }
 
-            const resp = await api.post(`/patients/update/${this.state.hsn}`, this.state.setup);
-
-            console.log(resp)
+            await api.post(`/patients/update/${this.state.hsn}`, this.state.setup);
 
             localStorage.removeItem('changed');
             this.state.changed = '';
@@ -788,10 +786,10 @@ class User extends Component {
                                 <label for="age">Idade:</label><br/>
                                 <input required disabled={!this.state.changeData} id="age" type="number" min='13' onChange={e => this.setState({setup: {...this.state.setup, age: e.target.value}})} value={this.state.setup.age}/><br/>
                                 <label>Género:</label><br/>                            
-                                <input required disabled={!this.state.changeData} type="radio" name="gender" id="male" value='0' onChange={e => {this.setState({setup: {...this.state.setup, sex: 0}}); this.forceUpdate()}}/>
-                                <label className="radioLabel" for="male">Feminino</label>
-                                <input required disabled={!this.state.changeData} type="radio" name="gender" id="female" value='1' onChange={e => {this.setState({setup: {...this.state.setup, sex: 1}}); this.forceUpdate()}}/>
-                                <label className="radioLabel" for="female">Masculino</label>
+                                <input required disabled={!this.state.changeData} type="radio" name="gender" id="female" value='0' onChange={e => {this.setState({setup: {...this.state.setup, sex: 0}}); this.forceUpdate()}}/>
+                                <label className="radioLabel" for="female">Feminino</label>
+                                <input required disabled={!this.state.changeData} type="radio" name="gender" id="male" value='1' onChange={e => {this.setState({setup: {...this.state.setup, sex: 1}}); this.forceUpdate()}}/>
+                                <label className="radioLabel" for="male">Masculino</label>
                                 <input required disabled={!this.state.changeData} type="radio" name="gender" id="other" value='2' onChange={e => {this.setState({setup: {...this.state.setup, sex: 2}}); this.forceUpdate()}}/>
                                 <label className="radioLabel" for="other">Outro</label>   
                                 <button type="submit"></button>                      
