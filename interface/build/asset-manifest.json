@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.74127db3.chunk.css",
+    "main.css": "/static/css/main.a3e17377.chunk.css",
     "main.js": "/static/js/main.c330f508.chunk.js",
     "main.js.map": "/static/js/main.c330f508.chunk.js.map",
     "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
@@ -8,9 +8,9 @@
     "static/js/2.fd04aab4.chunk.js": "/static/js/2.fd04aab4.chunk.js",
     "static/js/2.fd04aab4.chunk.js.map": "/static/js/2.fd04aab4.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.13dbd2134204fdebeddd55f0881eaddb.js": "/precache-manifest.13dbd2134204fdebeddd55f0881eaddb.js",
+    "precache-manifest.54c3b206a425f74ed77632f632e0a520.js": "/precache-manifest.54c3b206a425f74ed77632f632e0a520.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.74127db3.chunk.css.map": "/static/css/main.74127db3.chunk.css.map",
+    "static/css/main.a3e17377.chunk.css.map": "/static/css/main.a3e17377.chunk.css.map",
     "static/media/icon.png": "/static/media/icon.bebb9c00.png",
     "static/media/other.png": "/static/media/other.0181aeb8.png",
     "static/media/styles.css": "/static/media/pills.95415cb1.jpg",

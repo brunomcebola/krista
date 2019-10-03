@@ -976,15 +976,15 @@
 
     /* Barra de navegação - Botão para acesso à área médica */
     #user-area .navigation .navbar .container-fluid .nav .medBtn {
-        width: 31%;
-        margin-right: 25%;
+        width: 37%;
+        margin-right: 15%;
         margin-left: 7%;
         padding-left: 1.5%
     }
 
     /* Barra de navegação - Área pessoal */
     #user-area .navigation .navbar .container-fluid .nav .logged .dropdown {
-        width: 35%;
+        width: 40%;
     }
 
     /* Barra de navegação - Área login e logout */
