@@ -76,7 +76,7 @@ module.exports = {
     //lida com os logins dos pacientes
     async log(req, res) {
         //confirma a origem do pedido (site / app)
-        if (check(req) || req.body.appToken === 'WR7mG@h3rx9hxAX6A.72dtWJn&uxfjYa'){
+        if (check(req) || req.body.appToken === '<appToken>'){
             await Patient.findOne({'username': req.body.user}, function(err, patient) {
                 if (patient === null) { 
                     return res.json(null) 
