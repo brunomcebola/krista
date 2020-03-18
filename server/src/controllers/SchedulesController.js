@@ -79,7 +79,7 @@ module.exports = {
             return res.json(response)
         }
         //lida com os pedidos vindos da aplicação
-        else if(req.body.appToken === 'WR7mG@h3rx9hxAX6A.72dtWJn&uxfjYa') {
+        else if(req.body.appToken === '<appToken>') {
             await Patient.findOne({'username': req.body.user}, async function(err, patient) {
                 if (patient === null) { 
                     return res.send('Não tem permissão para aceder a esta informação')
