@@ -12,7 +12,7 @@ app.use(cors({}));
 
 //ligação à base de dados
 mongoose.connect(
-    'mongodb+srv://kristadmin:iRAhiSIFacrKpEo8@sitedata-xv2ex.mongodb.net/data?retryWrites=true&w=majority',
+    //connection string,
     { useNewUrlParser: true}
 );
 
