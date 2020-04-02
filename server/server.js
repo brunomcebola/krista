@@ -12,7 +12,7 @@ app.use(cors({}));
 
 //ligação à base de dados
 mongoose.connect(
-    //connection string,
+    'connection string here',
     { useNewUrlParser: true}
 );
 
